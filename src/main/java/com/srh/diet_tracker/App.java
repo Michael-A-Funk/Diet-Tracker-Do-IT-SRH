@@ -10,17 +10,22 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
+
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
-       UserDAO userDAO = new UserDAO();
+        ControllerUser controllerUser = new ControllerUser();
+        controllerUser.saveUser(38,90, 105,true,true);
+
+       /*UserDAO userDAO = new UserDAO();
        userDAO.insertUserData(38,90,true,true);
 
        EntryDAO entryDAO = new EntryDAO();
        entryDAO.insertEntryData(false,200,5);
 
        DayReviewDAO dayReviewDAO = new DayReviewDAO();
-       dayReviewDAO.insertDayReview(2000,100,30,100);
+       dayReviewDAO.insertDayReview(2000,100,30,100);*/
 
 
 

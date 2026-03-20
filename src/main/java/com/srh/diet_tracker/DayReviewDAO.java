@@ -5,13 +5,21 @@ import java.sql.SQLException;
 
 public class DayReviewDAO {
 
+    private DayReview dayReview;
+
+    public DayReviewDAO(DayReview dayReview){
+        this.dayReview = dayReview;
+    }
+
     public void insertDayReview(double dailyCaloriesBrutto, double dailyCaloriesPercentage,
                                 double dailySugarBrutto, double dailySugarPercentage){
         String url = "jdbc:sqlite:diet.db";
 
+
         String sql = "INSERT INTO dayReview(dailyCaloriesBrutto,dailyCaloriesPercentage," +
                      "dailySugarBrutto,dailySugarPercentage) VALUES(?,?,?,?)";
 
+        // Hier alle getter setzen von dayRevew.getXXX() jeweils für jedes attribut
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.prepareStatement(sql)){
             pstmt.setDouble(1,dailyCaloriesBrutto);

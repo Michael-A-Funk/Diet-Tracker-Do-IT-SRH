@@ -5,6 +5,12 @@ import java.sql.SQLException;
 
 public class EntryDAO {
 
+    private Entry entry;
+
+    public EntryDAO(Entry entry){
+        this.entry = entry;
+    }
+
     public void insertEntryData(boolean isSport, double calories, double sugar) {
         String url = "jdbc:sqlite:diet.db";
 
