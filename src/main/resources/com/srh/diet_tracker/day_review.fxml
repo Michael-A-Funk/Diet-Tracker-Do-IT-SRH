@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Pane prefHeight="274.0" prefWidth="504.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane prefHeight="274.0" prefWidth="483.0">
+               <content>
+                  <TableView prefHeight="323.0" prefWidth="487.0">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Eintrag Nr." />
+                      <TableColumn prefWidth="75.0" text="Aktivität" />
+                      <TableColumn prefWidth="75.0" text="Kalorien" />
+                        <TableColumn prefWidth="75.0" text="Zucker" />
+                        <TableColumn prefWidth="75.0" text="Uhrzeit" />
+                        <TableColumn prefWidth="75.0" text="Prozent" />
+                    </columns>
+                  </TableView>
+               </content>
+            </ScrollPane>
+         </children>
+      </Pane>
+   </center>
+   <top>
+      <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="269.0" layoutY="20.0" prefHeight="28.0" prefWidth="94.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
+         </children>
+      </Pane>
+   </top>
+   <bottom>
+      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <Pane prefHeight="274.0" prefWidth="120.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_LEFT" layoutX="7.0" layoutY="14.0" prefHeight="156.0" prefWidth="121.0" text="Hier werden alle &#10;Eintrage angezeigt&#10;(rechts) und wie &#10;viel Prozent von &#10;Kalorien und Zucker&#10;relativ von Ihren&#10;maximale Wert &#10;erreicht wurde &#10;(unten)&#10;" />
+            <Label layoutX="7.0" layoutY="243.0" text="Zucker: " />
+            <Label layoutX="7.0" layoutY="200.0" text="Kalorien:" />
+         </children>
+      </Pane>
+   </left>
+</BorderPane>

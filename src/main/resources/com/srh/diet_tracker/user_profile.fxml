@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Pane prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="23.0" layoutY="36.0" text="Gewicht" />
+            <Label layoutX="20.0" layoutY="77.0" text="Alter" />
+            <Label layoutX="20.0" layoutY="115.0" text="Geschlecht" />
+            <Label layoutX="21.0" layoutY="152.0" text="Größe" />
+            <Spinner layoutX="104.0" layoutY="32.0" prefHeight="18.0" prefWidth="151.0" />
+            <Spinner layoutX="104.0" layoutY="148.0" prefHeight="18.0" prefWidth="151.0" />
+            <Spinner layoutX="104.0" layoutY="73.0" prefHeight="18.0" prefWidth="151.0" />
+            <CheckBox layoutX="104.0" layoutY="192.0" mnemonicParsing="false" />
+            <Label layoutX="22.0" layoutY="195.0" text="Diabetes" />
+            <Button layoutX="164.0" layoutY="233.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" />
+            <MenuButton layoutX="104.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Männich" />
+                <MenuItem mnemonicParsing="false" text="Weiblich" />
+              </items>
+            </MenuButton>
+         </children>
+      </Pane>
+   </center>
+   <top>
+      <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="242.0" layoutY="20.0" prefHeight="28.0" prefWidth="161.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Benutzer Daten Eingeben" textFill="WHITE" />
+         </children>
+      </Pane>
+   </top>
+   <bottom>
+      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <left>
+      <Pane prefHeight="274.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="32.0" prefHeight="94.0" prefWidth="121.0" text="Geben Sie hier Ihre&#10;Daten, für die&#10;Kalkulation&#10;von Ihren Ideale&#10;Einahmewerte" />
+         </children>
+      </Pane>
+   </left>
+</BorderPane>
