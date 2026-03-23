@@ -13,6 +13,7 @@ public class DbManager {
         // SQL statement for creating a new table
         var userSql = "CREATE TABLE IF NOT EXISTS user("
                 + "	id INTEGER PRIMARY KEY,"
+                + "	height INTEGER NOT NULL,"
                 + "	age INTEGER NOT NULL,"
                 + " weight INTEGER NOT NULL,"
                 + "	isMale BOOLEAN NOT NULL,"
