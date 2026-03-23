@@ -87,4 +87,9 @@ public class EntryDAO {
         return 0;
     }
 
+    // Querry for DayReview
+    /*SELECT date, SUM(calories), SUM(sugar)
+      FROM entry
+      GROUP BY date;*/
+
 }
