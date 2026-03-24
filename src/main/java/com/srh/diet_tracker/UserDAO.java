@@ -11,8 +11,6 @@ public class UserDAO {
         this.user = user;
     }
 
-    public UserDAO(){}
-
     public void insertUserData() {
         String url = "jdbc:sqlite:diet.db";
 

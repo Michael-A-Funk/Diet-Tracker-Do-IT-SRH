@@ -24,26 +24,17 @@ public class DbManager {
                 + "	id INTEGER PRIMARY KEY,"
                 + "	isSport BOOLEAN NOT NULL,"
                 + " calories REAL NOT NULL,"
-                + "	sugar REAL NOT NULL"
+                + "	sugar REAL NOT NULL,"
+                + " date TEXT NOT NULL,"
+                + " time TEXT NOT NULL"
                 + ");";
 
-        var dayReviewSql = "CREATE TABLE IF NOT EXISTS dayReview("
-                + "	id INTEGER PRIMARY KEY,"
-                + "	dailyCaloriesBrutto REAL NOT NULL,"
-                + "	dailyCaloriesPercentage REAL NOT NULL,"
-                + "	dailySugarBrutto REAL NOT NULL,"
-                + "	dailySugarPercentage REAL NOT NULL"
-                + ");";
-
-
-
-        try (var conn = DriverManager.getConnection(url);
+                try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement()) {
             // create a new table
             stmt.execute(userSql);
             stmt.execute(entrySql);
-            stmt.execute(dayReviewSql);
-            System.out.println("Databases 'user', 'entry' and 'dayReview' were created.");
+            System.out.println("Databases 'user', 'entry' were created.");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

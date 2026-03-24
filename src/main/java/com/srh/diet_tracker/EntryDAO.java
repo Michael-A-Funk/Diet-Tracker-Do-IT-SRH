@@ -14,13 +14,20 @@ public class EntryDAO {
     public void insertEntryData() {
         String url = "jdbc:sqlite:diet.db";
 
-        String sql = "INSERT INTO entry(isSport,calories,sugar) VALUES(?,?,?)";
+        //For a first entry, the date and time should be automatically set to the current time.
+        // This SQL command is one possibility, but not necessarily the final solution.
+        //Later, functionality may be added to change the time.
+        // Later, a controller should be used when instantiating the Entry class.
+
+        String sql = "INSERT INTO entry(isSport,calories,sugar,date,time) VALUES(?,?,?,?,?";
 
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.prepareStatement(sql)){
             pstmt.setBoolean(1,entry.isSport());
             pstmt.setDouble(2,entry.getCalories());
             pstmt.setDouble(3,entry.getSugar());
+            pstmt.setString(4,(entry.getDay()).toString());
+
             pstmt.executeUpdate();
 
         }catch (SQLException e){
@@ -52,7 +59,7 @@ public class EntryDAO {
         }
     }
 
-    // id wird vom entsprechenden Controller übergeben (last id für ControllerUser, beliebige id für ControllerDayReview)
+    // The ID is passed by the corresponding controller (last ID for Controller User, any ID for ControllerDayReview)
     public void deleteEntry (int id){
         if (id!=0) {
             String url = "jdbc:sqlite:diet.db";

@@ -1,50 +1,42 @@
 package com.srh.diet_tracker;
 
-import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Entry {
     private boolean isSport;
     private double calories;
     private double sugar;
-    private DateFormat time;
+    private LocalDate day;
+    private LocalTime time;
 
-    public Entry (boolean isSport,double calories, double sugar){
+    public Entry (boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
         this.isSport = isSport;
         this.calories = calories;
         this.sugar = sugar;
+        this.day = day;
+        this.time = time;
     }
 
     public boolean isSport() {
         return isSport;
     }
 
-    public void setSport(boolean sport) {
-        isSport = sport;
-    }
-
-    public double getCalories() {
+        public double getCalories() {
         return calories;
     }
 
-    public void setCalories(double calories) {
-        this.calories = calories;
-    }
-
-    public double getSugar() {
+     public double getSugar() {
         return sugar;
     }
 
-    public void setSugar(double sugar) {
-        this.sugar = sugar;
-    }
-
-    public DateFormat getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    /*public void setTime() {
-
-    }*/
+    public LocalDate getDay() {
+        return day;
+    }
 }
 
 

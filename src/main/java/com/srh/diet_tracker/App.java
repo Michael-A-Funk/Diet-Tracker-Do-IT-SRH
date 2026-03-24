@@ -18,6 +18,9 @@ public class App extends Application {
         ControllerUser controllerUser = new ControllerUser();
         controllerUser.saveUser(38,90, 105,true,true);
 
+        ControllerEntry controllerEntry = new ControllerEntry();
+        controllerEntry.saveEntry(false, 500, 10);
+
        /*UserDAO userDAO = new UserDAO();
        userDAO.insertUserData(38,90,true,true);
 

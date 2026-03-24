@@ -5,8 +5,6 @@ import javafx.scene.control.Label;
 
 public class ControllerDayReview {
 
-    private DayReviewDAO dayReviewDAO;
-
     public ControllerDayReview(){}
 
 
