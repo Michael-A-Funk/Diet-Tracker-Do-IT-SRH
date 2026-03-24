@@ -16,22 +16,35 @@ public class App extends Application {
         dbManager.setDataBase();
 
         ControllerUser controllerUser = new ControllerUser();
-        controllerUser.saveUser(38,90, 105,true,true);
+//        controllerUser.eliminateUserData();
 
+        //Insert new data into entry table in DB from Controller->DAO->DB
         ControllerEntry controllerEntry = new ControllerEntry();
-        controllerEntry.saveEntry(false, 500, 10);
+//        controllerEntry.saveEntry(false, 500, 10);
+//        controllerEntry.saveEntry(true, 800, 20);
 
+//        ControllerEntry controllerEntry = new ControllerEntry();
+        controllerEntry.eliminateLastEntry();
+
+        controllerUser.eliminateUserData();
+
+        //Eliminate row of table with certain id from table user. Path: DAO->DB
+
+
+        //Save user data into user table in DB from Controller->DAO->DB
+//        controllerUser.saveUser(38,90, 105,true,true);
+
+
+
+       // Insert new data into user table in DB from DAO->DB
        /*UserDAO userDAO = new UserDAO();
        userDAO.insertUserData(38,90,true,true);
 
+       // Insert new data into user entry in DB from DAO->DB
        EntryDAO entryDAO = new EntryDAO();
        entryDAO.insertEntryData(false,200,5);
 
-       DayReviewDAO dayReviewDAO = new DayReviewDAO();
-       dayReviewDAO.insertDayReview(2000,100,30,100);*/
-
-
-
+        // FXMLLoader EXAMPLE
         /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Erstellung des User Profiles");

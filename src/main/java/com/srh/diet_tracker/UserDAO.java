@@ -7,9 +7,15 @@ public class UserDAO {
 
     private User user;
 
+
+    // FRAGE bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes user?
+    //Constructor used when we want to insert new Data into DB
     public UserDAO(User user){
         this.user = user;
     }
+
+    //Constructor user when we want to use methods update, delete and getLastId
+    public UserDAO(){}
 
     public void insertUserData() {
         String url = "jdbc:sqlite:diet.db";
@@ -30,16 +36,15 @@ public class UserDAO {
         }
     }
 
-    // id wird vom entsprechenden Controller übergeben (last id für ControllerUser, beliebige id für ControllerDayReview)
-    public void updateEntryData(int id) {
-        if (id!=0) {
+    public void updateEntryData() {
+
             String url = "jdbc:sqlite:diet.db";
             String sql = "UPDATE entry SET age = ? , "
                     + " height = ? , "
                     + " weight = ? "
                     + " isMale = ? , "
                     + " hasDiabetes = ? "
-                    + "WHERE id = ?";
+                    + "WHERE id = 1";
 
             try (var conn = DriverManager.getConnection(url);
                  var pstmt = conn.prepareStatement(sql)) {
@@ -48,58 +53,30 @@ public class UserDAO {
                 pstmt.setInt(3, user.getWeight());
                 pstmt.setBoolean(4, user.isMale());
                 pstmt.setBoolean(5, user.hasDiabetes);
-                pstmt.setInt(6, id);
+                // id is always 1 because we have just one user!
+                //pstmt.setInt(6, 1);
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
-        }
+
     }
 
 
-    // id wird vom entsprechenden Controller übergeben (last id für ControllerUser, beliebige id für ControllerDayReview)
-    public void deleteEntryData (int id){
-        if (id!=0) {
+    public void deleteEntryData (){
+
             String url = "jdbc:sqlite:diet.db";
-            String sql = "DELETE FROM user WHERE id = ?";
+            String sql = "DELETE FROM user WHERE id = 1";
 
             try (var conn = DriverManager.getConnection(url);
                  var pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, user.getAge());
-                pstmt.setInt(2, user.getHeight());
-                pstmt.setInt(3, user.getWeight());
-                pstmt.setBoolean(4, user.isMale());
-                pstmt.setBoolean(5, user.hasDiabetes);
-                pstmt.setInt(6, id);
                 pstmt.executeUpdate();
+                System.out.println("User Daten wurden gelöscht");
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
-        }
-    }
-
-    public int getLastId(){
-        String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT MAX(id) AS max_id FROM user;";
-
-        try (var conn = DriverManager.getConnection(url);
-             var stmt = conn.createStatement();
-             var lastId= stmt.executeQuery(sql)) {
-            if (lastId.wasNull()) {
-                return lastId.getInt("max_id");
-            }
-            else {return 0;}
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return 0;
-    }
-
-    void setUser (User user){
-        this.user = user;
     }
 
 }

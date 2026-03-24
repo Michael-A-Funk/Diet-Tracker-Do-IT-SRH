@@ -19,12 +19,26 @@ public class ControllerEntry {
         LocalDate date;
         LocalTime time;
 
-        // Date and Tim will further be dependent, with an if-clause, from the boolean coming from checkbox "Jetzige Zeit"
+        // Date and Time will further be dependent, with an if-clause, from the boolean coming from checkbox "Jetzige Zeit"
         date = LocalDate.now();
         time = LocalTime.now();
 
         Entry entry = new Entry(isSport,calories,sugar,date,time);
         EntryDAO entryDAO = new EntryDAO(entry);
         entryDAO.insertEntryData();
+        System.out.println("Neuer Eintrag wurde gesetzt");
     }
+
+    // waits for event from Button "Löschen".
+    public void eliminateLastEntry(){
+        EntryDAO entryDAO = new EntryDAO();
+        entryDAO.deleteEntry();
+        /*int lastId = entryDAO.getLastId();
+        System.out.println("Resultat von getLastId" + )*/
+//        System.out.println("Letzter Eintrag wurde gelöscht");
+
+    }
+
 }
+
+

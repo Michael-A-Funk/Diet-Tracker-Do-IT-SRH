@@ -1,15 +1,22 @@
 package com.srh.diet_tracker;
 
+import javax.xml.transform.Result;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EntryDAO {
 
     private Entry entry;
 
+    // FRAGE bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes entry?
+    //Constructor used when we want to insert new Data into DB
     public EntryDAO(Entry entry){
         this.entry = entry;
     }
+
+    //Constructor user when we want to use methods update, delete and getLastId
+    public EntryDAO(){}
 
     public void insertEntryData() {
         String url = "jdbc:sqlite:diet.db";
@@ -61,37 +68,39 @@ public class EntryDAO {
     }
 
     // The ID is passed by the corresponding controller (last ID for Controller User, any ID for ControllerDayReview)
-    public void deleteEntry (int id){
-        if (id!=0) {
+    public void deleteEntry (){
             String url = "jdbc:sqlite:diet.db";
             String sql = "DELETE FROM entry WHERE id = ?";
 
             try (var conn = DriverManager.getConnection(url);
                  var pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, id);
+                pstmt.setInt(1, getLastId());
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
-        }
     }
 
     public int getLastId(){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT MAX(id) AS max_id FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
-             var lastId= stmt.executeQuery(sql)) {
-            if (lastId.wasNull()) {
-                return lastId.getInt("max_id");
-            }
-            else {return 0;}
+             ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS max_id FROM entry;")) {
+//                if (rs.next()) {
+                    System.out.println("Letzte id von entry ist: " + rs.getInt("max_id") + " und Eintrag wird gelöscht.");
+                    return rs.getInt("max_id");
 
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+//                } else {
+//                    System.out.println("Letzte id von entry ist: und Eintrag wird NICHT gelöscht.");
+//                    return 0;
+//                }
+            } catch (SQLException e) {
+
+                System.err.println(e.getMessage());
+            }
+        System.out.println("Keine id selektiert!!!");
         return 0;
     }
 
