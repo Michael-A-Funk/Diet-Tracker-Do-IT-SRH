@@ -15,6 +15,7 @@ public class ControllerEntry {
     public void saveEntry(boolean isSport,double calories, double sugar){
 
 
+
         LocalDate date;
         LocalTime time;
 
@@ -23,6 +24,7 @@ public class ControllerEntry {
         time = LocalTime.now();
 
         Entry entry = new Entry(isSport,calories,sugar,date,time);
+        EntryDAO entryDAO = new EntryDAO(entry);
         entryDAO.insertEntryData();
     }
 }

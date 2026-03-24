@@ -19,7 +19,7 @@ public class EntryDAO {
         //Later, functionality may be added to change the time.
         // Later, a controller should be used when instantiating the Entry class.
 
-        String sql = "INSERT INTO entry(isSport,calories,sugar,date,time) VALUES(?,?,?,?,?";
+        String sql = "INSERT INTO entry(isSport,calories,sugar,date,time) VALUES(?,?,?,?,?)";
 
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.prepareStatement(sql)){
@@ -27,6 +27,7 @@ public class EntryDAO {
             pstmt.setDouble(2,entry.getCalories());
             pstmt.setDouble(3,entry.getSugar());
             pstmt.setString(4,(entry.getDay()).toString());
+            pstmt.setString(5,(entry.getTime()).toString());
 
             pstmt.executeUpdate();
 
