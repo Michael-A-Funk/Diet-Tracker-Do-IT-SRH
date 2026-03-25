@@ -41,7 +41,7 @@ public class User {
     }
 
 
-    public double bmr(){
+    public double getBMR(){
         double bmr;
         if (isMale) {
             bmr= 88.362 + (13.397 * this.weight)+(4.799 * this.height) - (5.677 * this.age);

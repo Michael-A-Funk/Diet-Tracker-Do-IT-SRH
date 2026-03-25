@@ -43,7 +43,6 @@ public class ControllerDayReview {
 
     public void showTotalSugarSum(){
 
-
         EntryDAO entryDAO = new EntryDAO();
         System.out.println("Total Sugar Sum: "+ entryDAO.returnSugarTotalSum());
     }
@@ -64,8 +63,20 @@ public class ControllerDayReview {
         System.out.println("Height " + user.getHeight() +"cm "+", Age: "+ user.getAge() + ", Weight: "+ user.getWeight()+
                             "kg"+", Male:" +user.isMale() + ",Has Diabetes: "+user.hasDiabetes());
 
+        // Actual Date only used for test purposes
+        LocalDate date;
+        date = LocalDate.now();
+
+        EntryDAO entryDAO = new EntryDAO();
+
+        double percentageCalories = (entryDAO.returnCaloriesSumByDate(date)/user.getBMR())*100;
+        double percentageSugar = (entryDAO.returnCaloriesSumByDate(date)/50)*100;
+        System.out.println("Du hast " + percentageCalories + " % von deinen Maximalen Tageskaloriengehalt erreicht.");
+        System.out.println("Du hast " + percentageSugar + " % von deinen Maximalen Tageszuckergehalt erreicht.");
+
     }
 
+    //
 
 
     // Here will be, using UserDAO and EntryDAO represented and calculated things like:

@@ -101,14 +101,9 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-//                if (rs.next()) {
-                    System.out.println("Letzte id von entry ist: " + rs.getInt("max_id") + " und Eintrag wird gelöscht.");
+                    System.out.println("Letzte id von entry ist: " + rs.getInt("max_id"));
                     return rs.getInt("max_id");
 
-//                } else {
-//                    System.out.println("Letzte id von entry ist: und Eintrag wird NICHT gelöscht.");
-//                    return 0;
-//                }
             } catch (SQLException e) {
 
                 System.err.println(e.getMessage());
@@ -204,6 +199,4 @@ public class EntryDAO {
         }
         return 0;
     }
-
-
 }

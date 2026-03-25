@@ -42,14 +42,15 @@ public class App extends Application {
 //        controllerEntry.updateLastEntry(false, 1000, 1000000);
 
         //ControllerDayReview Testing
-        /*ControllerDayReview controllerDayReview = new ControllerDayReview();
-        controllerDayReview.showCaloriesSumByDate();
+        ControllerDayReview controllerDayReview = new ControllerDayReview();
+        /*controllerDayReview.showCaloriesSumByDate();
         controllerDayReview.showSugarSumByDate();
         controllerDayReview.showTotalCaloriesSum();
         controllerDayReview.showTotalSugarSum();
         controllerDayReview.showCaloriesMean();
         controllerDayReview.showSugarMean();
         controllerDayReview.representData()*/
+        controllerDayReview.representData();
 
 
        // Insert new data into user table in DB from DAO->DB
