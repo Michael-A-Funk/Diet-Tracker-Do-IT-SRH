@@ -42,12 +42,14 @@ public class User {
 
 
     public double bmr(){
-        double bmr = 0;
+        double bmr;
+        if (isMale) {
+            bmr= 88.362 + (13.397 * this.weight)+(4.799 * this.height) - (5.677 * this.age);
+        }
+        else{
+            bmr=447.593 + (9.247 * this.weight) + (3.098 * this.height) - (4.330 * this.age);
+        }
         return bmr;
-
-
-        // Must query sum calories consumed and burned separately.
-        //
     }
 
 }
