@@ -12,8 +12,8 @@ public class Entry {
 
     public Entry (boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
         this.isSport = isSport;
-        this.calories = calories;
-        this.sugar = sugar;
+        this.setCalories(calories);
+        this.setSugar(sugar);
         this.day = day;
         this.time = time;
     }
@@ -22,9 +22,7 @@ public class Entry {
         return isSport;
     }
 
-        public double getCalories() {
-        return calories;
-    }
+    public double getCalories() {return calories;}
 
      public double getSugar() {
         return sugar;
@@ -36,6 +34,27 @@ public class Entry {
 
     public LocalDate getDay() {
         return day;
+    }
+
+    public void setCalories(double calories) {
+        //Forciert das bei Sport Kalorien immer 0 ist (kein Zucker eintrag wenn Sport)
+        if (isSport) {
+            this.calories = -calories;
+        }
+        else if (calories>0){
+            this.calories=calories;
+        }
+    }
+
+    public void setSugar(double sugar) {
+        //Forciert das bei Sport Zuckereintrag immer 0 ist (kein Zucker eintrag wenn Sport),
+        // und bei Essen immer größer oder gleich 0 ist
+        if (this.isSport){
+            this.sugar = 0;
+        } else if (sugar>=0){
+            this.sugar = sugar;
+        }
+
     }
 }
 

@@ -1,57 +1,53 @@
 package com.srh.diet_tracker;
 
 public class User {
-    private int age;
+
     private int height;
+    private int age;
     private int weight;
     boolean isMale;
     boolean hasDiabetes;
 
-    public User(int age, int height, int weight, boolean isMale, boolean hasDiabetes) {
-        this.age = age;
+    public User(int height, int age, int weight,  boolean isMale, boolean hasDiabetes) {
         this.height = height;
+        this.age = age;
         this.weight = weight;
         this.isMale = isMale;
         this.hasDiabetes = hasDiabetes;
+    }
+
+
+    public int getHeight() {
+        return height;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public int getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
 
     public boolean isMale() {
         return isMale;
     }
 
-    public void setMale(boolean male) {
-        isMale = male;
-    }
 
-    public boolean isHasDiabetes() {
+    public boolean hasDiabetes() {
         return hasDiabetes;
     }
 
-    public void setHasDiabetes(boolean hasDiabetes) {
-        this.hasDiabetes = hasDiabetes;
+
+    public double bmr(){
+        double bmr = 0;
+        return bmr;
+
+
+        // Must query sum calories consumed and burned separately.
+        //
     }
+
 }

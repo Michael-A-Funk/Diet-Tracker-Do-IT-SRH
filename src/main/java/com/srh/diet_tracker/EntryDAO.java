@@ -4,12 +4,13 @@ import javax.xml.transform.Result;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class EntryDAO {
 
     private Entry entry;
 
-    // FRAGE bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes entry?
+    // Frage : bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes entry?
     //Constructor used when we want to insert new Data into DB
     public EntryDAO(Entry entry){
         this.entry = entry;
@@ -32,7 +33,12 @@ public class EntryDAO {
              var pstmt = conn.prepareStatement(sql)){
             pstmt.setBoolean(1,entry.isSport());
             pstmt.setDouble(2,entry.getCalories());
-            pstmt.setDouble(3,entry.getSugar());
+            if (entry.isSport()){
+                pstmt.setDouble(3,0);
+            }
+            else {
+                pstmt.setDouble(3, entry.getSugar());
+            }
             pstmt.setString(4,(entry.getDay()).toString());
             pstmt.setString(5,(entry.getTime()).toString());
 
@@ -43,9 +49,9 @@ public class EntryDAO {
         }
     }
 
-    // id wird vom entsprechenden Controller übergeben (last id für ControllerEntry, beliebige id für ControllerDayReview)
+    // This method will be used by two different controllers. The `isLastEntry` variable differentiates between them.
+    //  The ID is passed by the corresponding `ControllerDayReview` (last ID for `ControllerEntry`, any ID for `ControllerDayReview`)
     public void updateEntryData(int id){
-        if (id!=0) {
             String url = "jdbc:sqlite:diet.db";
             String sql = "UPDATE entry SET isSport = ? , "
                     + " calories = ? , "
@@ -57,24 +63,30 @@ public class EntryDAO {
                 pstmt.setBoolean(1, entry.isSport());
                 pstmt.setDouble(2, entry.getCalories());
                 pstmt.setDouble(3, entry.getSugar());
-                pstmt.setInt(4, id);
+                // id=0 wird gesetzt vom ControllerEntry um zu diferenzieren von ControllerDayReview, wo beliebige
+                // ids geändert werden, und nicht nur die letzte (forciert)
+                if (id==0) {
+                    pstmt.setInt(4, getLastId());
+                }
+                else {
+                    pstmt.setInt(4, id);
+                }
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {
                 System.err.println(e.getMessage());
             }
-
-        }
     }
 
+
     // The ID is passed by the corresponding controller (last ID for Controller User, any ID for ControllerDayReview)
-    public void deleteEntry (){
+    public void deleteEntry (int id){
             String url = "jdbc:sqlite:diet.db";
             String sql = "DELETE FROM entry WHERE id = ?";
 
             try (var conn = DriverManager.getConnection(url);
                  var pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(1, getLastId());
+                pstmt.setInt(1, id);
                 pstmt.executeUpdate();
 
             } catch (SQLException e) {
@@ -84,10 +96,11 @@ public class EntryDAO {
 
     public int getLastId(){
         String url = "jdbc:sqlite:diet.db";
+        var sql = "SELECT MAX(id) AS max_id FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT MAX(id) AS max_id FROM entry;")) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 //                if (rs.next()) {
                     System.out.println("Letzte id von entry ist: " + rs.getInt("max_id") + " und Eintrag wird gelöscht.");
                     return rs.getInt("max_id");
@@ -104,9 +117,93 @@ public class EntryDAO {
         return 0;
     }
 
-    // Querry for DayReview
-    /*SELECT date, SUM(calories), SUM(sugar)
-      FROM entry
-      GROUP BY date;*/
+
+    public double returnCaloriesSumByDate(LocalDate date){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT SUM(calories) AS sum_calories_day FROM entry WHERE date = ?;";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+
+             stmt.setString(1,date.toString());
+             ResultSet rs = stmt.executeQuery();
+             return rs.getDouble("sum_calories_day");
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+
+    // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
+    public double returnCaloriesTotalSum(){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT SUM(calories) AS sum_calories_total FROM entry;";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            return rs.getDouble("sum_calories_total");
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    public double returnSugarSumByDate(LocalDate date){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT SUM(sugar) AS sum_sugar_day FROM entry WHERE date= ?;";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1,date.toString());
+            ResultSet rs = stmt.executeQuery();
+            return rs.getDouble("sum_sugar_day");
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+
+    // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
+    public double returnSugarTotalSum(){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT SUM(sugar) AS sum_sugar_total FROM entry";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            return rs.getDouble("sum_sugar_total");
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
+    // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
+    public double returnNumberOfDays(){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT COUNT(DISTINCT date) AS count_days FROM entry";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            return rs.getDouble("count_days");
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
+
 
 }
