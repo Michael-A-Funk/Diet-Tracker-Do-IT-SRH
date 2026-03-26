@@ -19,9 +19,10 @@ public class App extends Application {
 //        controllerUser.eliminateUserData();
 
         //Insert new data into entry table in DB from Controller->DAO->DB
-//        ControllerEntry controllerEntry = new ControllerEntry();
-//        controllerEntry.saveEntry(false, 500, 10);
-//        controllerEntry.saveEntry(true, 800, 20);
+            ControllerEntry controllerEntry = new ControllerEntry();
+            controllerEntry.saveEntry(false, 1000, 50);
+            controllerEntry.saveEntry(true, 500, 20);
+            controllerEntry.saveEntry(false, 300, 10);
 
 //        ControllerEntry controllerEntry = new ControllerEntry();
 //        controllerEntry.eliminateLastEntry();
@@ -32,12 +33,12 @@ public class App extends Application {
 
 
         //Save user data into user table in DB from Controller->DAO->DB
-//        controllerUser.saveUser(166,38,105, true,true);
+        controllerUser.saveUser(166,38,105, true,true);
 
         //Update User Data
 //        controllerUser.updateUser(166,40,70,true,false);
 
-        ControllerEntry controllerEntry = new ControllerEntry();
+        //ControllerEntry controllerEntry = new ControllerEntry();
         //Update Entry Data
 //        controllerEntry.updateLastEntry(false, 1000, 1000000);
 

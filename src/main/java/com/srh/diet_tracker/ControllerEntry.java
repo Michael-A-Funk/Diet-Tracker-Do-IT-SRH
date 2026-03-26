@@ -2,7 +2,7 @@ package com.srh.diet_tracker;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.format.DateTimeFormatter;
 
 
 public class ControllerEntry {
@@ -14,13 +14,17 @@ public class ControllerEntry {
     // What happens when "Bestätigen" Button is clicked !!! Parameters are now just for testing purposes!!!
     public void saveEntry(boolean isSport,double calories, double sugar){
 
+        ControllerEntry controllerEntry = new ControllerEntry();
+
         // Frage : Kann ich es auch außerhalb der methode machen um es nicht zu wiederholen?
         LocalDate date;
         LocalTime time;
 
         // Date and Time will further be dependent, with an if-clause, from the boolean coming from checkbox "Jetzige Zeit"
         date = LocalDate.now();
+        date = controllerEntry.parseDate(date);
         time = LocalTime.now();
+        time = controllerEntry.parseTime(time);
 
         Entry entry = new Entry(isSport,calories,sugar,date,time);
         EntryDAO entryDAO = new EntryDAO(entry);
@@ -30,13 +34,17 @@ public class ControllerEntry {
 
     public void updateLastEntry(boolean isSport, double calories, double sugar){
 
+        ControllerEntry controllerEntry = new ControllerEntry();
+
         // Frage : Kann ich es auch außerhalb der methode machen um es nicht zu wiederholen?
         LocalDate date;
         LocalTime time;
 
         // Date and Time will further be dependent, with an if-clause, from the boolean coming from checkbox "Jetzige Zeit"
         date = LocalDate.now();
+        date = controllerEntry.parseDate(date);
         time = LocalTime.now();
+        time = controllerEntry.parseTime(time);
 
 
         Entry entry = new Entry(isSport,calories, sugar, date, time);
@@ -44,6 +52,19 @@ public class ControllerEntry {
         entryDAO.updateEntryData(0);
         System.out.println("Daten von letzten Eintrag wurden aktualisiert");
 
+    }
+
+    private LocalDate parseDate (LocalDate date){
+        DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateText = date.format(parserDate);
+        return LocalDate.parse(dateText, parserDate);
+
+    }
+
+    private  LocalTime parseTime (LocalTime time){
+        DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String timeText = time.format(parserTime);
+        return LocalTime.parse(timeText, parserTime);
     }
 
 

@@ -31,7 +31,6 @@ public class UserDAO {
             pstmt.setBoolean(4,user.isMale());
             pstmt.setBoolean(5,user.hasDiabetes);
             pstmt.executeUpdate();
-            System.err.println("SQL error");
 
         }catch (SQLException e){
             System.err.println(e.getMessage());

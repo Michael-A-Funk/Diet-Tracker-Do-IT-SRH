@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class ControllerDayReview {
 
@@ -57,11 +58,11 @@ public class ControllerDayReview {
         System.out.println("Sugar Mean: "+ entryDAO.returnSugarTotalSum()/entryDAO.returnNumberOfDays());
     }
 
-    public void representData(){
+    public void representData() {
         UserDAO userDAO = new UserDAO();
         User user = userDAO.getUserData();
-        System.out.println("Height " + user.getHeight() +"cm "+", Age: "+ user.getAge() + ", Weight: "+ user.getWeight()+
-                            "kg"+", Male:" +user.isMale() + ",Has Diabetes: "+user.hasDiabetes());
+        System.out.println("Height " + user.getHeight() + "cm " + ", Age: " + user.getAge() + ", Weight: " + user.getWeight() +
+                "kg" + ", Male:" + user.isMale() + ",Has Diabetes: " + user.hasDiabetes());
 
         // Actual Date only used for test purposes
         LocalDate date;
@@ -69,10 +70,20 @@ public class ControllerDayReview {
 
         EntryDAO entryDAO = new EntryDAO();
 
-        double percentageCalories = (entryDAO.returnCaloriesSumByDate(date)/user.getBMR())*100;
-        double percentageSugar = (entryDAO.returnCaloriesSumByDate(date)/50)*100;
+        double percentageCalories = (entryDAO.returnCaloriesSumByDate(date) / user.getBMR()) * 100;
+        double percentageSugar = (entryDAO.returnCaloriesSumByDate(date) / 50) * 100;
         System.out.println("Du hast " + percentageCalories + " % von deinen Maximalen Tageskaloriengehalt erreicht.");
         System.out.println("Du hast " + percentageSugar + " % von deinen Maximalen Tageszuckergehalt erreicht.");
+
+        ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
+        for (int i = 0; i < entryList.size(); i++) {
+            System.out.println(i + "-Eintrag :");
+            System.out.println("Sport: " + entryList.get(i).isSport());
+            System.out.println("Kaloriengewinn: " + entryList.get(i).getCalories());
+            System.out.println("Zuckegewinn " + entryList.get(i).getSugar());
+            System.out.println("----------------------");
+
+        }
 
     }
 
