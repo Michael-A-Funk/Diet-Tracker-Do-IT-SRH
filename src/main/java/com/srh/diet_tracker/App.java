@@ -23,6 +23,7 @@ public class App extends Application {
 
         ControllerGraph controllerGraph = new ControllerGraph();
         controllerGraph.representData();
+        System.out.println();
 
     }
 }

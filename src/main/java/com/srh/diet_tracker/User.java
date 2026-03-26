@@ -16,8 +16,7 @@ public class User {
         this.hasDiabetes = hasDiabetes;
     }
 
-
-    public int getHeight() {
+      public int getHeight() {
         return height;
     }
 
@@ -52,4 +51,23 @@ public class User {
         return bmr;
     }
 
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setMale(boolean male) {
+        isMale = male;
+    }
+
+    public void setHasDiabetes(boolean hasDiabetes) {
+        this.hasDiabetes = hasDiabetes;
+    }
 }

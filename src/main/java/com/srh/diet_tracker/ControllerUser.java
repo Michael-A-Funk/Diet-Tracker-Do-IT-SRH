@@ -2,17 +2,16 @@ package com.srh.diet_tracker;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.*;
 
 public class ControllerUser {
 
     @FXML
-    private Spinner weight;
+    private Spinner<Integer> spinnerHeight;
     @FXML
-    private Spinner age;
+    private Spinner<Integer> spinnerAge;
+    @FXML
+    private Spinner<Integer> spinnerWeight;
     @FXML
     private CheckBox hasDiabetes;
     @FXML
@@ -22,14 +21,22 @@ public class ControllerUser {
 
     // FRAGE : Muss das Attribut sein?
     private UserDAO userDAO;
+    private User user = new User(160,20,60,false,false);
     private boolean diabetesButtonChecked;
+    ToggleGroup group = new ToggleGroup();
+    RadioButton femaleRadioBtn= new RadioButton("Weiblich");
+    RadioButton maleRadioBtn = new RadioButton("Männlich");
 
-    public ControllerUser(){}
+    public ControllerUser(){
+        femaleRadioBtn.setToggleGroup(group);
+        femaleRadioBtn.setSelected(true);
+        maleRadioBtn.setToggleGroup(group);
+        System.out.println("Fick dich!");
+    }
 
 
     // waits for event from Button "Bestätigen"
-    public void saveUser(int age, int height, int weight, boolean isMale, boolean hasDiabetes){
-        User user = new User (age,height,weight,isMale,hasDiabetes); //this line wil be replaced with the values
+    public void saveUser(){ //this line wil be replaced with the values
                                                                      // that come from the TextFields
         UserDAO userDAO = new UserDAO(user);
         userDAO.insertUserData();
@@ -53,10 +60,24 @@ public class ControllerUser {
     }
 
     public void onDiabetes(ActionEvent actionEvent) {
-        diabetesButtonChecked = !diabetesButtonChecked;
+        boolean currentValue = user.hasDiabetes();
+        user.setHasDiabetes(!currentValue);
     }
 
     public void onSave(ActionEvent actionEvent) {
-
+        user.setAge(spinnerAge.getValue());
+        user.setHeight(spinnerHeight.getValue());
+        user.setWeight(spinnerWeight.getValue());
+        UserDAO userDAO = new UserDAO(user);
+        userDAO.insertUserData();
     }
+
+    public void setRadioBtnFemale(ActionEvent actionEvent) {user.setMale(false);
+    }
+
+    public void setRadioBtnMale(ActionEvent actionEvent) {user.setMale(true);}
+
+    //For Actions after selecting a gender of Gender Menu
+    /*
+    */
 }
