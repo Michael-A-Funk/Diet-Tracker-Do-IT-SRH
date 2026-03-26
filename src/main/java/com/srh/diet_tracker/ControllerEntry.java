@@ -54,14 +54,14 @@ public class ControllerEntry {
 
     }
 
-    private LocalDate parseDate (LocalDate date){
+    public LocalDate parseDate (LocalDate date){
         DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String dateText = date.format(parserDate);
         return LocalDate.parse(dateText, parserDate);
 
     }
 
-    private  LocalTime parseTime (LocalTime time){
+    public  LocalTime parseTime (LocalTime time){
         DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
         String timeText = time.format(parserTime);
         return LocalTime.parse(timeText, parserTime);

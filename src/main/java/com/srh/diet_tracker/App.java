@@ -53,6 +53,9 @@ public class App extends Application {
         controllerDayReview.representData()*/
         controllerDayReview.representData();
 
+        ControllerGraph controllerGraph = new ControllerGraph();
+        controllerGraph.representData();
+
 
        // Insert new data into user table in DB from DAO->DB
        /*UserDAO userDAO = new UserDAO();

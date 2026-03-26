@@ -80,7 +80,9 @@ public class ControllerDayReview {
             System.out.println(i + "-Eintrag :");
             System.out.println("Sport: " + entryList.get(i).isSport());
             System.out.println("Kaloriengewinn: " + entryList.get(i).getCalories());
-            System.out.println("Zuckegewinn " + entryList.get(i).getSugar());
+            System.out.println("Zuckegewinn: " + entryList.get(i).getSugar());
+            System.out.println("Datum: " + entryList.get(i).getDay());
+            System.out.println("Uhrzeit: " + entryList.get(i).getTime());
             System.out.println("----------------------");
 
         }

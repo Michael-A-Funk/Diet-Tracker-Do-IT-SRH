@@ -1,6 +1,7 @@
 package com.srh.diet_tracker;
 
 import javax.xml.transform.Result;
+import java.sql.Array;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -204,7 +205,7 @@ public class EntryDAO {
 
     public ArrayList<Entry> returnEntriesDay(LocalDate date){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT isSport, calories, sugar, date, time FROM entry WHERE date = ?";
+        String sql = "SELECT isSport, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Entry> entryList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
@@ -232,5 +233,26 @@ public class EntryDAO {
         return null;
     }
 
+    public ArrayList<LocalDate> returnRegisteredDates(){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT DISTINCT date FROM entry ORDER BY date ASC";
+        ArrayList<LocalDate> dateList = new ArrayList<>();
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql);) {
+
+            while (rs.next()) {
+                LocalDate localDate = LocalDate.parse(rs.getString("date"));
+                dateList.add(localDate);
+
+            }
+            return dateList;
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
 
 }
