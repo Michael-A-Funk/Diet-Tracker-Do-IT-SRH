@@ -9,21 +9,21 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerUser">
    <center>
-      <Pane prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+      <Pane fx:id="height" prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="23.0" layoutY="36.0" text="Gewicht" />
+            <Label layoutX="23.0" layoutY="36.0" text="Größe" />
             <Label layoutX="20.0" layoutY="77.0" text="Alter" />
             <Label layoutX="20.0" layoutY="115.0" text="Geschlecht" />
-            <Label layoutX="21.0" layoutY="152.0" text="Größe" />
+            <Label layoutX="21.0" layoutY="152.0" text="Gewicht" />
             <Spinner layoutX="104.0" layoutY="32.0" prefHeight="18.0" prefWidth="151.0" />
-            <Spinner layoutX="104.0" layoutY="148.0" prefHeight="18.0" prefWidth="151.0" />
-            <Spinner layoutX="104.0" layoutY="73.0" prefHeight="18.0" prefWidth="151.0" />
-            <CheckBox layoutX="104.0" layoutY="192.0" mnemonicParsing="false" />
+            <Spinner fx:id="weight" layoutX="104.0" layoutY="148.0" prefHeight="18.0" prefWidth="151.0" />
+            <Spinner fx:id="age" layoutX="104.0" layoutY="73.0" prefHeight="18.0" prefWidth="151.0" />
+            <CheckBox fx:id="hasDiabetes" layoutX="104.0" layoutY="192.0" mnemonicParsing="false" onAction="#onDiabetes" />
             <Label layoutX="22.0" layoutY="195.0" text="Diabetes" />
-            <Button layoutX="164.0" layoutY="233.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" />
-            <MenuButton layoutX="104.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0">
+            <Button fx:id="save_user" layoutX="164.0" layoutY="233.0" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" />
+            <MenuButton fx:id="gender" layoutX="104.0" layoutY="112.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0">
               <items>
                 <MenuItem mnemonicParsing="false" text="Männich" />
                 <MenuItem mnemonicParsing="false" text="Weiblich" />

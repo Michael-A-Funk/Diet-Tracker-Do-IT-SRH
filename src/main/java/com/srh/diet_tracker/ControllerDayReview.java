@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ControllerDayReview {
 
+    // FRAGE : Müssen die Attribute sein?
     private EntryDAO entryDAO;
     private UserDAO userDAO;
 

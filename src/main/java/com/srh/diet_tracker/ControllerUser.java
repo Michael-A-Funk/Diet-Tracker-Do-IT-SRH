@@ -1,10 +1,31 @@
 package com.srh.diet_tracker;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.Spinner;
+
 public class ControllerUser {
 
+    @FXML
+    private Spinner weight;
+    @FXML
+    private Spinner age;
+    @FXML
+    private CheckBox hasDiabetes;
+    @FXML
+    private MenuButton gender;
+    @FXML
+    private Button save_user;
+
+    // FRAGE : Muss das Attribut sein?
     private UserDAO userDAO;
+    private boolean diabetesButtonChecked;
 
     public ControllerUser(){}
+
 
     // waits for event from Button "Bestätigen"
     public void saveUser(int age, int height, int weight, boolean isMale, boolean hasDiabetes){
@@ -29,5 +50,13 @@ public class ControllerUser {
     public void eliminateUserData(){
         UserDAO userDAO = new UserDAO();
         userDAO.deleteEntryData();
+    }
+
+    public void onDiabetes(ActionEvent actionEvent) {
+        diabetesButtonChecked = !diabetesButtonChecked;
+    }
+
+    public void onSave(ActionEvent actionEvent) {
+
     }
 }

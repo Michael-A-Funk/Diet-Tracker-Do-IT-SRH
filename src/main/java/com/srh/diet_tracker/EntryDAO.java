@@ -1,7 +1,6 @@
 package com.srh.diet_tracker;
 
-import javax.xml.transform.Result;
-import java.sql.Array;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -141,7 +140,7 @@ public class EntryDAO {
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             return rs.getDouble("sum_calories_total");
 
@@ -176,7 +175,7 @@ public class EntryDAO {
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             return rs.getDouble("sum_sugar_total");
 
@@ -193,7 +192,7 @@ public class EntryDAO {
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
+             ResultSet rs = stmt.executeQuery(sql)) {
 
             return rs.getDouble("count_days");
 
@@ -209,7 +208,7 @@ public class EntryDAO {
         ArrayList<Entry> entryList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
-             var stmt = conn.prepareStatement(sql);) {
+             var stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1,date.toString());
             ResultSet rs = stmt.executeQuery();
@@ -233,14 +232,25 @@ public class EntryDAO {
         return null;
     }
 
-    public ArrayList<LocalDate> returnRegisteredDates(){
+    public ArrayList<LocalDate> returnRegisteredDates(boolean allDates, LocalDate newerDate, LocalDate olderDate){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT DISTINCT date FROM entry ORDER BY date ASC";
+        String sql;
+        if (allDates){
+            sql = "SELECT DISTINCT date FROM entry ORDER BY date ASC";
+        }
+        else {
+            sql = "SELECT DISTINCT date FROM entry WHERE date<=? AND date>=? ORDER BY date ASC";
+            DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        }
         ArrayList<LocalDate> dateList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
-             var stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql);) {
+             var stmt = conn.prepareStatement(sql)) {
+            if (!allDates) {
+                stmt.setString(1, newerDate.toString());
+                stmt.setString(2, olderDate.toString());
+            }
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 LocalDate localDate = LocalDate.parse(rs.getString("date"));
@@ -254,5 +264,4 @@ public class EntryDAO {
         }
         return null;
     }
-
 }

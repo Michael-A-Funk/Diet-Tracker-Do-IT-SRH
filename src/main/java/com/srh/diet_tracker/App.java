@@ -15,14 +15,32 @@ public class App extends Application {
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
-        ControllerUser controllerUser = new ControllerUser();
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        stage.setTitle("Erstellung des User Profiles");
+        stage.setScene(scene);
+        stage.show();
+
+        ControllerGraph controllerGraph = new ControllerGraph();
+        controllerGraph.representData();
+
+    }
+}
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        stage.setTitle("Erstellung des User Profiles");
+        stage.setScene(scene);
+        stage.show();*/
+
+//        ControllerUser controllerUser = new ControllerUser();
 //        controllerUser.eliminateUserData();
 
         //Insert new data into entry table in DB from Controller->DAO->DB
-            ControllerEntry controllerEntry = new ControllerEntry();
-            controllerEntry.saveEntry(false, 1000, 50);
-            controllerEntry.saveEntry(true, 500, 20);
-            controllerEntry.saveEntry(false, 300, 10);
+//            ControllerEntry controllerEntry = new ControllerEntry();
+//            controllerEntry.saveEntry(false, 1000, 50);
+//            controllerEntry.saveEntry(true, 500, 20);
+//            controllerEntry.saveEntry(false, 300, 10);
 
 //        ControllerEntry controllerEntry = new ControllerEntry();
 //        controllerEntry.eliminateLastEntry();
@@ -33,7 +51,7 @@ public class App extends Application {
 
 
         //Save user data into user table in DB from Controller->DAO->DB
-        controllerUser.saveUser(166,38,105, true,true);
+//        controllerUser.saveUser(166,38,105, true,true);
 
         //Update User Data
 //        controllerUser.updateUser(166,40,70,true,false);
@@ -43,18 +61,17 @@ public class App extends Application {
 //        controllerEntry.updateLastEntry(false, 1000, 1000000);
 
         //ControllerDayReview Testing
-        ControllerDayReview controllerDayReview = new ControllerDayReview();
+//        ControllerDayReview controllerDayReview = new ControllerDayReview();
         /*controllerDayReview.showCaloriesSumByDate();
         controllerDayReview.showSugarSumByDate();
         controllerDayReview.showTotalCaloriesSum();
         controllerDayReview.showTotalSugarSum();
         controllerDayReview.showCaloriesMean();
         controllerDayReview.showSugarMean();
-        controllerDayReview.representData()*/
-        controllerDayReview.representData();
+        controllerDayReview.representData()
+        controllerDayReview.representData();*/
 
-        ControllerGraph controllerGraph = new ControllerGraph();
-        controllerGraph.representData();
+
 
 
        // Insert new data into user table in DB from DAO->DB
@@ -63,13 +80,8 @@ public class App extends Application {
 
        // Insert new data into user entry in DB from DAO->DB
        EntryDAO entryDAO = new EntryDAO();
-       entryDAO.insertEntryData(false,200,5);
+       entryDAO.insertEntryData(false,200,5);*/
 
         // FXMLLoader EXAMPLE
-        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
-        stage.setTitle("Erstellung des User Profiles");
-        stage.setScene(scene);
-        stage.show();*/
-    }
-}
+
+

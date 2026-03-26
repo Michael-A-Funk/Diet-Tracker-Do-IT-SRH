@@ -17,10 +17,14 @@ public class ControllerGraph {
         UserDAO userDAO = new UserDAO();
         User user = userDAO.getUserData();
         EntryDAO entryDAO = new EntryDAO();
-        ArrayList<LocalDate> dateList = entryDAO.returnRegisteredDates();
+        LocalDate forAllDates = LocalDate.parse("2000-12-01");
+        LocalDate olderDate = LocalDate.parse("2026-03-24");
+        LocalDate newerDate = LocalDate.parse("2026-03-25");
+        ArrayList<LocalDate> dateList = entryDAO.returnRegisteredDates(false, newerDate, olderDate);
 
         for (int i=0;i<dateList.size();i++){
-            System.out.println("Datum: " + dateList.get(i) + ", Summe Kalorien: " + ", Prozent von Max Kalorien:"+
+            System.out.println("Datum: " + dateList.get(i) + ", Summe Kalorien: " +
+                                + entryDAO.returnCaloriesSumByDate(dateList.get(i)) + ", Prozent von Max Kalorien:" +
                                 + ((entryDAO.returnCaloriesSumByDate(dateList.get(i)) / user.getBMR()) * 100) +
                                 + entryDAO.returnCaloriesSumByDate(dateList.get(i)) + ", Summe Zucker: " +
                                 + entryDAO.returnSugarSumByDate(dateList.get(i)) + ", Prozent von Max Zucker: " +

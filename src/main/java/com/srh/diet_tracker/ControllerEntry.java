@@ -7,9 +7,12 @@ import java.time.format.DateTimeFormatter;
 
 public class ControllerEntry {
 
+
+    // FRAGE : Muss das Attribut sein?
     private EntryDAO entryDAO;
 
     public ControllerEntry() {}
+
 
     // What happens when "Bestätigen" Button is clicked !!! Parameters are now just for testing purposes!!!
     public void saveEntry(boolean isSport,double calories, double sugar){
