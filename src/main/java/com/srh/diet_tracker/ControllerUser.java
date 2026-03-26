@@ -18,21 +18,17 @@ public class ControllerUser {
     private MenuButton gender;
     @FXML
     private Button save_user;
+    @FXML
+    private RadioButton femaleRadioBtn= new RadioButton("Weiblich");
+    @FXML
+    private RadioButton maleRadioBtn = new RadioButton("Männlich");
 
     // FRAGE : Muss das Attribut sein?
     private UserDAO userDAO;
     private User user = new User(160,20,60,false,false);
-    private boolean diabetesButtonChecked;
-    ToggleGroup group = new ToggleGroup();
-    RadioButton femaleRadioBtn= new RadioButton("Weiblich");
-    RadioButton maleRadioBtn = new RadioButton("Männlich");
 
-    public ControllerUser(){
-        femaleRadioBtn.setToggleGroup(group);
-        femaleRadioBtn.setSelected(true);
-        maleRadioBtn.setToggleGroup(group);
-        System.out.println("Fick dich!");
-    }
+
+    public ControllerUser(){}
 
 
     // waits for event from Button "Bestätigen"
@@ -72,10 +68,17 @@ public class ControllerUser {
         userDAO.insertUserData();
     }
 
-    public void setRadioBtnFemale(ActionEvent actionEvent) {user.setMale(false);
+    public void setRadioBtnFemale(ActionEvent actionEvent) {
+        user.setMale(false);
+        femaleRadioBtn.setSelected(true);
+        maleRadioBtn.setSelected(false);
     }
 
-    public void setRadioBtnMale(ActionEvent actionEvent) {user.setMale(true);}
+    public void setRadioBtnMale(ActionEvent actionEvent) {
+        user.setMale(true);
+        femaleRadioBtn.setSelected(false);
+        maleRadioBtn.setSelected(true);
+    }
 
     //For Actions after selecting a gender of Gender Menu
     /*
