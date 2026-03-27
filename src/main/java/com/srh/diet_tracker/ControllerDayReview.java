@@ -46,7 +46,7 @@ public class ControllerDayReview {
         ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
-
+        dayEntryList.addAll(entryList);
     }
 
 
