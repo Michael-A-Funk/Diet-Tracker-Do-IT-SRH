@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerDayReview">
    <center>
       <Pane prefHeight="274.0" prefWidth="504.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
             <ScrollPane prefHeight="274.0" prefWidth="483.0">
                <content>
-                  <TableView prefHeight="323.0" prefWidth="487.0">
+                  <TableView fx:id="table" prefHeight="323.0" prefWidth="487.0">
                     <columns>
-                        <TableColumn prefWidth="75.0" text="Eintrag Nr." />
-                      <TableColumn prefWidth="75.0" text="Aktivität" />
-                      <TableColumn prefWidth="75.0" text="Kalorien" />
-                        <TableColumn prefWidth="75.0" text="Zucker" />
-                        <TableColumn prefWidth="75.0" text="Uhrzeit" />
-                        <TableColumn prefWidth="75.0" text="Prozent" />
+                        <TableColumn fx:id="entryNrColumn" prefWidth="75.0" text="Eintrag Nr." />
+                      <TableColumn fx:id="activityColumn" prefWidth="86.40003967285156" text="Aktivität" />
+                      <TableColumn fx:id="caloriesColumn" prefWidth="73.60003662109375" text="Kalorien" />
+                        <TableColumn fx:id="sugarColumn" prefWidth="95.20002746582031" text="Zucker" />
+                        <TableColumn fx:id="timeColumn" prefWidth="135.20001220703125" text="Uhrzeit" />
                     </columns>
                   </TableView>
                </content>
@@ -29,21 +33,37 @@
       </Pane>
    </center>
    <top>
-      <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="269.0" layoutY="20.0" prefHeight="28.0" prefWidth="94.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
+            <Label layoutX="266.0" layoutY="9.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
          </children>
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="saveEntryBtn" layoutX="276.0" layoutY="61.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" text="Ändern" />
+            <Spinner fx:id="spinnerEntryNr" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
+            <RadioButton fx:id="isSportRadio" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadio" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
+            <RadioButton fx:id="isMealRadio" layoutX="202.0" layoutY="33.0" mnemonicParsing="false" onAction="#onIsMealRadio" prefHeight="18.0" prefWidth="73.0" text="Essen" textFill="WHITE" />
+            <TextField fx:id="caloriesTextField" layoutX="275.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Kalorien" />
+            <TextField fx:id="sugarTextField" layoutX="353.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Zucker" />
+            <Label layoutX="458.0" layoutY="9.0" text="Studen" textFill="WHITE" />
+            <Spinner fx:id="hoursSpinner" layoutX="520.0" layoutY="5.0" prefHeight="15.0" prefWidth="58.0" />
+            <Spinner fx:id="minutesSpinner" layoutX="520.0" layoutY="38.0" prefHeight="15.0" prefWidth="58.0" />
+            <Spinner fx:id="secondsSpinner" layoutX="520.0" layoutY="74.0" prefHeight="15.0" prefWidth="58.0" />
+            <Label layoutX="458.0" layoutY="41.0" text="Minuten" textFill="WHITE" />
+            <Label layoutX="458.0" layoutY="77.0" text="Sekunden" textFill="WHITE" />
+            <DatePicker fx:id="datePicker" layoutX="6.0" layoutY="51.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
+            <Label layoutX="22.0" layoutY="2.0" prefHeight="31.0" prefWidth="77.0" text="Tag Auswahl" textFill="WHITE" />
+         </children></Pane>
    </bottom>
    <left>
       <Pane prefHeight="274.0" prefWidth="120.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="TOP_LEFT" layoutX="7.0" layoutY="14.0" prefHeight="156.0" prefWidth="121.0" text="Hier werden alle &#10;Eintrage angezeigt&#10;(rechts) und wie &#10;viel Prozent von &#10;Kalorien und Zucker&#10;relativ von Ihren&#10;maximale Wert &#10;erreicht wurde &#10;(unten)&#10;" />
-            <Label layoutX="7.0" layoutY="243.0" text="Zucker: " />
-            <Label layoutX="7.0" layoutY="200.0" text="Kalorien:" />
+            <Label fx:id="sugarPercentageLabel" layoutX="7.0" layoutY="211.0" text="Zucker: " />
+            <Label fx:id="caloriesPercentageLabel" layoutX="5.0" layoutY="179.0" text="Kalorien:" />
          </children>
       </Pane>
    </left>

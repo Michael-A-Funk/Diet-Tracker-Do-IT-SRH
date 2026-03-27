@@ -1,7 +1,13 @@
 package com.srh.diet_tracker;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -9,13 +15,43 @@ import java.util.ArrayList;
 
 public class ControllerDayReview {
 
+    //Controls
+    @FXML
+    private DatePicker datePicker;
+
+    // Columns
+    private TableColumn entryNrColumn;
+    @FXML
+    private TableColumn activityColumn;
+    @FXML
+    private TableColumn caloriesColumn;
+    @FXML
+    private TableColumn sugarColumn;
+    @FXML
+    private TableColumn timeColumn;
+
+
+
+
+
     // FRAGE : Müssen die Attribute sein?
     private EntryDAO entryDAO;
     private UserDAO userDAO;
 
 
-
     public ControllerDayReview(){}
+
+    public void onActionDatePicker(ActionEvent actionEvent) {
+        LocalDate date = datePicker.getValue();
+        ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
+        EntryDAO entryDAO = new EntryDAO();
+        ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
+
+    }
+
+
+
+    // TEST METHODS
 
     public void showCaloriesSumByDate(){
 
@@ -89,6 +125,8 @@ public class ControllerDayReview {
         }
 
     }
+
+
 
     //
 

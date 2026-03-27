@@ -21,7 +21,7 @@ public class UserDAO {
     public void insertUserData() {
         String url = "jdbc:sqlite:diet.db";
 
-        String sql = "INSERT INTO user(height,age,weight,isMale,hasDiabetes) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO user(height,age,weight,isMale,hasDiabetes) VALUES(?,?,?,?,?) ";
 
         try ( var conn = DriverManager.getConnection(url);
               var pstmt = conn.prepareStatement(sql)){
@@ -57,7 +57,6 @@ public class UserDAO {
                 // id is always 1 because we have just one user!
                 //pstmt.setInt(6, 1);
                 pstmt.executeUpdate();
-                System.err.println("SQL error");
 
             } catch (SQLException e) {
 
@@ -65,6 +64,30 @@ public class UserDAO {
             }
 
     }
+
+    public boolean userExists (){
+        String url = "jdbc:sqlite:diet.db";
+        var sql = "SELECT id FROM user; WHERE id=1";
+
+        try (var conn = DriverManager.getConnection(url);
+             var pstmt = conn.createStatement();
+             ResultSet rs = pstmt.executeQuery(sql);)
+        {
+            if (rs.getInt("id") == 1){
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+
+            System.err.println(e.getMessage());
+
+        }
+        return false;
+    }
+
 
     // Frage : Macht es Sinn Daten zu löschen oder lasst man User einfach Daten Bearbeiten?
     public void deleteEntryData (){
@@ -101,5 +124,7 @@ public class UserDAO {
             }
             return null;
     }
+
+
 
 }

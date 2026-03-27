@@ -35,8 +35,15 @@ public class ControllerUser {
     public void saveUser(){ //this line wil be replaced with the values
                                                                      // that come from the TextFields
         UserDAO userDAO = new UserDAO(user);
-        userDAO.insertUserData();
-        System.out.println("Neuer User wurde gesetzt");
+        if (userDAO.userExists()) {
+            userDAO.insertUserData();
+            System.out.println("Neuer User wurde gesetzt");
+        }
+        else{
+            userDAO.updateUserData();
+            System.out.println("Daten wurden Aktualisiert");
+        }
+
     }
 
     // waits for event from Button "Bestätigen" oder "Bearbeiten"
@@ -65,7 +72,14 @@ public class ControllerUser {
         user.setHeight(spinnerHeight.getValue());
         user.setWeight(spinnerWeight.getValue());
         UserDAO userDAO = new UserDAO(user);
-        userDAO.insertUserData();
+        if (!userDAO.userExists()) {
+            userDAO.insertUserData();
+            System.out.println("Neuer User wurde gesetzt");
+        }
+        else{
+            userDAO.updateUserData();
+            System.out.println("Daten wurden Aktualisiert");
+        }
     }
 
     public void setRadioBtnFemale(ActionEvent actionEvent) {
