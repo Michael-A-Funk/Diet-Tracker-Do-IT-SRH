@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 public class ControllerEntry {
 
+    public Label warningLabel;
     @FXML
     private RadioButton isMealRadioBtn;
     @FXML
@@ -24,11 +25,11 @@ public class ControllerEntry {
     @FXML
     private DatePicker datePicker;
     @FXML
-    private Spinner hoursPicker;
+    private Spinner hoursSpinner;
     @FXML
-    private Spinner minutesPicker;
+    private Spinner minutesSpinner;
     @FXML
-    private Spinner secondsPicker;
+    private Spinner secondsSpinner;
     @FXML
     private Button saveEntryBtn;
     @FXML
@@ -37,22 +38,131 @@ public class ControllerEntry {
     private Button newEntryBtn;
 
 
+    Entry entry = new Entry();
+
 
     // FRAGE : Muss das Attribut sein?
     private EntryDAO entryDAO;
 
-    public ControllerEntry() {
-        Entry entry = new Entry();
-    }
+    public ControllerEntry() {}
+
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
+        entry.setSport(false);
+        isSportRadioBtn.setSelected(false);
     }
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
+        entry.setSport(true);
+        isMealRadioBtn.setSelected(false);
     }
 
     public void onSelectActualTime(ActionEvent actionEvent) {
+        if (selectActualTime.isSelected()){
+            datePicker.setDisable(true);
+            hoursSpinner.setDisable(true);
+            minutesSpinner.setDisable(true);
+            secondsSpinner.setDisable(true);
+        }else{
+            datePicker.setDisable(false);
+            hoursSpinner.setDisable(false);
+            minutesSpinner.setDisable(false);
+            secondsSpinner.setDisable(false);
+        }
     }
+
+    public void onSaveEntryBtn(ActionEvent actionEvent) {
+        String caloriesText = caloriesTextField.getText();
+        String sugarText = sugarTextField.getText();
+        boolean isCaloriesEntryAdequate;
+        boolean isSugarEntryAdequate;
+
+        try {
+            double calories = Double.parseDouble(caloriesText);
+            isCaloriesEntryAdequate = true;
+            entry.setCalories(calories);
+
+        } catch (NumberFormatException e){
+            isCaloriesEntryAdequate = false;
+        }
+
+        try {
+            double sugar = Double.parseDouble(sugarText);
+            isSugarEntryAdequate = true;
+            entry.setSugar(sugar);
+
+        } catch (NumberFormatException e){
+            isSugarEntryAdequate = false;
+
+        }
+
+        //Check and warn if calories and sugar entries are adequate.
+        if (isSugarEntryAdequate == false || isCaloriesEntryAdequate == false ){
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
+        }
+        else if (isCaloriesEntryAdequate==false){
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
+        }
+        else if (isSugarEntryAdequate == false){
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
+        }
+        // if entry values adequate, then save all Entry values.
+        else {
+            //check if user wants to save actual time or other time.
+//            if (selectActualTime.isSelected()){
+                ControllerEntry controllerEntry = new ControllerEntry();
+                LocalDate date;
+                date = LocalDate.now();
+                LocalTime time;
+                time = LocalTime.now();
+                time = controllerEntry.parseTime(time);
+
+                entry.setDay(date);
+                entry.setTime(time);
+                warningLabel.setText("Eintrag gespeichert.\nSie können es bearbeiten\noder ein neuen speichern.");
+//            }
+            /*else{
+                LocalDate date = datePicker.getValue();
+                LocalTime time;
+                String timeTextToParse = hoursSpinner.getValue() + ":" + minutesSpinner.getValue().
+            }*/
+
+            EntryDAO entryDAO = new EntryDAO(entry);
+            entryDAO.insertEntryData();
+         }
+
+
+    }
+
+    public void onEditLastEntryBtn(ActionEvent actionEvent) {
+    }
+
+    public void onNewEntryBtn(ActionEvent actionEvent) {
+    }
+
+    public LocalDate parseDate (LocalDate date){
+        DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateText = date.format(parserDate);
+        return LocalDate.parse(dateText, parserDate);
+
+    }
+
+    public  LocalTime parseTime (LocalTime time){
+        DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String timeText = time.format(parserTime);
+        return LocalTime.parse(timeText, parserTime);
+    }
+
+
+    /* for SaveButton
+        LocalDate date;
+        date = LocalDate.now();
+        LocalTime time;
+        time = LocalTime.now();
+
+        entry.setDay(date);
+        entry.setTime(time);
+     */
 
     // TEST METHODS
 
@@ -97,19 +207,6 @@ public class ControllerEntry {
         entryDAO.updateEntryData(0);
         System.out.println("Daten von letzten Eintrag wurden aktualisiert");
 
-    }
-
-    public LocalDate parseDate (LocalDate date){
-        DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dateText = date.format(parserDate);
-        return LocalDate.parse(dateText, parserDate);
-
-    }
-
-    public  LocalTime parseTime (LocalTime time){
-        DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String timeText = time.format(parserTime);
-        return LocalTime.parse(timeText, parserTime);
     }
 
 

@@ -21,7 +21,7 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
-        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
+        /*XMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Erstellung des User Profiles");
         stage.setScene(scene);

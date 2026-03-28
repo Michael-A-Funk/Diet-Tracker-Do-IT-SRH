@@ -18,7 +18,19 @@ public class Entry {
         this.time = time;
     }
 
-        // "Empty" Constructor is needed in EntryDAO
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public void setDay(LocalDate day) {
+        this.day = day;
+    }
+
+    public void setSport(boolean sport) {
+        isSport = sport;
+    }
+
+    // "Empty" Constructor is needed in EntryDAO
     public Entry (){}
 
     public boolean isSport() {
