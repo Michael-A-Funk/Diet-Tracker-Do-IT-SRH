@@ -28,9 +28,9 @@ public class ControllerEntry {
     @FXML
     private Spinner<Integer> hoursSpinner;
     @FXML
-    private Spinner<Integer>  minutesSpinner;
+    private Spinner<Integer> minutesSpinner;
     @FXML
-    private Spinner<Integer>  secondsSpinner;
+    private Spinner<Integer> secondsSpinner;
     @FXML
     private Button saveEntryBtn;
     @FXML
@@ -45,7 +45,8 @@ public class ControllerEntry {
     // FRAGE : Muss das Attribut sein?
     private EntryDAO entryDAO;
 
-    public ControllerEntry() {}
+    public ControllerEntry() {
+    }
 
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
@@ -59,12 +60,12 @@ public class ControllerEntry {
     }
 
     public void onSelectActualTime(ActionEvent actionEvent) {
-        if (selectActualTime.isSelected()){
+        if (selectActualTime.isSelected()) {
             datePicker.setDisable(true);
             hoursSpinner.setDisable(true);
             minutesSpinner.setDisable(true);
             secondsSpinner.setDisable(true);
-        }else{
+        } else {
             datePicker.setDisable(false);
             datePicker.setValue(LocalDate.now());
             hoursSpinner.setDisable(false);
@@ -91,7 +92,7 @@ public class ControllerEntry {
             isCaloriesEntryAdequate = true;
             entry.setCalories(calories);
 
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             isCaloriesEntryAdequate = false;
         }
 
@@ -100,25 +101,23 @@ public class ControllerEntry {
             isSugarEntryAdequate = true;
             entry.setSugar(sugar);
 
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             isSugarEntryAdequate = false;
 
         }
 
         //Check and warn if calories and sugar entries are adequate.
-        if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false ){
+        if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false) {
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
-        }
-        else if (!isCaloriesEntryAdequate){
+        } else if (!isCaloriesEntryAdequate) {
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
-        }
-        else if (isSugarEntryAdequate == false){
+        } else if (isSugarEntryAdequate == false) {
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
         }
         // if entry values adequate, then save all Entry values.
         else {
             //check if user wants to save actual time or other time.
-            if (selectActualTime.isSelected()){
+            if (selectActualTime.isSelected()) {
                 LocalDate date;
                 date = LocalDate.now();
                 LocalTime time;
@@ -127,8 +126,7 @@ public class ControllerEntry {
 
                 entry.setDay(date);
                 entry.setTime(time);
-            }
-            else{
+            } else {
                 /*datePicker.setOnAction(e -> {
                     LocalDate date = datePicker.getValue();
                     entry.setDay(date);
@@ -137,7 +135,7 @@ public class ControllerEntry {
                 int hours = hoursSpinner.getValue();
                 int minutes = minutesSpinner.getValue();
                 int seconds = secondsSpinner.getValue();
-                LocalTime time = LocalTime.of(hours,minutes,seconds);
+                LocalTime time = LocalTime.of(hours, minutes, seconds);
 
                 entry.setTime(time);
                 System.out.println("Eintrag vom: " + time);
@@ -150,7 +148,7 @@ public class ControllerEntry {
             saveEntryBtn.setDisable(true);
             editLastEntryBtn.setDisable(false);
             newEntryBtn.setDisable(false);
-         }
+        }
 
 
     }
@@ -163,11 +161,10 @@ public class ControllerEntry {
 
         //Setting all fields to values of last Entry
         // Activity: Meal or Sport
-        if (entry.isSport()){
+        if (entry.isSport()) {
             isSportRadioBtn.setSelected(true);
             isMealRadioBtn.setSelected(false);
-        }
-        else {
+        } else {
             isSportRadioBtn.setSelected(false);
             isMealRadioBtn.setSelected(true);
         }
@@ -176,6 +173,7 @@ public class ControllerEntry {
         String sugar = Double.toString(entry.getSugar());
 
         caloriesTextField.setText(calories);
+
         sugarTextField.setText(sugar);
 
         //Date and Time fields
@@ -195,6 +193,13 @@ public class ControllerEntry {
         minutesSpinner.getValueFactory().setValue(minutes);
         secondsSpinner.getValueFactory().setValue(seconds);
 
+
+
+        ControllerEntry controllerEntry = new ControllerEntry();
+        if (controllerEntry.checkAndFillData()) {
+            entryDAO.updateEntryData(entryDAO.getLastId());
+            saveEntryBtn.setDisable(true);
+        }
 
     }
 
@@ -217,14 +222,74 @@ public class ControllerEntry {
 
 
     //Do
-    public  LocalTime parseTime (LocalTime time){
+    public LocalTime parseTime(LocalTime time) {
         DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
         String timeText = time.format(parserTime);
         return LocalTime.parse(timeText, parserTime);
     }
 
+    private boolean checkAndFillData() {
+        String caloriesText = caloriesTextField.getText();
+        String sugarText = sugarTextField.getText();
+        boolean isCaloriesEntryAdequate;
+        boolean isSugarEntryAdequate;
 
+        try {
+            double calories = Double.parseDouble(caloriesText);
+            isCaloriesEntryAdequate = true;
+            entry.setCalories(calories);
 
+        } catch (NumberFormatException e) {
+            isCaloriesEntryAdequate = false;
+        }
+
+        try {
+            double sugar = Double.parseDouble(sugarText);
+            isSugarEntryAdequate = true;
+            entry.setSugar(sugar);
+
+        } catch (NumberFormatException e) {
+            isSugarEntryAdequate = false;
+
+        }
+
+        //Check and warn if calories and sugar entries are adequate.
+        if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false) {
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
+            return false;
+        } else if (!isCaloriesEntryAdequate) {
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
+            return false;
+        } else if (isSugarEntryAdequate == false) {
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
+            return false;
+        }
+        // if entry values adequate, then save all Entry values.
+        else {
+            //check if user wants to save actual time or other time.
+            if (selectActualTime.isSelected()) {
+                LocalDate date;
+                date = LocalDate.now();
+                LocalTime time;
+                time = LocalTime.now();
+                time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+                entry.setDay(date);
+                entry.setTime(time);
+            } else {
+                int hours = hoursSpinner.getValue();
+                int minutes = minutesSpinner.getValue();
+                int seconds = secondsSpinner.getValue();
+                LocalTime time = LocalTime.of(hours, minutes, seconds);
+
+                entry.setTime(time);
+                System.out.println("Eintrag vom: " + time);
+
+                return true;
+            }
+        }
+        return false;
+    }
 
     /* for SaveButton
         LocalDate date;
@@ -236,9 +301,9 @@ public class ControllerEntry {
         entry.setTime(time);
      */
 
-    // TEST METHODS
+        // TEST METHODS
 
-    // What happens when "Bestätigen" Button is clicked !!! Parameters are now just for testing purposes!!!
+        // What happens when "Bestätigen" Button is clicked !!! Parameters are now just for testing purposes!!!
     /*public void saveEntry(boolean isSport,double calories, double sugar){
 
         ControllerEntry controllerEntry = new ControllerEntry();
@@ -294,6 +359,5 @@ public class ControllerEntry {
 
     }*/
 
-}
 
-
+    }
