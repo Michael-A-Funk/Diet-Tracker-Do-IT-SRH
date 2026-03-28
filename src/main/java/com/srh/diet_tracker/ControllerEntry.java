@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class ControllerEntry {
@@ -23,7 +24,7 @@ public class ControllerEntry {
     @FXML
     private CheckBox selectActualTime;
     @FXML
-    private DatePicker datePicker;
+    private DatePicker datePicker = new DatePicker();
     @FXML
     private Spinner hoursSpinner;
     @FXML
@@ -65,10 +66,17 @@ public class ControllerEntry {
             secondsSpinner.setDisable(true);
         }else{
             datePicker.setDisable(false);
+            datePicker.setValue(LocalDate.now());
             hoursSpinner.setDisable(false);
             minutesSpinner.setDisable(false);
             secondsSpinner.setDisable(false);
+
         }
+    }
+
+    public void onDatePicker(ActionEvent actionEvent) {
+        LocalDate date = datePicker.getValue();
+        entry.setDay(date);
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
@@ -76,6 +84,7 @@ public class ControllerEntry {
         String sugarText = sugarTextField.getText();
         boolean isCaloriesEntryAdequate;
         boolean isSugarEntryAdequate;
+        ControllerEntry controllerEntry = new ControllerEntry();
 
         try {
             double calories = Double.parseDouble(caloriesText);
@@ -97,7 +106,7 @@ public class ControllerEntry {
         }
 
         //Check and warn if calories and sugar entries are adequate.
-        if (isSugarEntryAdequate == false || isCaloriesEntryAdequate == false ){
+        if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false ){
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
         }
         else if (isCaloriesEntryAdequate==false){
@@ -109,26 +118,35 @@ public class ControllerEntry {
         // if entry values adequate, then save all Entry values.
         else {
             //check if user wants to save actual time or other time.
-//            if (selectActualTime.isSelected()){
-                ControllerEntry controllerEntry = new ControllerEntry();
+            if (selectActualTime.isSelected()){
                 LocalDate date;
                 date = LocalDate.now();
                 LocalTime time;
                 time = LocalTime.now();
-                time = controllerEntry.parseTime(time);
+                time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
                 entry.setDay(date);
                 entry.setTime(time);
-                warningLabel.setText("Eintrag gespeichert.\nSie können es bearbeiten\noder ein neuen speichern.");
-//            }
-            /*else{
-                LocalDate date = datePicker.getValue();
-                LocalTime time;
-                String timeTextToParse = hoursSpinner.getValue() + ":" + minutesSpinner.getValue().
-            }*/
+            }
+            else{
+                /*datePicker.setOnAction(e -> {
+                    LocalDate date = datePicker.getValue();
+                    entry.setDay(date);
+                });*/
+
+                int hours = Integer.parseInt(hoursSpinner.getValue().toString());
+                int minutes = Integer.parseInt(minutesSpinner.getValue().toString());
+                int seconds = Integer.parseInt(secondsSpinner.getValue().toString());
+                LocalTime time = LocalTime.of(hours,minutes,seconds);
+
+                entry.setTime(time);
+                System.out.println("Eintrag vom: " + time);
+
+            }
 
             EntryDAO entryDAO = new EntryDAO(entry);
             entryDAO.insertEntryData();
+            warningLabel.setText("Eintrag gespeichert.\nSie können es bearbeiten\noder ein neuen speichern.");
          }
 
 
@@ -140,13 +158,8 @@ public class ControllerEntry {
     public void onNewEntryBtn(ActionEvent actionEvent) {
     }
 
-    public LocalDate parseDate (LocalDate date){
-        DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String dateText = date.format(parserDate);
-        return LocalDate.parse(dateText, parserDate);
 
-    }
-
+    //Do
     public  LocalTime parseTime (LocalTime time){
         DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
         String timeText = time.format(parserTime);
