@@ -26,11 +26,11 @@ public class ControllerEntry {
     @FXML
     private DatePicker datePicker = new DatePicker();
     @FXML
-    private Spinner hoursSpinner;
+    private Spinner<Integer> hoursSpinner;
     @FXML
-    private Spinner minutesSpinner;
+    private Spinner<Integer>  minutesSpinner;
     @FXML
-    private Spinner secondsSpinner;
+    private Spinner<Integer>  secondsSpinner;
     @FXML
     private Button saveEntryBtn;
     @FXML
@@ -109,7 +109,7 @@ public class ControllerEntry {
         if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false ){
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
         }
-        else if (isCaloriesEntryAdequate==false){
+        else if (!isCaloriesEntryAdequate){
             warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
         }
         else if (isSugarEntryAdequate == false){
@@ -134,9 +134,9 @@ public class ControllerEntry {
                     entry.setDay(date);
                 });*/
 
-                int hours = Integer.parseInt(hoursSpinner.getValue().toString());
-                int minutes = Integer.parseInt(minutesSpinner.getValue().toString());
-                int seconds = Integer.parseInt(secondsSpinner.getValue().toString());
+                int hours = hoursSpinner.getValue();
+                int minutes = minutesSpinner.getValue();
+                int seconds = secondsSpinner.getValue();
                 LocalTime time = LocalTime.of(hours,minutes,seconds);
 
                 entry.setTime(time);
@@ -147,15 +147,72 @@ public class ControllerEntry {
             EntryDAO entryDAO = new EntryDAO(entry);
             entryDAO.insertEntryData();
             warningLabel.setText("Eintrag gespeichert.\nSie können es bearbeiten\noder ein neuen speichern.");
+            saveEntryBtn.setDisable(true);
+            editLastEntryBtn.setDisable(false);
+            newEntryBtn.setDisable(false);
          }
 
 
     }
 
     public void onEditLastEntryBtn(ActionEvent actionEvent) {
+        saveEntryBtn.setDisable(true);
+
+        EntryDAO entryDAO = new EntryDAO();
+        entry = entryDAO.getLastEntry();
+
+        //Setting all fields to values of last Entry
+        // Activity: Meal or Sport
+        if (entry.isSport()){
+            isSportRadioBtn.setSelected(true);
+            isMealRadioBtn.setSelected(false);
+        }
+        else {
+            isSportRadioBtn.setSelected(false);
+            isMealRadioBtn.setSelected(true);
+        }
+        // Textfields calories and sugar
+        String calories = Double.toString(entry.getCalories());
+        String sugar = Double.toString(entry.getSugar());
+
+        caloriesTextField.setText(calories);
+        sugarTextField.setText(sugar);
+
+        //Date and Time fields
+        selectActualTime.setSelected(false);
+        datePicker.setDisable(false);
+        hoursSpinner.setDisable(false);
+        minutesSpinner.setDisable(false);
+        secondsSpinner.setDisable(false);
+
+
+        datePicker.setValue(entry.getDay());
+        int hour = entry.getTime().getHour();
+        int minutes = entry.getTime().getMinute();
+        int seconds = entry.getTime().getSecond();
+
+        hoursSpinner.getValueFactory().setValue(hour);
+        minutesSpinner.getValueFactory().setValue(minutes);
+        secondsSpinner.getValueFactory().setValue(seconds);
+
+
     }
 
     public void onNewEntryBtn(ActionEvent actionEvent) {
+        saveEntryBtn.setDisable(false);
+        isSportRadioBtn.setSelected(false);
+        isMealRadioBtn.setSelected(true);
+        caloriesTextField.setText("");
+        sugarTextField.setText("");
+        selectActualTime.setSelected(true);
+        hoursSpinner.getValueFactory().setValue(7);
+        minutesSpinner.getValueFactory().setValue(0);
+        secondsSpinner.getValueFactory().setValue(0);
+        datePicker.setValue(LocalDate.now());
+        datePicker.setDisable(true);
+        hoursSpinner.setDisable(true);
+        minutesSpinner.setDisable(true);
+        secondsSpinner.setDisable(true);
     }
 
 
@@ -165,6 +222,8 @@ public class ControllerEntry {
         String timeText = time.format(parserTime);
         return LocalTime.parse(timeText, parserTime);
     }
+
+
 
 
     /* for SaveButton

@@ -42,8 +42,8 @@ public class EntryDAO {
             } else {
                 pstmt.setDouble(3, entry.getSugar());
             }
-            pstmt.setString(4, (entry.getDay()).toString());
-            pstmt.setString(5, (entry.getTime()).toString());
+            pstmt.setString(4, (entry.getDay()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            pstmt.setString(5, (entry.getTime()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
             pstmt.executeUpdate();
 
@@ -122,7 +122,7 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, date.toString());
+            stmt.setString(1, date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ResultSet rs = stmt.executeQuery();
             return rs.getDouble("sum_calories_day");
 
@@ -157,7 +157,7 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, date.toString());
+            stmt.setString(1, date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ResultSet rs = stmt.executeQuery();
             return rs.getDouble("sum_sugar_day");
 
@@ -210,7 +210,7 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1,date.toString());
+            stmt.setString(1,date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             ResultSet rs = stmt.executeQuery();
 
             DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -247,8 +247,8 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, newerDate.toString());
-                stmt.setString(2, olderDate.toString());
+                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             ResultSet rs = stmt.executeQuery();
 
@@ -258,6 +258,31 @@ public class EntryDAO {
 
             }
             return dateList;
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public Entry getLastEntry(){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT isSport, calories, sugar, date, time FROM entry WHERE id=?";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1,getLastId());
+                ResultSet rs = stmt.executeQuery();
+
+                DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter parserTime = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+                LocalDate localDate = LocalDate.parse(rs.getString("date"), parserDate);
+                LocalTime localTime = LocalTime.parse(rs.getString("time"), parserTime);
+
+            return new Entry(rs.getBoolean("isSport"), rs.getDouble("calories"),
+                rs.getDouble("sugar"), localDate, localTime);
+
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());

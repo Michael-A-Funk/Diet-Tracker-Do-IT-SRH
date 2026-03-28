@@ -23,7 +23,7 @@
             <TextField fx:id="sugarTextField" layoutX="163.0" layoutY="111.0" prefHeight="25.0" prefWidth="56.0" />
             <CheckBox fx:id="selectActualTime" layoutX="8.0" layoutY="164.0" mnemonicParsing="false" onAction="#onSelectActualTime" selected="true" text="Jetzige Zeit" />
             <DatePicker fx:id="datePicker" disable="true" layoutX="161.0" layoutY="160.0" onAction="#onDatePicker" prefHeight="25.0" prefWidth="114.0" />
-            <Spinner fx:id="hoursSpinner" disable="true" initialValue="0" layoutX="369.0" layoutY="160.0" max="24" min="00" prefHeight="25.0" prefWidth="61.0" />
+            <Spinner fx:id="hoursSpinner" disable="true" initialValue="7" layoutX="369.0" layoutY="160.0" max="24" min="00" prefHeight="25.0" prefWidth="61.0" />
             <Spinner fx:id="minutesSpinner" disable="true" initialValue="0" layoutX="369.0" layoutY="194.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="108.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Datum" />
             <Label layoutX="287.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Stunden" />
@@ -44,9 +44,9 @@
    <bottom>
       <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="saveEntryBtn" layoutX="490.0" layoutY="16.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" textFill="WHITE" />
-            <Button fx:id="editLastEntryBtn" disable="true" layoutX="219.0" layoutY="16.0" mnemonicParsing="false" onAction="#onEditLastEntryBtn" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #39533C;" text="Leztes Eintrag Bearbeiten" textFill="WHITE" />
-            <Button fx:id="newEntryBtn" disable="true" layoutX="381.0" layoutY="16.0" mnemonicParsing="false" onAction="#onNewEntryBtn" prefHeight="30.0" prefWidth="94.0" style="-fx-background-color: #39533C;" text="Neuer Eintrag" textFill="WHITE" />
+            <Button fx:id="saveEntryBtn" disable="true" layoutX="490.0" layoutY="16.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" textFill="WHITE" />
+            <Button fx:id="editLastEntryBtn" layoutX="219.0" layoutY="16.0" mnemonicParsing="false" onAction="#onEditLastEntryBtn" prefHeight="30.0" prefWidth="150.0" style="-fx-background-color: #39533C;" text="Leztes Eintrag Bearbeiten" textFill="WHITE" />
+            <Button fx:id="newEntryBtn" layoutX="381.0" layoutY="16.0" mnemonicParsing="false" onAction="#onNewEntryBtn" prefHeight="30.0" prefWidth="94.0" style="-fx-background-color: #39533C;" text="Neuer Eintrag" textFill="WHITE" />
          </children></Pane>
    </bottom>
    <left>
