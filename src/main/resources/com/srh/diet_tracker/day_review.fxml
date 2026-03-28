@@ -36,19 +36,19 @@
       <Pane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="266.0" layoutY="9.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
+            <Button fx:id="saveEntryBtn" layoutX="530.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" text="Ändern" />
          </children>
       </Pane>
    </top>
    <bottom>
       <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="saveEntryBtn" layoutX="276.0" layoutY="61.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" text="Ändern" />
             <Spinner fx:id="spinnerEntryNr" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
             <RadioButton fx:id="isSportRadio" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadio" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
             <RadioButton fx:id="isMealRadio" layoutX="202.0" layoutY="33.0" mnemonicParsing="false" onAction="#onIsMealRadio" prefHeight="18.0" prefWidth="73.0" text="Essen" textFill="WHITE" />
-            <TextField fx:id="caloriesTextField" layoutX="275.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Kalorien" />
-            <TextField fx:id="sugarTextField" layoutX="353.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Zucker" />
-            <Label layoutX="458.0" layoutY="9.0" text="Studen" textFill="WHITE" />
+            <TextField fx:id="caloriesTextField" layoutX="286.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Kalorien" />
+            <TextField fx:id="sugarTextField" layoutX="386.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Zucker" />
+            <Label layoutX="458.0" layoutY="9.0" text="Stunden" textFill="WHITE" />
             <Spinner fx:id="hoursSpinner" layoutX="520.0" layoutY="5.0" prefHeight="15.0" prefWidth="58.0" />
             <Spinner fx:id="minutesSpinner" layoutX="520.0" layoutY="38.0" prefHeight="15.0" prefWidth="58.0" />
             <Spinner fx:id="secondsSpinner" layoutX="520.0" layoutY="74.0" prefHeight="15.0" prefWidth="58.0" />

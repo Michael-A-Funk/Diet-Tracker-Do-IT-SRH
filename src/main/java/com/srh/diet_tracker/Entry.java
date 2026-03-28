@@ -18,6 +18,9 @@ public class Entry {
         this.time = time;
     }
 
+        // "Empty" Constructor is needed in EntryDAO
+    public Entry (){}
+
     public boolean isSport() {
         return isSport;
     }

@@ -21,7 +21,6 @@
             <Spinner fx:id="spinnerAge" initialValue="20" layoutX="104.0" layoutY="73.0" max="150" min="1" prefHeight="18.0" prefWidth="151.0" />
             <CheckBox fx:id="hasDiabetes" layoutX="104.0" layoutY="192.0" mnemonicParsing="false" onAction="#onDiabetes" />
             <Label layoutX="22.0" layoutY="195.0" text="Diabetes" />
-            <Button fx:id="save_user" layoutX="164.0" layoutY="233.0" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" />
             <RadioButton fx:id="femaleRadioBtn" layoutX="104.0" layoutY="115.0" mnemonicParsing="false" onAction="#setRadioBtnFemale" selected="true" text="Weiblich" />
             <RadioButton fx:id="maleRadioBtn" layoutX="196.0" layoutY="115.0" mnemonicParsing="false" onAction="#setRadioBtnMale" text="Männlich" />
          </children>
@@ -30,12 +29,15 @@
    <top>
       <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="242.0" layoutY="20.0" prefHeight="28.0" prefWidth="161.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Benutzer Daten Eingeben" textFill="WHITE" />
+            <Label layoutX="242.0" layoutY="20.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Benutzer Daten Eingeben" textFill="#250101" />
          </children>
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="save_user" layoutX="477.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSave" prefHeight="30.0" prefWidth="99.0" style="-fx-background-color: #39533C;" text="Bestätigen" />
+         </children></Pane>
    </bottom>
    <left>
       <Pane prefHeight="274.0" prefWidth="138.0" BorderPane.alignment="CENTER">

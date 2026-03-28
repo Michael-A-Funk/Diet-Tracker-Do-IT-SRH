@@ -1,5 +1,9 @@
 package com.srh.diet_tracker;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -7,29 +11,53 @@ import java.time.format.DateTimeFormatter;
 
 public class ControllerEntry {
 
+    @FXML
+    private RadioButton isMealRadioBtn;
+    @FXML
+    private RadioButton isSportRadioBtn;
+    @FXML
+    private TextField caloriesTextField;
+    @FXML
+    private TextField sugarTextField;
+    @FXML
+    private CheckBox selectActualTime;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private Spinner hoursPicker;
+    @FXML
+    private Spinner minutesPicker;
+    @FXML
+    private Spinner secondsPicker;
+    @FXML
+    private Button saveEntryBtn;
+    @FXML
+    private Button editLastEntryBtn;
+    @FXML
+    private Button newEntryBtn;
+
+
+
     // FRAGE : Muss das Attribut sein?
     private EntryDAO entryDAO;
 
-    public ControllerEntry() {}
+    public ControllerEntry() {
+        Entry entry = new Entry();
+    }
 
+    public void onIsMealRadioBtn(ActionEvent actionEvent) {
+    }
 
+    public void onIsSportRadioBtn(ActionEvent actionEvent) {
+    }
 
+    public void onSelectActualTime(ActionEvent actionEvent) {
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
+    // TEST METHODS
 
     // What happens when "Bestätigen" Button is clicked !!! Parameters are now just for testing purposes!!!
-    public void saveEntry(boolean isSport,double calories, double sugar){
+    /*public void saveEntry(boolean isSport,double calories, double sugar){
 
         ControllerEntry controllerEntry = new ControllerEntry();
 

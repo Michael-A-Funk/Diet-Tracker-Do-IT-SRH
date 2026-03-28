@@ -15,7 +15,13 @@ public class App extends Application {
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        stage.setTitle("Essen oder Sport Eintrag eingeben");
+        stage.setScene(scene);
+        stage.show();
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Erstellung des User Profiles");
         stage.setScene(scene);
@@ -23,7 +29,7 @@ public class App extends Application {
 
         ControllerGraph controllerGraph = new ControllerGraph();
         controllerGraph.representData();
-        System.out.println();
+        System.out.println();*/
 
     }
 }
