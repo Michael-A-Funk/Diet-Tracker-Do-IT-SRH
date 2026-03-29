@@ -16,7 +16,7 @@
             <TextField fx:id="sugarTextField" layoutX="163.0" layoutY="111.0" prefHeight="25.0" prefWidth="56.0" />
             <CheckBox fx:id="selectActualTime" layoutX="8.0" layoutY="164.0" mnemonicParsing="false" onAction="#onSelectActualTime" selected="true" text="Jetzige Zeit" />
             <DatePicker fx:id="datePicker" disable="true" layoutX="161.0" layoutY="160.0" onAction="#onDatePicker" prefHeight="25.0" prefWidth="114.0" />
-            <Spinner fx:id="hoursSpinner" disable="true" initialValue="7" layoutX="369.0" layoutY="160.0" max="24" min="00" prefHeight="25.0" prefWidth="61.0" />
+            <Spinner fx:id="hoursSpinner" disable="true" initialValue="7" layoutX="369.0" layoutY="160.0" max="23" min="0" prefHeight="25.0" prefWidth="61.0" />
             <Spinner fx:id="minutesSpinner" disable="true" initialValue="0" layoutX="369.0" layoutY="194.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="108.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Datum" />
             <Label layoutX="287.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Stunden" />

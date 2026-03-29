@@ -5,25 +5,30 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ControllerDayReview {
 
+
+
     //Controls
-    @FXML
-    private Button saveEntryBtn;
+    Button saveEntryBtn;
     @FXML
     private Spinner<Integer> spinnerEntryNr;
     @FXML
-    private RadioButton isSportRadioBtn;
+    private RadioButton isSportRadioBtn = new RadioButton();
     @FXML
-    private RadioButton isMealRadioBtn;
+    private RadioButton isMealRadioBtn = new RadioButton();
     @FXML
-    private TextField caloriesTextField = new TextField("0");
+    private TextField caloriesTextField;
     @FXML
-    private TextField sugarTextField= new TextField("0");;
+    private TextField sugarTextField;
     @FXML
     private Spinner<Integer> hoursSpinner;
     @FXML
@@ -31,12 +36,13 @@ public class ControllerDayReview {
     @FXML
     private Spinner<Integer> secondsSpinner;
     @FXML
-    private Label sugarPercentageLabel;
+    private Label sugarPercentageLabel = new Label();
     @FXML
-    private Label caloriesPercentageLabel;
-
+    private Label caloriesPercentageLabel = new Label();
     @FXML
     private DatePicker datePicker = new DatePicker();
+    @FXML
+    private Label warningLabel;
 
     // Columns
     @FXML
@@ -59,29 +65,60 @@ public class ControllerDayReview {
     public ControllerDayReview(){
     }
 
-    @FXML
-    public void initialize() {
-        entryDAO = new EntryDAO();
-        LocalDate currentDate = LocalDate.now();
-        ArrayList<Entry> entryList = entryDAO.returnEntriesDay(currentDate);
-        spinnerEntryNr.getValueFactory().setValue(1);
-        isMealRadioBtn.setSelected(true);
-        isSportRadioBtn.setSelected(false);
-        isSportRadioBtn.setSelected(entryList.getFirst().isSport());
-        isMealRadioBtn.setSelected(!entryList.getFirst().isSport());
-        datePicker.setValue(currentDate);
-        hoursSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getHour());
-        minutesSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getMinute());
-        secondsSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getSecond());
-    }
+
 
     public void onActionDatePicker(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
-        ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
         EntryDAO entryDAO = new EntryDAO();
+        ControllerDayReview controllerDayReview = new ControllerDayReview();
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
+        int entryNr = entryList.size()-1;
 
 
+        if (entryList.isEmpty()){
+            warningLabel.setText("Kein Eintrag an gewählten Tag!\nKeine neue Einträge angezeigt.");
+        }
+        else {
+            isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
+            isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
+            String calories = Double.toString(entryList.get(entryNr).getCalories());
+            caloriesTextField.setText(calories);
+            String sugar = Double.toString(entryList.get(entryNr).getSugar());
+            sugarTextField.setText(sugar);
+
+            spinnerEntryNr.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            1,
+                            entryList.size()
+                    )
+            );
+            spinnerEntryNr.getValueFactory().setValue(entryList.size());
+            hoursSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            23
+                    )
+            );
+            hoursSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getHour());
+            minutesSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            59
+                    )
+            );
+            minutesSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getMinute());
+            secondsSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            59
+                    )
+            );
+            secondsSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getSecond());
+        }
+
+
+
+        ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
         dayEntryList.addAll(entryList);
     }
 
@@ -96,6 +133,11 @@ public class ControllerDayReview {
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
+    }
+
+    void setFieldsByEntryNr (int entryNr, ArrayList<Entry> entryList){
+
+
     }
 
 

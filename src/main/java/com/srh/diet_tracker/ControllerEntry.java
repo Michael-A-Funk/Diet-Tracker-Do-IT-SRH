@@ -31,12 +31,11 @@ public class ControllerEntry extends ControllerParent {
     @FXML
     private DatePicker datePicker = new DatePicker(currentDate);
     @FXML
-    private Spinner<Integer> hoursSpinner = new Spinner<Integer>(0,24,7);
+    private Spinner<Integer> hoursSpinner = new Spinner<Integer>(0,23,7);
     @FXML
-    private Spinner<Integer> minutesSpinner = new Spinner<Integer>(0,60,0);
+    private Spinner<Integer> minutesSpinner = new Spinner<Integer>(0,59,0);
     @FXML
-    private Spinner<Integer> secondsSpinner = new Spinner<Integer>(0,60,0);
-    @FXML
+    private Spinner<Integer> secondsSpinner = new Spinner<Integer>(0,59,0);    @FXML
     private Button saveEntryBtn;
     @FXML
     private Button editLastEntryBtn;
@@ -50,6 +49,11 @@ public class ControllerEntry extends ControllerParent {
         isSportRadioBtn.setSelected(false);
         selectActualTime.setSelected(true);
         this.isNewEntry = true;
+    }
+
+    public void initialize() {
+        caloriesTextField.setText("0");
+        sugarTextField.setText("0");
     }
 
     // FRAGE : Muss das Attribut sein?
@@ -118,11 +122,6 @@ public class ControllerEntry extends ControllerParent {
         } catch (Exception e) {
             System.err.println("User hat in Textfelder ungültige Werte eingegeben und es wurde in Label gemeldet.");
         }
-
-
-
-
-
     }
 
     public void onEditLastEntryBtn(ActionEvent actionEvent) {
