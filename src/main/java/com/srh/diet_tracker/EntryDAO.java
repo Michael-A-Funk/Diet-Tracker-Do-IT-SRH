@@ -240,7 +240,6 @@ public class EntryDAO {
         }
         else {
             sql = "SELECT DISTINCT date FROM entry WHERE date<=? AND date>=? ORDER BY date ASC";
-            DateTimeFormatter parserDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         }
         ArrayList<LocalDate> dateList = new ArrayList<>();
 

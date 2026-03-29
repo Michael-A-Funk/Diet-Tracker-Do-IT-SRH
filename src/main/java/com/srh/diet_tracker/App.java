@@ -15,7 +15,10 @@ public class App extends Application {
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
+
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));
+
+
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Essen oder Sport Eintrag eingeben");
         stage.setScene(scene);

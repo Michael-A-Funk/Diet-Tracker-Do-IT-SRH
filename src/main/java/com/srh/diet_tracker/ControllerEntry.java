@@ -12,25 +12,31 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ControllerEntry {
 
-    public Label warningLabel;
+    Entry entry = new Entry();
+
+    String caloriesInitialValue = Integer.toString(0);
+    String sugarInitialValue = Integer.toString(0);
+    LocalDate currentDate = LocalDate.now();
+
+    public Label warningLabel = new Label();
     @FXML
-    private RadioButton isMealRadioBtn;
+    private RadioButton isMealRadioBtn = new RadioButton();
     @FXML
-    private RadioButton isSportRadioBtn;
+    private RadioButton isSportRadioBtn = new RadioButton();;
     @FXML
-    private TextField caloriesTextField;
+    private TextField caloriesTextField = new TextField(caloriesInitialValue);
     @FXML
-    private TextField sugarTextField;
+    private TextField sugarTextField = new TextField(sugarInitialValue);
     @FXML
-    private CheckBox selectActualTime;
+    private CheckBox selectActualTime = new CheckBox();
     @FXML
-    private DatePicker datePicker = new DatePicker();
+    private DatePicker datePicker = new DatePicker(currentDate);
     @FXML
-    private Spinner<Integer> hoursSpinner;
+    private Spinner<Integer> hoursSpinner = new Spinner<Integer>(0,24,7);
     @FXML
-    private Spinner<Integer> minutesSpinner;
+    private Spinner<Integer> minutesSpinner = new Spinner<Integer>(0,60,0);;
     @FXML
-    private Spinner<Integer> secondsSpinner;
+    private Spinner<Integer> secondsSpinner = new Spinner<Integer>(0,60,0);;
     @FXML
     private Button saveEntryBtn;
     @FXML
@@ -38,15 +44,19 @@ public class ControllerEntry {
     @FXML
     private Button newEntryBtn;
 
+    private boolean isNewEntry;
 
-    Entry entry = new Entry();
-
+    public ControllerEntry() {
+        isMealRadioBtn.setSelected(true);
+        isSportRadioBtn.setSelected(false);
+        selectActualTime.setSelected(true);
+        this.isNewEntry = true;
+    }
 
     // FRAGE : Muss das Attribut sein?
     private EntryDAO entryDAO;
 
-    public ControllerEntry() {
-    }
+
 
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
@@ -127,10 +137,6 @@ public class ControllerEntry {
                 entry.setDay(date);
                 entry.setTime(time);
             } else {
-                /*datePicker.setOnAction(e -> {
-                    LocalDate date = datePicker.getValue();
-                    entry.setDay(date);
-                });*/
 
                 int hours = hoursSpinner.getValue();
                 int minutes = minutesSpinner.getValue();
@@ -143,7 +149,12 @@ public class ControllerEntry {
             }
 
             EntryDAO entryDAO = new EntryDAO(entry);
-            entryDAO.insertEntryData();
+            if (isNewEntry) {
+                entryDAO.insertEntryData();
+            }
+            else {
+                entryDAO.updateEntryData(entryDAO.getLastId());
+            }
             warningLabel.setText("Eintrag gespeichert.\nSie können es bearbeiten\noder ein neuen speichern.");
             saveEntryBtn.setDisable(true);
             editLastEntryBtn.setDisable(false);
@@ -154,7 +165,6 @@ public class ControllerEntry {
     }
 
     public void onEditLastEntryBtn(ActionEvent actionEvent) {
-        saveEntryBtn.setDisable(true);
 
         EntryDAO entryDAO = new EntryDAO();
         entry = entryDAO.getLastEntry();
@@ -193,13 +203,8 @@ public class ControllerEntry {
         minutesSpinner.getValueFactory().setValue(minutes);
         secondsSpinner.getValueFactory().setValue(seconds);
 
-
-
-        ControllerEntry controllerEntry = new ControllerEntry();
-        if (controllerEntry.checkAndFillData()) {
-            entryDAO.updateEntryData(entryDAO.getLastId());
-            saveEntryBtn.setDisable(true);
-        }
+        isNewEntry = false;
+        saveEntryBtn.setDisable(false);
 
     }
 
@@ -218,6 +223,8 @@ public class ControllerEntry {
         hoursSpinner.setDisable(true);
         minutesSpinner.setDisable(true);
         secondsSpinner.setDisable(true);
+
+        isNewEntry = true;
     }
 
 
@@ -229,8 +236,17 @@ public class ControllerEntry {
     }
 
     private boolean checkAndFillData() {
-        String caloriesText = caloriesTextField.getText();
-        String sugarText = sugarTextField.getText();
+        String caloriesText;
+        String sugarText;
+        try{
+            caloriesText = caloriesTextField.getText();
+            sugarText = sugarTextField.getText();
+
+        } catch (Exception e) {
+            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\nDarf nicht leer sein!");
+            return false;
+        }
+
         boolean isCaloriesEntryAdequate;
         boolean isSugarEntryAdequate;
 
