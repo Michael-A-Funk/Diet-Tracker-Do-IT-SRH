@@ -4,12 +4,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Entry {
+    private int id;
     private boolean isSport;
     private double calories;
     private double sugar;
     private LocalDate day;
     private LocalTime time;
 
+
+    public Entry (int id, boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
+        this.isSport = isSport;
+        this.setCalories(calories);
+        this.setSugar(sugar);
+        this.day = day;
+        this.time = time;
+        this.id = id;
+    }
+
+    // one query (getLastEntry to be used in ControllerEntry) doesnt need id. This querying spares time.
     public Entry (boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
         this.isSport = isSport;
         this.setCalories(calories);
@@ -49,6 +61,12 @@ public class Entry {
 
     public LocalDate getDay() {
         return day;
+    }
+
+    public int getId(){return id;}
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setCalories(double calories) {

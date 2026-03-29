@@ -10,13 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.DragEvent;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ControllerDayReview {
-
-
-
+public class ControllerDayReview extends ControllerParent{
     //Controls
     @FXML
     Button saveEntryBtn;
@@ -61,21 +59,23 @@ public class ControllerDayReview {
     // FRAGE : Müssen die Attribute sein?
     private EntryDAO entryDAO;
     private UserDAO userDAO;
+    private boolean isSport;
 
 
-    public ControllerDayReview(){
-    }
+    public ControllerDayReview() {}
 
     public void initialize (){
         spinnerEntryNr.valueProperty().addListener((obs, oldValue, newValue) ->
             {System.out.println("Spinner Method");
                 EntryDAO entryDAO = new EntryDAO();
-                int entryNr = spinnerEntryNr.getValue();
                 LocalDate date = datePicker.getValue();
+                // here I get a List with all the info from entries for one day, even its id!! can use it to update any one.
                 ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
                 ControllerDayReview controllerDayReview = new ControllerDayReview();
                 controllerDayReview.setFieldsByEntryNr(newValue-1,entryList, isSportRadioBtn, isMealRadioBtn, caloriesTextField,
                 sugarTextField, hoursSpinner, minutesSpinner, secondsSpinner);});
+
+
     }
 
 
@@ -128,22 +128,39 @@ public class ControllerDayReview {
         }
 
 
-
+        // For representing day entries in Table
         ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
         //dayEntryList.addAll(entryList);
     }
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
         isMealRadioBtn.setSelected(false);
-        //isSport = true;
+        isSport = true;
     }
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
-        isMealRadioBtn.setSelected(true);
-        //isSport = false;
+        isSportRadioBtn.setSelected(false);
+        isSport = false;
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
+        ControllerDayReview controllerDayReview = new ControllerDayReview();
+        isSport= isSportRadioBtn.isArmed();
+        Entry entry = returnEntryFromFields(controllerDayReview.checkTextFieldData(caloriesTextField,sugarTextField,warningLabel),
+                isSport,caloriesTextField,sugarTextField,null,datePicker,
+                hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
+
+        EntryDAO entryDAO = new EntryDAO(entry);
+        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespodingIds(datePicker.getValue());
+        for (int i=0; i<idList.size();i++){
+            int spinnerNr= spinnerEntryNr.getValueFactory().getValue();
+            if (i==spinnerNr-1){
+                int id= idList.get(spinnerNr-1);
+                entryDAO.updateEntryData(id);
+                break;
+            }
+        }
+
     }
 
     void setFieldsByEntryNr (int entryNr, ArrayList<Entry> entryList, RadioButton isSportRadioBtn,
@@ -155,6 +172,7 @@ public class ControllerDayReview {
         } else {
             isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
             isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
+            isSport = entryList.get(entryNr).isSport();
             String calories = Double.toString(entryList.get(entryNr).getCalories());
             caloriesTextField.setText(calories);
             String sugar = Double.toString(entryList.get(entryNr).getSugar());

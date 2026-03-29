@@ -47,13 +47,13 @@ public  ControllerParent(){}
 
         //Check and warn if calories and sugar entries are adequate.
         if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false) {
-            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
+            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
             return false;
         } else if (!isCaloriesEntryAdequate) {
-            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
+            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
             return false;
         } else if (isSugarEntryAdequate == false) {
-            warningLabel.setText("Bitte geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
+            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
             return false;
         }
         return true;
@@ -81,22 +81,23 @@ public  ControllerParent(){}
             double sugar = Double.parseDouble(sugarText);
             entry.setSugar(sugar);
 
-
-            if (selectActualTime.isSelected()) {
-                date = LocalDate.now();
-                time = LocalTime.now();
-                time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-                entry.setDay(date);
-
-            } else {
+            if (selectActualTime==null || !selectActualTime.isSelected())
+            {
                 date = datePicker.getValue();
                 int hours = hoursSpinner.getValue();
                 int minutes = minutesSpinner.getValue();
                 int seconds = secondsSpinner.getValue();
                 time = LocalTime.of(hours, minutes, seconds);
+                entry.setDay(date);
+                entry.setTime(time);
             }
-            entry.setDay(date);
-            entry.setTime(time);
+            else if(selectActualTime.isSelected()) {
+                date = LocalDate.now();
+                time = LocalTime.now();
+                time.format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+                entry.setDay(date);
+                entry.setTime(time);
+            }
             return entry;
         }
         return null;

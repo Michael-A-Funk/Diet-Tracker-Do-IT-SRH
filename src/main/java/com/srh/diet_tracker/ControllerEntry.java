@@ -98,11 +98,7 @@ public class ControllerEntry extends ControllerParent {
         String caloriesText = caloriesTextField.getText();
         String sugarText = sugarTextField.getText();
 
-
-
         ControllerEntry controllerEntry = new ControllerEntry();
-
-
 
         Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(caloriesTextField,sugarTextField,warningLabel),
                 isSport,caloriesTextField,sugarTextField,selectActualTime,datePicker,

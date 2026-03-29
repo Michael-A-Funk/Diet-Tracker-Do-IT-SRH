@@ -58,7 +58,9 @@ public class EntryDAO {
         String url = "jdbc:sqlite:diet.db";
         String sql = "UPDATE entry SET isSport = ? , "
                 + " calories = ? , "
-                + " sugar = ? "
+                + " sugar = ?, "
+                + " date = ?, "
+                + " time = ? "
                 + "WHERE id = ?";
 
         try (var conn = DriverManager.getConnection(url);
@@ -66,12 +68,14 @@ public class EntryDAO {
             pstmt.setBoolean(1, entry.isSport());
             pstmt.setDouble(2, entry.getCalories());
             pstmt.setDouble(3, entry.getSugar());
+            pstmt.setString(4, (entry.getDay()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            pstmt.setString(5, (entry.getTime()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
             // id=0 wird gesetzt vom ControllerEntry um zu diferenzieren von ControllerDayReview, wo beliebige
             // ids geändert werden, und nicht nur die letzte (forciert)
             if (id == 0) {
-                pstmt.setInt(4, getLastId());
+                pstmt.setInt(6, getLastId());
             } else {
-                pstmt.setInt(4, id);
+                pstmt.setInt(6, id);
             }
             pstmt.executeUpdate();
 
@@ -220,7 +224,7 @@ public class EntryDAO {
                 LocalDate localDate = LocalDate.parse(rs.getString("date"), parserDate);
                 LocalTime localTime = LocalTime.parse(rs.getString("time"), parserTime);
 
-                Entry entry = new Entry(rs.getBoolean("isSport"), rs.getDouble("calories"),
+                Entry entry = new Entry(rs.getInt("id"),rs.getBoolean("isSport"), rs.getDouble("calories"),
                         rs.getDouble("sugar"), localDate, localTime);
                 entryList.add(entry);
 
