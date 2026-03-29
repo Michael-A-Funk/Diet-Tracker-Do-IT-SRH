@@ -15,16 +15,24 @@ public class App extends Application {
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("day_review.fxml"));
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
+        stage.setScene(scene);
+        stage.show();
+
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));
 
 
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Essen oder Sport Eintrag eingeben");
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
 
-        /*XMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
+        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("user_profile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Erstellung des User Profiles");
         stage.setScene(scene);

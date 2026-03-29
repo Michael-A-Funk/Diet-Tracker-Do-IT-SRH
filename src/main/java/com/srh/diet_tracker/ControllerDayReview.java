@@ -4,22 +4,42 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ControllerDayReview {
 
     //Controls
     @FXML
-    private DatePicker datePicker;
+    private Button saveEntryBtn;
+    @FXML
+    private Spinner<Integer> spinnerEntryNr;
+    @FXML
+    private RadioButton isSportRadioBtn;
+    @FXML
+    private RadioButton isMealRadioBtn;
+    @FXML
+    private TextField caloriesTextField = new TextField("0");
+    @FXML
+    private TextField sugarTextField= new TextField("0");;
+    @FXML
+    private Spinner<Integer> hoursSpinner;
+    @FXML
+    private Spinner<Integer> minutesSpinner;
+    @FXML
+    private Spinner<Integer> secondsSpinner;
+    @FXML
+    private Label sugarPercentageLabel;
+    @FXML
+    private Label caloriesPercentageLabel;
+
+    @FXML
+    private DatePicker datePicker = new DatePicker();
 
     // Columns
+    @FXML
     private TableColumn entryNrColumn;
     @FXML
     private TableColumn activityColumn;
@@ -31,29 +51,57 @@ public class ControllerDayReview {
     private TableColumn timeColumn;
 
 
-
-
-
     // FRAGE : Müssen die Attribute sein?
     private EntryDAO entryDAO;
     private UserDAO userDAO;
 
 
-    public ControllerDayReview(){}
+    public ControllerDayReview(){
+    }
+
+    @FXML
+    public void initialize() {
+        entryDAO = new EntryDAO();
+        LocalDate currentDate = LocalDate.now();
+        ArrayList<Entry> entryList = entryDAO.returnEntriesDay(currentDate);
+        spinnerEntryNr.getValueFactory().setValue(1);
+        isMealRadioBtn.setSelected(true);
+        isSportRadioBtn.setSelected(false);
+        isSportRadioBtn.setSelected(entryList.getFirst().isSport());
+        isMealRadioBtn.setSelected(!entryList.getFirst().isSport());
+        datePicker.setValue(currentDate);
+        hoursSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getHour());
+        minutesSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getMinute());
+        secondsSpinner.getValueFactory().setValue(entryList.getFirst().getTime().getSecond());
+    }
 
     public void onActionDatePicker(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
         ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
+
+
         dayEntryList.addAll(entryList);
     }
 
+    public void onIsSportRadioBtn(ActionEvent actionEvent) {
+        isMealRadioBtn.setSelected(false);
+        //isSport = true;
+    }
+
+    public void onIsMealRadioBtn(ActionEvent actionEvent) {
+        isMealRadioBtn.setSelected(true);
+        //isSport = false;
+    }
+
+    public void onSaveEntryBtn(ActionEvent actionEvent) {
+    }
 
 
     // TEST METHODS
 
-    public void showCaloriesSumByDate(){
+    /*public void showCaloriesSumByDate(){
 
         // Actual Date only used for test purposes
         LocalDate date;
@@ -124,7 +172,8 @@ public class ControllerDayReview {
 
         }
 
-    }
+    }/*
+
 
 
 

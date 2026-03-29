@@ -232,6 +232,30 @@ public class EntryDAO {
         return null;
     }
 
+    public ArrayList<Integer> returnEntriesDayCorrespodingIds(LocalDate date){
+        String url = "jdbc:sqlite:diet.db";
+        String sql = "SELECT id FROM entry WHERE date = ? ORDER BY time ASC";
+        ArrayList<Integer> idList = new ArrayList<Integer>();
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1,date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            ResultSet rs = stmt.executeQuery();
+
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                idList.add(id);
+
+            }
+            return idList;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
     public ArrayList<LocalDate> returnRegisteredDates(boolean allDates, LocalDate newerDate, LocalDate olderDate){
         String url = "jdbc:sqlite:diet.db";
         String sql;

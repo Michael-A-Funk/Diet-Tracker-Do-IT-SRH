@@ -43,9 +43,9 @@
    <bottom>
       <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Spinner fx:id="spinnerEntryNr" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
-            <RadioButton fx:id="isSportRadio" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadio" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
-            <RadioButton fx:id="isMealRadio" layoutX="202.0" layoutY="33.0" mnemonicParsing="false" onAction="#onIsMealRadio" prefHeight="18.0" prefWidth="73.0" text="Essen" textFill="WHITE" />
+            <Spinner fx:id="spinnerEntryNr" initialValue="1" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
+            <RadioButton fx:id="isSportRadioBtn" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadioBtn" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
+            <RadioButton fx:id="isMealRadioBtn" layoutX="202.0" layoutY="33.0" mnemonicParsing="false" onAction="#onIsMealRadioBtn" prefHeight="18.0" prefWidth="73.0" text="Essen" textFill="WHITE" />
             <TextField fx:id="caloriesTextField" layoutX="286.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Kalorien" />
             <TextField fx:id="sugarTextField" layoutX="386.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" promptText="Zucker" />
             <Label layoutX="458.0" layoutY="9.0" text="Stunden" textFill="WHITE" />

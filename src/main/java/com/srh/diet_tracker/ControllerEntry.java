@@ -14,8 +14,6 @@ public class ControllerEntry extends ControllerParent {
 
     Entry entry;
 
-    String caloriesInitialValue = Integer.toString(0);
-    String sugarInitialValue = Integer.toString(0);
     LocalDate currentDate = LocalDate.now();
     private boolean isSport;
 
@@ -25,9 +23,9 @@ public class ControllerEntry extends ControllerParent {
     @FXML
     private RadioButton isSportRadioBtn = new RadioButton();;
     @FXML
-    private TextField caloriesTextField = new TextField(caloriesInitialValue);
+    private TextField caloriesTextField = new TextField("0");
     @FXML
-    private TextField sugarTextField = new TextField(sugarInitialValue);
+    private TextField sugarTextField = new TextField("0");
     @FXML
     private CheckBox selectActualTime = new CheckBox();
     @FXML
@@ -35,9 +33,9 @@ public class ControllerEntry extends ControllerParent {
     @FXML
     private Spinner<Integer> hoursSpinner = new Spinner<Integer>(0,24,7);
     @FXML
-    private Spinner<Integer> minutesSpinner = new Spinner<Integer>(0,60,0);;
+    private Spinner<Integer> minutesSpinner = new Spinner<Integer>(0,60,0);
     @FXML
-    private Spinner<Integer> secondsSpinner = new Spinner<Integer>(0,60,0);;
+    private Spinner<Integer> secondsSpinner = new Spinner<Integer>(0,60,0);
     @FXML
     private Button saveEntryBtn;
     @FXML
