@@ -43,7 +43,7 @@
    <bottom>
       <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Spinner fx:id="spinnerEntryNr" initialValue="1" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
+            <Spinner fx:id="spinnerEntryNr" initialValue="1" layoutX="129.0" layoutY="17.0"  prefHeight="25.0" prefWidth="58.0" />
             <RadioButton fx:id="isSportRadioBtn" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadioBtn" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
             <RadioButton fx:id="isMealRadioBtn" layoutX="202.0" layoutY="33.0" mnemonicParsing="false" onAction="#onIsMealRadioBtn" prefHeight="18.0" prefWidth="73.0" text="Essen" textFill="WHITE" />
             <TextField fx:id="caloriesTextField" layoutX="286.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" />

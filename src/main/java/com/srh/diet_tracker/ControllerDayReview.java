@@ -8,8 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -18,6 +18,7 @@ public class ControllerDayReview {
 
 
     //Controls
+    @FXML
     Button saveEntryBtn;
     @FXML
     private Spinner<Integer> spinnerEntryNr;
@@ -26,15 +27,15 @@ public class ControllerDayReview {
     @FXML
     private RadioButton isMealRadioBtn = new RadioButton();
     @FXML
-    private TextField caloriesTextField;
+    private TextField caloriesTextField = new TextField();
     @FXML
-    private TextField sugarTextField;
+    private TextField sugarTextField = new TextField();
     @FXML
-    private Spinner<Integer> hoursSpinner;
+    private Spinner<Integer> hoursSpinner = new Spinner<>();
     @FXML
-    private Spinner<Integer> minutesSpinner;
+    private Spinner<Integer> minutesSpinner = new Spinner<>();
     @FXML
-    private Spinner<Integer> secondsSpinner;
+    private Spinner<Integer> secondsSpinner = new Spinner<>();;
     @FXML
     private Label sugarPercentageLabel = new Label();
     @FXML
@@ -42,7 +43,7 @@ public class ControllerDayReview {
     @FXML
     private DatePicker datePicker = new DatePicker();
     @FXML
-    private Label warningLabel;
+    private Label warningLabel = new Label();
 
     // Columns
     @FXML
@@ -65,6 +66,17 @@ public class ControllerDayReview {
     public ControllerDayReview(){
     }
 
+    public void initialize (){
+        spinnerEntryNr.valueProperty().addListener((obs, oldValue, newValue) ->
+            {System.out.println("Spinner Method");
+                EntryDAO entryDAO = new EntryDAO();
+                int entryNr = spinnerEntryNr.getValue();
+                LocalDate date = datePicker.getValue();
+                ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
+                ControllerDayReview controllerDayReview = new ControllerDayReview();
+                controllerDayReview.setFieldsByEntryNr(newValue-1,entryList, isSportRadioBtn, isMealRadioBtn, caloriesTextField,
+                sugarTextField, hoursSpinner, minutesSpinner, secondsSpinner);});
+    }
 
 
     public void onActionDatePicker(ActionEvent actionEvent) {
@@ -72,13 +84,12 @@ public class ControllerDayReview {
         EntryDAO entryDAO = new EntryDAO();
         ControllerDayReview controllerDayReview = new ControllerDayReview();
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
-        int entryNr = entryList.size()-1;
 
-
-        if (entryList.isEmpty()){
+        if (entryList == null || entryList.isEmpty()){
             warningLabel.setText("Kein Eintrag an gewählten Tag!\nKeine neue Einträge angezeigt.");
         }
         else {
+            int entryNr = entryList.size()-1;
             isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
             isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
             String calories = Double.toString(entryList.get(entryNr).getCalories());
@@ -119,7 +130,7 @@ public class ControllerDayReview {
 
 
         ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
-        dayEntryList.addAll(entryList);
+        //dayEntryList.addAll(entryList);
     }
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
@@ -135,8 +146,41 @@ public class ControllerDayReview {
     public void onSaveEntryBtn(ActionEvent actionEvent) {
     }
 
-    void setFieldsByEntryNr (int entryNr, ArrayList<Entry> entryList){
+    void setFieldsByEntryNr (int entryNr, ArrayList<Entry> entryList, RadioButton isSportRadioBtn,
+                             RadioButton isMealRadioBtn, TextField caloriesTextField, TextField sugarTextField,
+                             Spinner<Integer> hoursSpinner, Spinner<Integer> minutesSpinner, Spinner<Integer> second ) {
 
+        if (entryList == null ||entryList.isEmpty()) {
+            warningLabel.setText("Kein Eintrag an gewählten Tag!\nKeine neue Einträge angezeigt.");
+        } else {
+            isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
+            isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
+            String calories = Double.toString(entryList.get(entryNr).getCalories());
+            caloriesTextField.setText(calories);
+            String sugar = Double.toString(entryList.get(entryNr).getSugar());
+            sugarTextField.setText(sugar);
+            hoursSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            23
+                    )
+            );
+            hoursSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getHour());
+            minutesSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            59
+                    )
+            );
+            minutesSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getMinute());
+            secondsSpinner.setValueFactory(
+                    new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                            0,
+                            59
+                    )
+            );
+            secondsSpinner.getValueFactory().setValue(entryList.get(entryNr).getTime().getSecond());
+        }
 
     }
 

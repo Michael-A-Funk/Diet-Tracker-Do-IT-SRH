@@ -204,7 +204,7 @@ public class EntryDAO {
 
     public ArrayList<Entry> returnEntriesDay(LocalDate date){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT isSport, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
+        String sql = "SELECT id, isSport, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Entry> entryList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
@@ -225,10 +225,12 @@ public class EntryDAO {
                 entryList.add(entry);
 
             }
+            System.out.println("Nicht null!"); // Even when DB doesn't have entry for date, it will make a empty List.
             return entryList;
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
+        System.out.println("Ist Null"); // only if Error in try, for example if trying to parse incorrect Time format (like 00:00)
         return null;
     }
 
