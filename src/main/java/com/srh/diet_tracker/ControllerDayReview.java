@@ -8,12 +8,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.DragEvent;
+import javafx.util.Callback;
 
 import java.lang.reflect.Array;
+import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ControllerDayReview extends ControllerParent{
 
@@ -49,17 +55,17 @@ public class ControllerDayReview extends ControllerParent{
 
     // Table and its Columns
     @FXML
-    private TableView<Entry> table;
+    private TableView<ArrayList<String>> table;
     @FXML
-    private TableColumn<Entry,String> entryNrColumn;
+    private TableColumn<ArrayList<String>,String> entryNrColumn;
     @FXML
-    private TableColumn<Entry,String> activityColumn;
+    private TableColumn<ArrayList<String>,String> activityColumn;
     @FXML
-    private TableColumn<Entry,String> caloriesColumn;
+    private TableColumn<ArrayList<String>,String> caloriesColumn;
     @FXML
-    private TableColumn<Entry,String> sugarColumn;
+    private TableColumn<ArrayList<String>,String> sugarColumn;
     @FXML
-    private TableColumn<Entry,String> timeColumn;
+    private TableColumn<ArrayList<String>,String> timeColumn;
 
 
     // FRAGE : Müssen die Attribute sein?
@@ -135,8 +141,13 @@ public class ControllerDayReview extends ControllerParent{
 
 
         // For representing day entries in Table
-
+       //representDataInTable(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
     }
+
+    /*
+    * (TableView<Entry> table, DatePicker datePicker, TableColumn<Integer, String> entryNrColumn,
+                                      TableColumn<Entry, String> activityColumn, TableColumn<Entry, String> caloriesColumn,
+                                      TableColumn<Entry,String> sugarColumn, TableColumn<Entry,String> timeColumn)*/
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
         isMealRadioBtn.setSelected(false);
@@ -207,13 +218,33 @@ public class ControllerDayReview extends ControllerParent{
         }
     }
 
-    private void representDataInTable(TableView tableView){
-        ObservableList<Entry> dayEntryList = FXCollections.observableArrayList();
-        dayEntryList.addAll(dayEntryList);
+    private void representDataInTable(TableView<TableRow> table, DatePicker datePicker, TableColumn<TableRow, String> entryNrColumn,
+                                      TableColumn<TableRow, String> activityColumn, TableColumn<TableRow, String> caloriesColumn,
+                                      TableColumn<TableRow,String> sugarColumn, TableColumn<TableRow,String> timeColumn){
+
+        ObservableList<TableRow> observableEntryList = FXCollections.observableArrayList();
+        EntryDAO entryDAO = new EntryDAO();
+        ArrayList<Entry> entryList =  entryDAO.returnEntriesDay(datePicker.getValue());
+
+
+        entryNrColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("entryNrColumn"));
+        activityColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("activityColumn"));
+        caloriesColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("caloriesColumn"));
+        sugarColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("sugarColumn"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("timeColumn"));
+
+        table.setItems(observableEntryList);
+
+//        data.add(new Person(
+//                addFirstName.getText(),
+//                addLastName.getText(),
+//                addEmail.getText()
+//        ));
+
+
     }
 
-
-    // TEST METHODS
+     // TEST METHODS
 
     /*public void showCaloriesSumByDate(){
 
