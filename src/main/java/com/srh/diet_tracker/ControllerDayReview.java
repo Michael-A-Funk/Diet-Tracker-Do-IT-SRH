@@ -141,7 +141,8 @@ public class ControllerDayReview extends ControllerParent{
 
 
         // For representing day entries in Table
-       representDataInTable(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
+       controllerDayReview.representDataInTableAndPercentageLabels(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn,
+                            caloriesPercentageLabel,sugarPercentageLabel);
     }
 
     /*
@@ -175,7 +176,9 @@ public class ControllerDayReview extends ControllerParent{
                 int id= idList.get(spinnerNr-1);
                 entryDAO.updateEntryData(id);
                 // For representing day entries in Table from day from entry that was changed
-                representDataInTable(table,datePickerChanges,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
+                controllerDayReview.representDataInTableAndPercentageLabels(table,datePickerChanges,entryNrColumn,
+                        activityColumn,caloriesColumn,sugarColumn,timeColumn,
+                        caloriesPercentageLabel,sugarPercentageLabel);
                 datePicker.setValue(datePickerChanges.getValue());
                 break;
             }
@@ -222,43 +225,46 @@ public class ControllerDayReview extends ControllerParent{
         }
     }
 
-    private void representDataInTable(TableView<TableRow> table, DatePicker datePicker, TableColumn<TableRow, String> entryNrColumn,
+    private void representDataInTableAndPercentageLabels(TableView<TableRow> table, DatePicker datePicker, TableColumn<TableRow, String> entryNrColumn,
                                       TableColumn<TableRow, String> activityColumn, TableColumn<TableRow, String> caloriesColumn,
-                                      TableColumn<TableRow,String> sugarColumn, TableColumn<TableRow,String> timeColumn){
+                                      TableColumn<TableRow,String> sugarColumn, TableColumn<TableRow,String> timeColumn,
+                                      Label caloriesPercentageLabel, Label sugarPercentageLabel ) {
 
+        //Represent data in Table Code
         ObservableList<TableRow> observableEntryList = FXCollections.observableArrayList();
         EntryDAO entryDAO = new EntryDAO();
-        ArrayList<Entry> entryList =  entryDAO.returnEntriesDay(datePicker.getValue());
+        ArrayList<Entry> entryList = entryDAO.returnEntriesDay(datePicker.getValue());
         String activity;
-        for (int i=entryList.size()-1; i>=0;i--){
-            if(entryList.get(i).isSport()){
-                activity="Sport";
+        for (int i = entryList.size() - 1; i >= 0; i--) {
+            if (entryList.get(i).isSport()) {
+                activity = "Sport";
+            } else {
+                activity = "Essen";
             }
-            else {
-                activity="Essen";
-            }
-            TableRow tableRow = new TableRow(i+1,activity,entryList.get(i).getCalories(),entryList.get(i).getSugar(),entryList.get(i).getTime());
+            TableRow tableRow = new TableRow(i + 1, activity, entryList.get(i).getCalories(), entryList.get(i).getSugar(), entryList.get(i).getTime());
             observableEntryList.add(tableRow);
         }
 
 
-        entryNrColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("entryNr"));
-        activityColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("activity"));
-        caloriesColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("calories"));
-        sugarColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("sugar"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("time"));
+        entryNrColumn.setCellValueFactory(new PropertyValueFactory<TableRow, String>("entryNr"));
+        activityColumn.setCellValueFactory(new PropertyValueFactory<TableRow, String>("activity"));
+        caloriesColumn.setCellValueFactory(new PropertyValueFactory<TableRow, String>("calories"));
+        sugarColumn.setCellValueFactory(new PropertyValueFactory<TableRow, String>("sugar"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<TableRow, String>("time"));
 
-        //table.getItems().addAll(observableEntryList);
         table.setItems(observableEntryList);
 
-//        data.add(new Person(
-//                addFirstName.getText(),
-//                addLastName.getText(),
-//                addEmail.getText()
-//        ));
+        //Code for calculating and representing achieved percentages of calories and sugar
+        UserDAO userDAO = new UserDAO();
+        User user = userDAO.getUserData();
 
-
+        double percentageCalories = Math.floor((entryDAO.returnCaloriesSumByDate(datePicker.getValue()) / user.getBMR()) * 100);
+        double percentageSugar = Math.floor((entryDAO.returnSugarSumByDate(datePicker.getValue()) / 50) * 100);
+        caloriesPercentageLabel.setText("Kalorien: "+percentageCalories+"%");
+        sugarPercentageLabel.setText("Zucker: "+percentageSugar+"%");
     }
+
+
 
      // TEST METHODS
 
