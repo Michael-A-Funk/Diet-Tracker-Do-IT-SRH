@@ -14,7 +14,7 @@ public class App extends Application {
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("graph_calories_sugar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("homepage.fxml"));
 
 
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);

@@ -17,9 +17,7 @@ public class GraphRepresentation extends App{
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<LocalDate> datesLists = entryDAO.returnRegisteredDates(true,null,null);
         makeGraph(true,true, datesLists.getFirst(),datesLists.getLast(),stage);
-
     }
-
 
     public void makeGraph(boolean isCalories, boolean isSum, LocalDate olderDate, LocalDate newerDate, Stage stage){
         double olderDateDouble = olderDate.getDayOfYear();
@@ -29,6 +27,7 @@ public class GraphRepresentation extends App{
 
         EntryDAO entryDAO = new EntryDAO();
         NumberAxis yAxis = new NumberAxis(0,entryDAO.getMaxCalories(),5);
+        System.out.println(entryDAO.getMaxCalories());
         yAxis.setLabel("Kalorien (kcal)");
 
         LineChart linechart  = new LineChart(xAxis,yAxis);
