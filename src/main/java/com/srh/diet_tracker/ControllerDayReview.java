@@ -173,6 +173,9 @@ public class ControllerDayReview extends ControllerParent{
             if (i==spinnerNr-1){
                 int id= idList.get(spinnerNr-1);
                 entryDAO.updateEntryData(id);
+                // For representing day entries in Table from day from entry that was changed
+                representDataInTable(table,datePickerChanges,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
+                datePicker.setValue(datePickerChanges.getValue());
                 break;
             }
         }
@@ -226,7 +229,7 @@ public class ControllerDayReview extends ControllerParent{
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<Entry> entryList =  entryDAO.returnEntriesDay(datePicker.getValue());
         String activity;
-        for (int i=0; i<entryList.size();i++){
+        for (int i=entryList.size()-1; i>=0;i--){
             if(entryList.get(i).isSport()){
                 activity="Sport";
             }
