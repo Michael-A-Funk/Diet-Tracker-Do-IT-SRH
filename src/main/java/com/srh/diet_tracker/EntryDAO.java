@@ -318,4 +318,36 @@ public class EntryDAO {
         }
         return null;
     }
+
+    public double getMaxCalories() {
+        String url = "jdbc:sqlite:diet.db";
+        var sql = "SELECT MAX(calories) AS max_calories FROM entry;";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.getInt("max_calories");
+
+        } catch (SQLException e) {
+
+            System.err.println(e.getMessage());
+        }
+        return 2000;
+    }
+
+    public double getMaxSugar() {
+        String url = "jdbc:sqlite:diet.db";
+        var sql = "SELECT MAX(sugar) AS max_sugar FROM entry;";
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            return rs.getInt("max_sugar");
+
+        } catch (SQLException e) {
+
+            System.err.println(e.getMessage());
+        }
+        return 50;
+    }
 }

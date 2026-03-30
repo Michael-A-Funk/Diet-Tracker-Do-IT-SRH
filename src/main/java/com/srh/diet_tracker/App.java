@@ -11,8 +11,18 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
         DbManager dbManager = new DbManager();
+        dbManager.setDataBase();
+
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("graph_calories_sugar.fxml"));
+
+
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
+        stage.setScene(scene);
+        stage.show();
+
+        /*DbManager dbManager = new DbManager();
         dbManager.setDataBase();
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("day_review.fxml"));
@@ -21,7 +31,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
 
 
         /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));

@@ -3,27 +3,21 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerGraph">
    <center>
       <Pane prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="22.0" layoutY="6.0" text="Wert" />
-            <MenuButton layoutX="67.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Kalorien" />
-                <MenuItem mnemonicParsing="false" text="Zucker" />
-              </items>
-            </MenuButton>
             <ScrollPane layoutY="31.0" prefHeight="238.0" prefWidth="460.0">
                <content>
-                  <LineChart prefHeight="224.0" prefWidth="469.0">
+                  <LineChart fx:id="graph" prefHeight="224.0" prefWidth="469.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -33,25 +27,31 @@
                   </LineChart>
                </content>
             </ScrollPane>
-            <Label layoutX="212.0" layoutY="6.0" text="Modus" />
-            <MenuButton layoutX="267.0" layoutY="2.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="97.0">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Brutto" />
-                  <MenuItem mnemonicParsing="false" text="Prozentual" />
-               </items>
-            </MenuButton>
          </children>
       </Pane>
    </center>
    <top>
       <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="242.0" layoutY="20.0" prefHeight="28.0" prefWidth="245.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Graphische Darstellung längeren Zeitraum" />
+            <Label layoutX="14.0" layoutY="20.0" prefHeight="28.0" prefWidth="245.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Graphische Darstellung längeren Zeitraum" />
+            <Label layoutX="274.0" layoutY="12.0" text="Wert" textFill="WHITE" />
+            <RadioButton fx:id="caloriesRadioBtn" layoutX="335.0" layoutY="12.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Kalorien" textFill="WHITE" />
+            <RadioButton fx:id="sugarRadioBtn" layoutX="414.0" layoutY="11.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="65.0" text="Zucker" textFill="WHITE" />
+            <CheckBox fx:id="meanCheckBox" layoutX="508.0" layoutY="12.0" mnemonicParsing="false" text="Mittelwert" textFill="WHITE" />
+            <Label layoutX="274.0" layoutY="40.0" prefHeight="17.0" prefWidth="37.0" text="Modus" textFill="WHITE" />
+            <RadioButton fx:id="sumRadioBtn" layoutX="335.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Summe" textFill="WHITE" />
+            <RadioButton fx:id="percentageRadioBtn" layoutX="413.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" text="Prozent" textFill="WHITE" />
          </children>
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="388.0" layoutY="21.0" prefHeight="17.0" prefWidth="64.0" text="Edndatum" textFill="WHITE" />
+            <DatePicker fx:id="olderDatePicker" layoutX="254.0" layoutY="17.0" prefHeight="25.0" prefWidth="91.0" />
+            <DatePicker fx:id="newerDatePicker" layoutX="471.0" layoutY="17.0" prefHeight="25.0" prefWidth="91.0" />
+            <Label layoutX="154.0" layoutY="21.0" prefHeight="17.0" prefWidth="88.0" text="Anfangsdatum" textFill="WHITE" />
+         </children></Pane>
    </bottom>
    <left>
       <Pane prefHeight="274.0" prefWidth="138.0" BorderPane.alignment="CENTER">
