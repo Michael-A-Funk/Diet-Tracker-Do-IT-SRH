@@ -350,4 +350,66 @@ public class EntryDAO {
         }
         return 50;
     }
+
+    public ArrayList<Double> returnSUMCaloriesForDateRange(boolean allDates, LocalDate newerDate, LocalDate olderDate){
+        String url = "jdbc:sqlite:diet.db";
+        String sql;
+        if (allDates){
+            sql = "SELECT SUM(calories) as sum_calories FROM entry GROUP by date ORDER BY date ASC";
+        }
+        else {
+            sql = "SELECT SUM(calories) sum_calories FROM entry WHERE date>=? AND date<=?  GROUP by date ORDER BY date ASC;";
+        }
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+            if (!allDates) {
+                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            }
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Double> caloriesSumList=new ArrayList<>();
+            while (rs.next()) {
+                caloriesSumList.add(rs.getDouble("sum_calories"));
+
+            }
+            return caloriesSumList;
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList<Double> returnSUMSugarForDateRange(boolean allDates, LocalDate newerDate, LocalDate olderDate){
+        String url = "jdbc:sqlite:diet.db";
+        String sql;
+        if (allDates){
+            sql = "SELECT SUM(sugar) as sum_sugar FROM entry GROUP by date ORDER BY date ASC";
+        }
+        else {
+            sql = "SELECT SUM(sugar) sum_sugar FROM entry WHERE date>=? AND date<=?  GROUP by date ORDER BY date ASC;";
+        }
+
+        try (var conn = DriverManager.getConnection(url);
+             var stmt = conn.prepareStatement(sql)) {
+            if (!allDates) {
+                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            }
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<Double> caloriesSumList=new ArrayList<>();
+            while (rs.next()) {
+                caloriesSumList.add(rs.getDouble("sum_sugar"));
+
+            }
+            return caloriesSumList;
+
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
+
 }

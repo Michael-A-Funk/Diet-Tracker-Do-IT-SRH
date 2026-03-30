@@ -18,7 +18,7 @@ public class App extends Application {
 
 
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
-        stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
+        stage.setTitle("Graphen mit Statistiken");
         stage.setScene(scene);
         stage.show();
 

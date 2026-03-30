@@ -1,18 +1,22 @@
 package com.srh.diet_tracker;
 
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.stage.Stage;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ControllerGraph {
+public class ControllerGraph extends App {
     @FXML
-    private LineChart<Integer,String> graph;
+    private LineChart graph;
     @FXML
     private DatePicker olderDatePicker;
     @FXML
@@ -39,19 +43,13 @@ public class ControllerGraph {
     public void setGraph(){
     }
 
+
+
     public void initialize(){
-        EntryDAO entryDAO = new EntryDAO();
-        ArrayList<LocalDate> datesLists = new ArrayList<>();
-        makeGraph(true,true, datesLists.getFirst(),datesLists.getLast());
-    }
-
-
-    public void makeGraph(boolean isCalories,boolean isSum,LocalDate olderDate, LocalDate newerDate){
-        double olderDateDouble = olderDate.getDayOfYear();
-        double newerDateDouble = newerDate.getDayOfYear();
-        NumberAxis xAxis = new NumberAxis(olderDateDouble, newerDateDouble, 1);
 
     }
+
+
 
     // TEST methods
 

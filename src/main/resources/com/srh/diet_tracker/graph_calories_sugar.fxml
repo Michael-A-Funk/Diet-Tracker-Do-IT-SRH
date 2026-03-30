@@ -47,7 +47,7 @@
    <bottom>
       <Pane prefHeight="58.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="388.0" layoutY="21.0" prefHeight="17.0" prefWidth="64.0" text="Edndatum" textFill="WHITE" />
+            <Label layoutX="388.0" layoutY="21.0" prefHeight="17.0" prefWidth="64.0" text="Enddatum" textFill="WHITE" />
             <DatePicker fx:id="olderDatePicker" layoutX="254.0" layoutY="17.0" prefHeight="25.0" prefWidth="91.0" />
             <DatePicker fx:id="newerDatePicker" layoutX="471.0" layoutY="17.0" prefHeight="25.0" prefWidth="91.0" />
             <Label layoutX="154.0" layoutY="21.0" prefHeight="17.0" prefWidth="88.0" text="Anfangsdatum" textFill="WHITE" />
