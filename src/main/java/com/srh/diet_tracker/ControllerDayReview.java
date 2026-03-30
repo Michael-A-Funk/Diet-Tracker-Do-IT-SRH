@@ -55,17 +55,17 @@ public class ControllerDayReview extends ControllerParent{
 
     // Table and its Columns
     @FXML
-    private TableView<ArrayList<String>> table;
+    private TableView<TableRow> table;
     @FXML
-    private TableColumn<ArrayList<String>,String> entryNrColumn;
+    private TableColumn<TableRow,String> entryNrColumn;
     @FXML
-    private TableColumn<ArrayList<String>,String> activityColumn;
+    private TableColumn<TableRow,String> activityColumn;
     @FXML
-    private TableColumn<ArrayList<String>,String> caloriesColumn;
+    private TableColumn<TableRow,String> caloriesColumn;
     @FXML
-    private TableColumn<ArrayList<String>,String> sugarColumn;
+    private TableColumn<TableRow,String> sugarColumn;
     @FXML
-    private TableColumn<ArrayList<String>,String> timeColumn;
+    private TableColumn<TableRow,String> timeColumn;
 
 
     // FRAGE : Müssen die Attribute sein?
@@ -141,7 +141,7 @@ public class ControllerDayReview extends ControllerParent{
 
 
         // For representing day entries in Table
-       //representDataInTable(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
+       representDataInTable(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn);
     }
 
     /*
@@ -225,14 +225,26 @@ public class ControllerDayReview extends ControllerParent{
         ObservableList<TableRow> observableEntryList = FXCollections.observableArrayList();
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<Entry> entryList =  entryDAO.returnEntriesDay(datePicker.getValue());
+        String activity;
+        for (int i=0; i<entryList.size();i++){
+            if(entryList.get(i).isSport()){
+                activity="Sport";
+            }
+            else {
+                activity="Essen";
+            }
+            TableRow tableRow = new TableRow(i+1,activity,entryList.get(i).getCalories(),entryList.get(i).getSugar(),entryList.get(i).getTime());
+            observableEntryList.add(tableRow);
+        }
 
 
-        entryNrColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("entryNrColumn"));
-        activityColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("activityColumn"));
-        caloriesColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("caloriesColumn"));
-        sugarColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("sugarColumn"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("timeColumn"));
+        entryNrColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("entryNr"));
+        activityColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("activity"));
+        caloriesColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("calories"));
+        sugarColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("sugar"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<TableRow,String>("time"));
 
+        //table.getItems().addAll(observableEntryList);
         table.setItems(observableEntryList);
 
 //        data.add(new Person(
