@@ -94,6 +94,10 @@ public class ControllerUser {
         maleRadioBtn.setSelected(true);
     }
 
+    public void onReturnHomepage(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
+
     //For Actions after selecting a gender of Gender Menu
     /*
     */

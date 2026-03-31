@@ -13,8 +13,10 @@ public class SceneManager {
 
     private String[] sceneFiles = {
            "homepage.fxml",
-            "user_profile.fxml"
-
+            "user_profile.fxml",
+            "add_calories_sugar.fxml",
+            "day_review.fxml",
+            "graph.fxml",
     };
 
     public static SceneManager getInstance(){

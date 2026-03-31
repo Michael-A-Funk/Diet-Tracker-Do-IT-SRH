@@ -4,7 +4,7 @@ public enum SceneType {
 
     HOMEPAGE,
     USER,
-
-
-
+    ENTRY,
+    REVIEW,
+    GRAPH,
 }

@@ -35,10 +35,11 @@
    <top>
       <Pane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="14.0" layoutY="7.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
+            <Label layoutX="7.0" layoutY="7.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
             <Button fx:id="saveEntryBtn" layoutX="458.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="25.0" prefWidth="127.0" text="Änderung speichern" />
-            <Label layoutX="181.0" layoutY="12.0" text="Tag für Bericht auswählen" textFill="WHITE" />
-            <DatePicker fx:id="datePicker" layoutX="328.0" layoutY="8.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
+            <Label layoutX="195.0" layoutY="12.0" text="Tag für Bericht auswählen" textFill="WHITE" />
+            <DatePicker fx:id="datePicker" layoutX="342.0" layoutY="8.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
+            <Button fx:id="returnHomepage" layoutX="109.0" layoutY="8.0" mnemonicParsing="false" onAction="#onReturnHomepage" text="Homepage" />
          </children>
       </Pane>
    </top>

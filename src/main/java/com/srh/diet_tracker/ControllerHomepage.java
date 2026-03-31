@@ -1,17 +1,12 @@
 package com.srh.diet_tracker;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class Homepage extends App {
+public class ControllerHomepage extends App {
 
     public Button userEditGoBtn;
     public Button entryGoBtn;
@@ -25,36 +20,26 @@ public class Homepage extends App {
     public DatePicker newerDatePicker;
     public Button graphMakeBtn;
 
-    public void start(Stage stage){
-
-    }
-
     public void userEditGoBtn(ActionEvent actionEvent) {
-         SceneManager.getInstance().loadScene(SceneType.USER, "User", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.USER, "User Daten eingeben/ändern", 900, 600);
     }
 
     public void onEntryGoBtn(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.ENTRY, "Neuer Eintrag oder Letztes Ändern", 900, 600);
     }
 
-    public void onDayReviewGoBtn(ActionEvent actionEvent) throws IOException {
-        DbManager dbManager = new DbManager();
-        dbManager.setDataBase();
+    public void onDayReviewGoBtn(ActionEvent actionEvent){
+        SceneManager.getInstance().loadScene(SceneType.REVIEW, "Tagesübersicht und Einträge verwalten", 900, 600);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("day_review.fxml"));
-
-
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
-
-        // FRAGE: Wie "springe" ich zwischen Stages mit Buttons?
-        /*stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
-        stage.setScene(scene);
-        stage.show();*/
     }
 
     public void onGraphMakeBtn(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.GRAPH, "Graphen mit Statistiken", 900, 600);
     }
 
-
+    public void onReturnHomepage(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
 
 
     //First we have to use method returnRegisteredDays. The values of this array, will be used in a for cycle

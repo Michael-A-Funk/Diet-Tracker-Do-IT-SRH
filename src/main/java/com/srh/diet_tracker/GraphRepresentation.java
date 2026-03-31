@@ -10,14 +10,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class GraphRepresentation extends App{
+public class GraphRepresentation{
 
-    @Override
-    public void start(Stage stage) {
-        EntryDAO entryDAO = new EntryDAO();
-        ArrayList<LocalDate> datesLists = entryDAO.returnRegisteredDates(true,null,null);
-        makeGraph(true,true, datesLists.getFirst(),datesLists.getLast(),stage);
-    }
+    public GraphRepresentation(){}
 
     public void makeGraph(boolean isCalories, boolean isSum, LocalDate olderDate, LocalDate newerDate, Stage stage){
         double olderDateDouble = olderDate.getDayOfYear();

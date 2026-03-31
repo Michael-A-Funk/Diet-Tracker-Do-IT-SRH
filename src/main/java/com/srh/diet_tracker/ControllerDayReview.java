@@ -264,9 +264,12 @@ public class ControllerDayReview extends ControllerParent{
         sugarPercentageLabel.setText("Zucker: "+percentageSugar+"%");
     }
 
+    public void onReturnHomepage(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
 
 
-     // TEST METHODS
+    // TEST METHODS
 
     /*public void showCaloriesSumByDate(){
 

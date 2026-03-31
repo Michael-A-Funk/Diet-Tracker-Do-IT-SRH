@@ -191,6 +191,10 @@ public class ControllerEntry extends ControllerParent {
         return LocalTime.parse(timeText, parserTime);
     }
 
+    public void onReturnHomepage(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
+
 
 
     /* for SaveButton

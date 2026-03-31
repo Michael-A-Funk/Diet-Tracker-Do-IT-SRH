@@ -29,7 +29,8 @@
    <top>
       <Pane prefHeight="67.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="242.0" layoutY="20.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Benutzer Daten Eingeben" textFill="#250101" />
+            <Label layoutX="8.0" layoutY="20.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Benutzer Daten Eingeben" textFill="#250101" />
+            <Button fx:id="returnHomepage" layoutX="181.0" layoutY="21.0" mnemonicParsing="false" onAction="#onReturnHomepage" text="Homepage" />
          </children>
       </Pane>
    </top>
