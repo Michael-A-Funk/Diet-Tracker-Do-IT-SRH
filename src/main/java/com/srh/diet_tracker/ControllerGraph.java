@@ -59,12 +59,12 @@ public class ControllerGraph {
             selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
             listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
             yAxis.setLabel("Kalorien (kcal)");
-        } else if(sugarRadioBtn.isDisable() && !plotAllDays.isSelected()) {
+        } else if(sugarRadioBtn.isSelected() && !plotAllDays.isSelected()) {
             selectedDaysList= entryDAO.returnRegisteredDates(false,newerDatePicker.getValue(),olderDatePicker.getValue());
             listDataToPlot = entryDAO.returnSUMSugarForDateRange(false,  newerDatePicker.getValue(),olderDatePicker.getValue());
             yAxis.setLabel("Zucker (g)");
         }
-        else if (!caloriesRadioBtn.isDisable() && plotAllDays.isSelected()) {
+        else if (!caloriesRadioBtn.isSelected() && plotAllDays.isSelected()) {
             selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
             listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
             yAxis.setLabel("Kalorien (g)");
