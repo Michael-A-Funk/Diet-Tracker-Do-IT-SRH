@@ -5,16 +5,22 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
+import java.util.Date;
 
 
 public class ControllerParent {
 
 public  ControllerParent(){}
 
-    public boolean checkTextFieldData(TextField caloriesTextField, TextField sugarTextField, Label warningLabel) {
+    public boolean checkTextFieldData(DatePicker datePicker, TextField caloriesTextField, TextField sugarTextField, Label warningLabel) {
         String caloriesText;
         String sugarText;
+        LocalDate currentDate = LocalDate.now();
+
+        if (datePicker.getValue().isAfter(currentDate)){
+            warningLabel.setText("Datum darf nicht in\nder Zukunft sein!");
+            return false;
+        }
 
         try {
             caloriesText = caloriesTextField.getText();

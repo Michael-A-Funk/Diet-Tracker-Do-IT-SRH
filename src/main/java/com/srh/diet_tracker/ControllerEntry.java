@@ -100,7 +100,7 @@ public class ControllerEntry extends ControllerParent {
 
         ControllerEntry controllerEntry = new ControllerEntry();
 
-        Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(caloriesTextField,sugarTextField,warningLabel),
+        Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(datePicker,caloriesTextField,sugarTextField,warningLabel),
                 isSport,caloriesTextField,sugarTextField,selectActualTime,datePicker,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 

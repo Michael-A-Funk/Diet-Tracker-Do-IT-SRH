@@ -30,7 +30,7 @@ public class Homepage extends App {
     }
 
     public void userEditGoBtn(ActionEvent actionEvent) {
-
+         SceneManager.getInstance().loadScene(SceneType.USER, "User", 900, 600);
     }
 
     public void onEntryGoBtn(ActionEvent actionEvent) {
@@ -54,9 +54,7 @@ public class Homepage extends App {
     public void onGraphMakeBtn(ActionEvent actionEvent) {
     }
 
-    public void onDayReviewGoBtn(ActionEvent actionEvent) {
 
-    }
 
 
     //First we have to use method returnRegisteredDays. The values of this array, will be used in a for cycle

@@ -8,30 +8,36 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+
+    private static Stage currentStage;
+
+    public static  Stage getCurrentStage(){
+        return currentStage;
+    }
+
+
     @Override
     public void start(Stage stage) throws IOException {
 
         DbManager dbManager = new DbManager();
         dbManager.setDataBase();
-
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("homepage.fxml"));
+        currentStage = stage;
+        /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("homepage.fxml"));
 
 
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Graphen mit Statistiken");
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
 
-        /*DbManager dbManager = new DbManager();
-        dbManager.setDataBase();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("day_review.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("homepage.fxml"));
 
 
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
         stage.setTitle("Einträge für bestimmten Tag sehen oder ändern.");
         stage.setScene(scene);
-        stage.show();*/
+        stage.show();
 
 
         /*FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("add_calories_sugar.fxml"));

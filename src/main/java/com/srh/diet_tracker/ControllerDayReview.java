@@ -164,7 +164,7 @@ public class ControllerDayReview extends ControllerParent{
         ControllerDayReview controllerDayReview = new ControllerDayReview();
         if(isSportRadioBtn.isDisable()){isSport=false;}
         else if(isMealRadioBtn.isDisable()){isSport=true;}
-        Entry entry = returnEntryFromFields(controllerDayReview.checkTextFieldData(caloriesTextField,sugarTextField,warningLabel),
+        Entry entry = returnEntryFromFields(controllerDayReview.checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel),
                 isSport,caloriesTextField,sugarTextField,null,datePickerChanges,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 
