@@ -18,10 +18,10 @@
          <children>
             <LineChart fx:id="lineChart" layoutX="1.0" layoutY="-5.0" prefHeight="237.0" prefWidth="600.0">
               <xAxis>
-                <CategoryAxis side="BOTTOM"  fx:id="xAxis"/>
+                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT"  fx:id="yAxis"/>
+                <NumberAxis fx:id="yAxis" side="LEFT" />
               </yAxis>
             </LineChart>
          </children></Pane>
@@ -42,12 +42,12 @@
       <Pane prefHeight="119.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="39.0" layoutY="58.0" text="Wert" textFill="WHITE" />
-            <RadioButton fx:id="caloriesRadioBtn" layoutX="100.0" layoutY="58.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Kalorien" textFill="WHITE" />
-            <RadioButton fx:id="sugarRadioBtn" layoutX="179.0" layoutY="57.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="65.0" text="Zucker" textFill="WHITE" />
+            <RadioButton fx:id="caloriesRadioBtn" layoutX="100.0" layoutY="58.0" mnemonicParsing="false" onAction="#onCaloriesRadioBtn" prefHeight="18.0" prefWidth="66.0" selected="true" text="Kalorien" textFill="WHITE" />
+            <RadioButton fx:id="sugarRadioBtn" layoutX="179.0" layoutY="57.0" mnemonicParsing="false" onAction="#onSugarRadioBtn" prefHeight="18.0" prefWidth="65.0" text="Zucker" textFill="WHITE" />
             <CheckBox fx:id="meanCheckBox" layoutX="273.0" layoutY="58.0" mnemonicParsing="false" text="Mittelwert" textFill="WHITE" />
             <Label layoutX="33.0" layoutY="95.0" prefHeight="17.0" prefWidth="37.0" text="Modus" textFill="WHITE" />
-            <RadioButton fx:id="sumRadioBtn" layoutX="100.0" layoutY="95.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Summe" textFill="WHITE" />
-            <RadioButton fx:id="percentageRadioBtn" layoutX="178.0" layoutY="95.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" text="Prozent" textFill="WHITE" />
+            <RadioButton fx:id="sumRadioBtn" layoutX="100.0" layoutY="95.0" mnemonicParsing="false" onAction="#onSumRadioBtn" prefHeight="18.0" prefWidth="66.0" selected="true" text="Summe" textFill="WHITE" />
+            <RadioButton fx:id="percentageRadioBtn" layoutX="178.0" layoutY="95.0" mnemonicParsing="false" onAction="#onPercentageRadioBtn" prefHeight="18.0" prefWidth="66.0" text="Prozent" textFill="WHITE" />
             <DatePicker fx:id="olderDatePicker" layoutX="480.0" layoutY="90.0" prefHeight="25.0" prefWidth="91.0" />
             <Label layoutX="378.0" layoutY="59.0" prefHeight="17.0" prefWidth="88.0" text="Anfangsdatum" textFill="WHITE" />
             <DatePicker fx:id="newerDatePicker" layoutX="480.0" layoutY="55.0" prefHeight="25.0" prefWidth="91.0" />
@@ -58,6 +58,7 @@
                </font>
             </Label>
             <Button fx:id="graphMakeBtn" layoutX="274.0" layoutY="15.0" mnemonicParsing="false" onAction="#onGraphMakeBtn" prefHeight="26.0" prefWidth="296.0" text="Graphik erstellen" />
+            <CheckBox fx:id="plotAllDays" layoutX="275.0" layoutY="86.0" mnemonicParsing="false" text="Alle Tage&#10;anzeigen" textFill="WHITE" />
          </children>
       </Pane>
    </bottom>

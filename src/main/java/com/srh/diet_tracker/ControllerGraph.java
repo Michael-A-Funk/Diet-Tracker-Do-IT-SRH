@@ -28,6 +28,8 @@ public class ControllerGraph {
     @FXML
     private LineChart<String,Double> lineChart;
     @FXML
+    private CheckBox plotAllDays;
+    @FXML
     private RadioButton caloriesRadioBtn;
     @FXML
     private RadioButton sugarRadioBtn;
@@ -47,10 +49,31 @@ public class ControllerGraph {
 
     public ControllerGraph(){}
 
-    public void makeGraph(boolean isCalories, boolean isSum, LocalDate olderDate, LocalDate newerDate){
-
+    public void makeGraph(){
 
         EntryDAO entryDAO = new EntryDAO();
+        ArrayList<Double> listDataToPlot;
+        ArrayList<LocalDate> selectedDaysList;
+        boolean isCaloriesBtnOn = caloriesRadioBtn.isDisable();
+        if (caloriesRadioBtn.isSelected() && plotAllDays.isSelected()){
+            selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
+            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
+            yAxis.setLabel("Kalorien (kcal)");
+        } else if(sugarRadioBtn.isDisable() && !plotAllDays.isSelected()) {
+            selectedDaysList= entryDAO.returnRegisteredDates(false,newerDatePicker.getValue(),olderDatePicker.getValue());
+            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false,  newerDatePicker.getValue(),olderDatePicker.getValue());
+            yAxis.setLabel("Zucker (g)");
+        }
+        else if (!caloriesRadioBtn.isDisable() && plotAllDays.isSelected()) {
+            selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
+            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
+            yAxis.setLabel("Kalorien (g)");
+        }
+        else{
+            selectedDaysList= entryDAO.returnRegisteredDates(false,newerDatePicker.getValue(),olderDatePicker.getValue());
+            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false, newerDatePicker.getValue(),olderDatePicker.getValue());
+        }
+
         xAxis.setLabel("Zeit (Tage)");
         yAxis.setLabel("Kalorien (kcal)");
 
@@ -58,11 +81,11 @@ public class ControllerGraph {
         series.setName("Summe Kalorien aller eingetragenen Zeit");
         xAxis.setTickLabelRotation(45);
 
-        ArrayList<LocalDate> selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
-        ArrayList<Double> sumCaloriesList= entryDAO.returnSUMCaloriesForDateRange(true,null,null);
+        //ArrayList<LocalDate> selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
+        //ArrayList<Double> sumCaloriesList= entryDAO.returnSUMCaloriesForDateRange(true,null,null);
         for (int i=0; i<selectedDaysList.size();i++){
             String day = Integer.toString(selectedDaysList.get(i).getDayOfMonth());
-            series.getData().add(new XYChart.Data<>(day,sumCaloriesList.get(i)));
+            series.getData().add(new XYChart.Data<>(day,listDataToPlot.get(i)));
         }
         lineChart.getData().clear();
         lineChart.getData().add(series);
@@ -78,8 +101,24 @@ public class ControllerGraph {
         ArrayList<Double> caloriesSumList = entryDAO.returnSUMCaloriesForDateRange(true,null,null);
         ArrayList<LocalDate> datesList = entryDAO.returnRegisteredDates(true, null, null);
 
-        makeGraph(true, true, datesList.getFirst(), datesList.getLast());
+        makeGraph();
 
+    }
+
+    public void onCaloriesRadioBtn(ActionEvent actionEvent) {
+        sugarRadioBtn.setSelected(false);
+    }
+
+    public void onSugarRadioBtn(ActionEvent actionEvent) {
+        caloriesRadioBtn.setSelected(false);
+    }
+
+    public void onSumRadioBtn(ActionEvent actionEvent) {
+        percentageRadioBtn.setSelected(false);
+    }
+
+    public void onPercentageRadioBtn(ActionEvent actionEvent) {
+        sumRadioBtn.setSelected(false);
     }
 }
 
