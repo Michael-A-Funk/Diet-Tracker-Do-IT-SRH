@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -13,17 +10,17 @@
    <center>
       <Pane prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="userEditGoBtn" layoutX="43.0" layoutY="14.0" mnemonicParsing="false" onAction="#userEditGoBtn" prefHeight="39.0" prefWidth="506.0" text="User Daten eintragen/bearbeiten">
+            <Button fx:id="userEditGoBtn" layoutX="47.0" layoutY="59.0" mnemonicParsing="false" onAction="#userEditGoBtn" prefHeight="39.0" prefWidth="506.0" text="User Daten eintragen/bearbeiten">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="entryGoBtn" layoutX="43.0" layoutY="74.0" mnemonicParsing="false" onAction="#onEntryGoBtn" prefHeight="39.0" prefWidth="506.0" text="Neuer Eintrag oder letztes bearbeiten">
+            <Button fx:id="entryGoBtn" layoutX="47.0" layoutY="119.0" mnemonicParsing="false" onAction="#onEntryGoBtn" prefHeight="39.0" prefWidth="506.0" text="Neuer Eintrag oder letztes bearbeiten">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="dayReviewGoBtn" layoutX="43.0" layoutY="138.0" mnemonicParsing="false" onAction="#onDayReviewGoBtn" prefHeight="39.0" prefWidth="506.0" text="Tagesübersicht mit Bearbeitungstool">
+            <Button fx:id="dayReviewGoBtn" layoutX="47.0" layoutY="183.0" mnemonicParsing="false" onAction="#onDayReviewGoBtn" prefHeight="39.0" prefWidth="506.0" text="Tagesübersicht mit Bearbeitungstool">
                <font>
                   <Font size="14.0" />
                </font>
@@ -43,27 +40,7 @@
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="130.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
-         <children>
-            <Label layoutX="39.0" layoutY="58.0" text="Wert" textFill="WHITE" />
-            <RadioButton fx:id="caloriesRadioBtn" layoutX="100.0" layoutY="58.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Kalorien" textFill="WHITE" />
-            <RadioButton fx:id="sugarRadioBtn" layoutX="179.0" layoutY="57.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="65.0" text="Zucker" textFill="WHITE" />
-            <CheckBox fx:id="meanCheckBox" layoutX="273.0" layoutY="58.0" mnemonicParsing="false" text="Mittelwert" textFill="WHITE" />
-            <Label layoutX="33.0" layoutY="95.0" prefHeight="17.0" prefWidth="37.0" text="Modus" textFill="WHITE" />
-            <RadioButton fx:id="sumRadioBtn" layoutX="100.0" layoutY="95.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" selected="true" text="Summe" textFill="WHITE" />
-            <RadioButton fx:id="percentageRadioBtn" layoutX="178.0" layoutY="95.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="66.0" text="Prozent" textFill="WHITE" />
-            <DatePicker fx:id="olderDatePicker" layoutX="480.0" layoutY="90.0" prefHeight="25.0" prefWidth="91.0" />
-            <Label layoutX="378.0" layoutY="59.0" prefHeight="17.0" prefWidth="88.0" text="Anfangsdatum" textFill="WHITE" />
-            <DatePicker fx:id="newerDatePicker" layoutX="480.0" layoutY="55.0" prefHeight="25.0" prefWidth="91.0" />
-            <Label layoutX="378.0" layoutY="94.0" prefHeight="17.0" prefWidth="64.0" text="Enddatum" textFill="WHITE" />
-            <Label layoutX="33.0" layoutY="14.0" prefHeight="27.0" prefWidth="219.0" text="Graphiken mit Statistiken" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Button fx:id="graphMakeBtn" layoutX="274.0" layoutY="15.0" mnemonicParsing="false" onAction="#onGraphMakeBtn" prefHeight="26.0" prefWidth="296.0" text="Graphik erstellen" />
-         </children>
-      </Pane>
+      <Pane prefHeight="52.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
    </bottom>
    <left>
       <Pane prefHeight="274.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
