@@ -1,5 +1,6 @@
 package com.srh.diet_tracker;
 
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -10,9 +11,9 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class GraphRepresentation{
+public class ControllerGraph {
 
-    public GraphRepresentation(){}
+    public ControllerGraph(){}
 
     public void makeGraph(boolean isCalories, boolean isSum, LocalDate olderDate, LocalDate newerDate, Stage stage){
         double olderDateDouble = olderDate.getDayOfYear();
@@ -54,6 +55,13 @@ public class GraphRepresentation{
 
     }
 
+    public void onReturnHomepage(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
+
+    public void onGraphMakeBtn(ActionEvent actionEvent) {
+
+    }
 }
 
 

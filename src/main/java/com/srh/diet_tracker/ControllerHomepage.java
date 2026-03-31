@@ -33,12 +33,8 @@ public class ControllerHomepage extends App {
 
     }
 
-    public void onGraphMakeBtn(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.GRAPH, "Graphen mit Statistiken", 900, 600);
-    }
-
-    public void onReturnHomepage(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    public void onGraphGoBtn(ActionEvent actionEvent) {
+        SceneManager.getInstance().loadScene(SceneType.GRAPH, "Graphen erstellen mit Statistik", 900, 600);
     }
 
 
