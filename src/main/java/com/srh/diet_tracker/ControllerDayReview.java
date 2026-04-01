@@ -78,16 +78,16 @@ public class ControllerDayReview extends ControllerParent{
 
     public void initialize (){
         spinnerEntryNr.valueProperty().addListener((obs, oldValue, newValue) ->
-            {System.out.println("Spinner Method");
+            {
+                System.out.println("Spinner Method");
                 EntryDAO entryDAO = new EntryDAO();
                 LocalDate date = datePicker.getValue();
                 // here I get a List with all the info from entries for one day, even its id!! can use it to update any one.
                 ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
                 ControllerDayReview controllerDayReview = new ControllerDayReview();
                 controllerDayReview.setFieldsByEntryNr(newValue-1,entryList,date,datePickerChanges, isSportRadioBtn, isMealRadioBtn, caloriesTextField,
-                sugarTextField, hoursSpinner, minutesSpinner, secondsSpinner);});
-
-
+                sugarTextField, hoursSpinner, minutesSpinner, secondsSpinner);
+            });
     }
 
 
