@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class ControllerDayReview extends ControllerParent{
 
+    public Button deleteBtn;
     //Controls
     @FXML
     private DatePicker datePicker = new DatePicker();
@@ -72,6 +73,7 @@ public class ControllerDayReview extends ControllerParent{
     private EntryDAO entryDAO;
     private UserDAO userDAO;
     private boolean isSport;
+    private boolean datePickedOn = false;
 
 
     public ControllerDayReview() {}
@@ -143,6 +145,10 @@ public class ControllerDayReview extends ControllerParent{
         // For representing day entries in Table
        controllerDayReview.representDataInTableAndPercentageLabels(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn,
                             caloriesPercentageLabel,sugarPercentageLabel);
+
+        saveEntryBtn.setDisable(false);
+        deleteBtn.setDisable(false);
+
     }
 
     /*
@@ -161,25 +167,27 @@ public class ControllerDayReview extends ControllerParent{
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
-        ControllerDayReview controllerDayReview = new ControllerDayReview();
         if(isSportRadioBtn.isDisable()){isSport=false;}
         else if(isMealRadioBtn.isDisable()){isSport=true;}
-        Entry entry = returnEntryFromFields(controllerDayReview.checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel),
+        Entry entry = returnEntryFromFields(checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel),
                 isSport,caloriesTextField,sugarTextField,null,datePickerChanges,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 
         EntryDAO entryDAO = new EntryDAO(entry);
         ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespodingIds(datePicker.getValue());
+        // SET IN METHOD LATER - used on delete Data button
         for (int i=0; i<idList.size();i++){
             int spinnerNr= spinnerEntryNr.getValueFactory().getValue();
             if (i==spinnerNr-1){
                 int id= idList.get(spinnerNr-1);
                 entryDAO.updateEntryData(id);
                 // For representing day entries in Table from day from entry that was changed
-                controllerDayReview.representDataInTableAndPercentageLabels(table,datePickerChanges,entryNrColumn,
+                representDataInTableAndPercentageLabels(table,datePickerChanges,entryNrColumn,
                         activityColumn,caloriesColumn,sugarColumn,timeColumn,
                         caloriesPercentageLabel,sugarPercentageLabel);
                 datePicker.setValue(datePickerChanges.getValue());
+                saveEntryBtn.setDisable(true);
+                deleteBtn.setDisable(true);
                 break;
             }
         }
@@ -266,6 +274,35 @@ public class ControllerDayReview extends ControllerParent{
 
     public void onReturnHomepage(ActionEvent actionEvent) {
         SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+    }
+
+    public void onDeleteBtn(ActionEvent actionEvent) {
+        EntryDAO entryDAO = new EntryDAO();
+        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespodingIds(datePicker.getValue());
+
+        for (int i=0; i<idList.size();i++){
+            int spinnerNr= spinnerEntryNr.getValueFactory().getValue();
+            if (i==spinnerNr-1){
+                int id= idList.get(spinnerNr-1);
+                int newCountOfEntries = idList.size()-1;
+                entryDAO.deleteEntry(id);
+                // For representing day entries in Table from day from entry that was changed
+                representDataInTableAndPercentageLabels(table,datePickerChanges,entryNrColumn,
+                        activityColumn,caloriesColumn,sugarColumn,timeColumn,
+                        caloriesPercentageLabel,sugarPercentageLabel);
+                datePicker.setValue(datePickerChanges.getValue());
+
+                //Set Spinner to new entry count of Day
+                spinnerEntryNr.setValueFactory(
+                        new SpinnerValueFactory.IntegerSpinnerValueFactory(
+                                1,
+                                newCountOfEntries
+                        )
+                );
+                spinnerEntryNr.getValueFactory().setValue(newCountOfEntries);
+                break;
+            }
+        }
     }
 
 

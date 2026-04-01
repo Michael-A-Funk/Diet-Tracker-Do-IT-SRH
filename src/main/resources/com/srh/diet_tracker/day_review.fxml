@@ -36,10 +36,11 @@
       <Pane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="7.0" layoutY="7.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
-            <Button fx:id="saveEntryBtn" layoutX="458.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="25.0" prefWidth="127.0" text="Änderung speichern" />
-            <Label layoutX="195.0" layoutY="12.0" text="Tag für Bericht auswählen" textFill="WHITE" />
-            <DatePicker fx:id="datePicker" layoutX="342.0" layoutY="8.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
-            <Button fx:id="returnHomepage" layoutX="109.0" layoutY="8.0" mnemonicParsing="false" onAction="#onReturnHomepage" text="Homepage" />
+            <Button fx:id="saveEntryBtn" disable="true" layoutX="523.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
+            <Label layoutX="184.0" layoutY="12.0" text="Tag für Bericht auswählen" textFill="WHITE" />
+            <DatePicker fx:id="datePicker" layoutX="329.0" layoutY="8.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
+            <Button fx:id="returnHomepage" layoutX="103.0" layoutY="8.0" mnemonicParsing="false" onAction="#onReturnHomepage" text="Homepage" />
+            <Button fx:id="deleteBtn" disable="true" layoutX="447.0" layoutY="8.0" mnemonicParsing="false" onAction="#onDeleteBtn" prefHeight="25.0" prefWidth="70.0" text="Löschen" />
          </children>
       </Pane>
    </top>
@@ -52,9 +53,9 @@
             <TextField fx:id="caloriesTextField" layoutX="286.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" />
             <TextField fx:id="sugarTextField" layoutX="386.0" layoutY="13.0" prefHeight="25.0" prefWidth="57.0" />
             <Label layoutX="458.0" layoutY="9.0" text="Stunden" textFill="WHITE" />
-            <Spinner fx:id="hoursSpinner"  layoutX="520.0" layoutY="5.0" prefHeight="15.0" prefWidth="58.0" max="23" min="0" initialValue="7"/>
-            <Spinner fx:id="minutesSpinner" layoutX="520.0" layoutY="38.0" prefHeight="15.0" prefWidth="58.0" max="59" min="0" initialValue="0"/>
-            <Spinner fx:id="secondsSpinner"  layoutX="520.0" layoutY="74.0" prefHeight="15.0" prefWidth="58.0" max="59" min="0" initialValue="0"/>
+            <Spinner fx:id="hoursSpinner" initialValue="7" layoutX="520.0" layoutY="5.0" max="23" min="0" prefHeight="15.0" prefWidth="58.0" />
+            <Spinner fx:id="minutesSpinner" initialValue="0" layoutX="520.0" layoutY="38.0" max="59" min="0" prefHeight="15.0" prefWidth="58.0" />
+            <Spinner fx:id="secondsSpinner" initialValue="0" layoutX="520.0" layoutY="74.0" max="59" min="0" prefHeight="15.0" prefWidth="58.0" />
             <Label layoutX="458.0" layoutY="41.0" text="Minuten" textFill="WHITE" />
             <Label layoutX="458.0" layoutY="77.0" text="Sekunden" textFill="WHITE" />
             <Label layoutX="25.0" layoutY="14.0" prefHeight="31.0" prefWidth="90.0" text="Tag ändern" textFill="WHITE" />

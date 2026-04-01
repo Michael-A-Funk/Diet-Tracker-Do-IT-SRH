@@ -70,11 +70,12 @@ public class Entry {
     }
 
     public void setCalories(double calories) {
-        //Forciert das bei Sport Kalorien immer 0 ist (kein Zucker eintrag wenn Sport)
+        //Forciert negatives wertdas bei Sport Kalorien immer 0 ist (kein Zucker eintrag wenn Sport),
+        // auch wenn der Wert negativ von der Datenbank kommt (ohne abs() wurde es positiv wieder!!)
         if (isSport) {
-            this.calories = -calories;
+            this.calories = -Math.abs(calories);
         }
-        else if (calories>0){
+        else if (calories>=0){
             this.calories=calories;
         }
     }
