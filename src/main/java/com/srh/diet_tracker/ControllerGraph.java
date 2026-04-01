@@ -60,18 +60,18 @@ public class ControllerGraph {
             listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
             yAxis.setLabel("Kalorien (kcal)");
         } else if(sugarRadioBtn.isSelected() && !plotAllDays.isSelected()) {
-            selectedDaysList= entryDAO.returnRegisteredDates(false,newerDatePicker.getValue(),olderDatePicker.getValue());
-            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false,  newerDatePicker.getValue(),olderDatePicker.getValue());
+            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
+            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false, olderDatePicker.getValue(),newerDatePicker.getValue());
             yAxis.setLabel("Zucker (g)");
         }
-        else if (!caloriesRadioBtn.isSelected() && plotAllDays.isSelected()) {
+        else if (sugarRadioBtn.isSelected() && plotAllDays.isSelected()) {
             selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
-            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
+            listDataToPlot = entryDAO.returnSUMSugarForDateRange(true, null, null);
             yAxis.setLabel("Kalorien (g)");
         }
         else{
-            selectedDaysList= entryDAO.returnRegisteredDates(false,newerDatePicker.getValue(),olderDatePicker.getValue());
-            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false, newerDatePicker.getValue(),olderDatePicker.getValue());
+            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
+            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(false, olderDatePicker.getValue(),newerDatePicker.getValue());
         }
 
         xAxis.setLabel("Zeit (Tage)");

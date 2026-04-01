@@ -262,22 +262,22 @@ public class EntryDAO {
         return null;
     }
 
-    public ArrayList<LocalDate> returnRegisteredDates(boolean allDates, LocalDate newerDate, LocalDate olderDate){
+    public ArrayList<LocalDate> returnRegisteredDates(boolean allDates, LocalDate olderDate, LocalDate newerDate){
         String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
             sql = "SELECT DISTINCT date FROM entry ORDER BY date ASC";
         }
         else {
-            sql = "SELECT DISTINCT date FROM entry WHERE date<=? AND date>=? ORDER BY date ASC";
+            sql = "SELECT DISTINCT date FROM entry WHERE date>=? AND date<=? ORDER BY date ASC";
         }
         ArrayList<LocalDate> dateList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             ResultSet rs = stmt.executeQuery();
 
@@ -351,7 +351,7 @@ public class EntryDAO {
         return 50;
     }
 
-    public ArrayList<Double> returnSUMCaloriesForDateRange(boolean allDates, LocalDate newerDate, LocalDate olderDate){
+    public ArrayList<Double> returnSUMCaloriesForDateRange(boolean allDates, LocalDate olderDate, LocalDate newerDate){
         String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
@@ -364,8 +364,8 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             ResultSet rs = stmt.executeQuery();
             ArrayList<Double> caloriesSumList=new ArrayList<>();
@@ -381,7 +381,7 @@ public class EntryDAO {
         return null;
     }
 
-    public ArrayList<Double> returnSUMSugarForDateRange(boolean allDates, LocalDate newerDate, LocalDate olderDate){
+    public ArrayList<Double> returnSUMSugarForDateRange(boolean allDates, LocalDate olderDate, LocalDate newerDate){
         String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
@@ -394,8 +394,8 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                stmt.setString(2, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(2, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             ResultSet rs = stmt.executeQuery();
             ArrayList<Double> caloriesSumList=new ArrayList<>();
