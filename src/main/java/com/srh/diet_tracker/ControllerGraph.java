@@ -46,6 +46,8 @@ public class ControllerGraph {
     private DatePicker newerDatePicker;
     @FXML
     private Button graphMakeBtn;
+
+    private boolean isRepresentAllTime = true;
     private final int CHART_RESOLUTION = 0;
 
     public ControllerGraph(){}
@@ -58,65 +60,77 @@ public class ControllerGraph {
         EntryDAO entryDAO = new EntryDAO();
         ArrayList<Double> caloriesSumList = entryDAO.returnSUMCaloriesForDateRange(true,null,null);
         ArrayList<LocalDate> datesList = entryDAO.returnRegisteredDates(true, null, null);
-        ArrayList<Double> listDataToPlot;
-        ArrayList<LocalDate> selectedDaysList;
+        ArrayList<Double> listDataToPlot = new ArrayList<>();;
+        ArrayList<LocalDate> selectedDaysList =new ArrayList<>();;
         XYChart.Series series = new XYChart.Series();
         boolean isCaloriesBtnOn = caloriesRadioBtn.isDisable();
-
         // TIME CONTROLS MUST STILL BE IMPLEMENTED
         //IF PART FOR SUMS!
-        if (caloriesRadioBtn.isSelected() && plotAllDays.isSelected() && sumRadioBtn.isSelected()){
-            selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
-            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
-            yAxis.setLabel("Kalorien (kcal)");
-            series.setName("Summe Kalorien aller eingetragenen Zeit");
-        } else if (caloriesRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected()){
-            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
-            listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(false, olderDatePicker.getValue(),newerDatePicker.getValue());
-            yAxis.setLabel("Kalorien (kcal)");
-            series.setName("Summe Kalorien vom "+ olderDatePicker.getValue() + " bis zum "+ newerDatePicker.getValue());
-        }
-        else if(sugarRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected()) {
-            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
-            listDataToPlot = entryDAO.returnSUMSugarForDateRange(false, olderDatePicker.getValue(),newerDatePicker.getValue());
-            yAxis.setLabel("Zucker (g)");
-            series.setName("Summe Zucker vom "+ olderDatePicker.getValue() + " bis zum "+ newerDatePicker.getValue());
-        }
-        else if (sugarRadioBtn.isSelected() && plotAllDays.isSelected() && sumRadioBtn.isSelected()) {
-            selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
-            listDataToPlot = entryDAO.returnSUMSugarForDateRange(true, null, null);
-            yAxis.setLabel("Zucker (g)");
-            series.setName("Summe Zucker aller eingetragenen Zeit");
-        //IF PART FOR PERCENTAGE!
-        } else if (plotAllDays.isSelected() && caloriesRadioBtn.isSelected() && percentageRadioBtn.isSelected()){
-            selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
-            listDataToPlot = returnPercentageList(true,true);
-        }else if (plotAllDays.isSelected() && sugarRadioBtn.isSelected() && percentageRadioBtn.isSelected()){
-            selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
-            listDataToPlot = returnPercentageList(false,true);
-        }else if (!plotAllDays.isSelected() && caloriesRadioBtn.isSelected() && percentageRadioBtn.isSelected()){
-            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
-            listDataToPlot = returnPercentageList(true,false);
-        }else {
-            selectedDaysList= entryDAO.returnRegisteredDates(false,olderDatePicker.getValue(),newerDatePicker.getValue());
-            listDataToPlot = returnPercentageList(false,false);
-        } {
+        if (caloriesRadioBtn.isSelected() && plotAllDays.isSelected() && sumRadioBtn.isSelected()) {
+                selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
+                listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
+                yAxis.setLabel("Kalorien (kcal)");
+                series.setName("Summe Kalorien aller eingetragenen Zeit");
+            } else if (caloriesRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected() &&
+                !newerDatePicker.getValue().isBefore(olderDatePicker.getValue())) {
+                selectedDaysList = entryDAO.returnRegisteredDates(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                yAxis.setLabel("Kalorien (kcal)");
+                series.setName("Summe Kalorien vom " + olderDatePicker.getValue() + " bis zum " + newerDatePicker.getValue());
+                newerDatePicker.setDisable(true);
+            } else if (sugarRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected() &&
+                !newerDatePicker.getValue().isBefore(olderDatePicker.getValue())) {
+                selectedDaysList = entryDAO.returnRegisteredDates(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                listDataToPlot = entryDAO.returnSUMSugarForDateRange(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                yAxis.setLabel("Zucker (g)");
+                series.setName("Summe Zucker vom " + olderDatePicker.getValue() + " bis zum " + newerDatePicker.getValue());
+            } else if (sugarRadioBtn.isSelected() && plotAllDays.isSelected() && sumRadioBtn.isSelected() ) {
+                selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
+                listDataToPlot = entryDAO.returnSUMSugarForDateRange(true, null, null);
+                yAxis.setLabel("Zucker (g)");
+                series.setName("Summe Zucker aller eingetragenen Zeit");
+                //IF PART FOR PERCENTAGE!
+            } else if (plotAllDays.isSelected() && caloriesRadioBtn.isSelected() && percentageRadioBtn.isSelected()) {
+                selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
+                listDataToPlot = returnPercentageList(true, true);
+                series.setName("Prozent Kalorien (relativ zu Grenzwert) aller eingetragenen Zeit");
+            } else if (plotAllDays.isSelected() && sugarRadioBtn.isSelected() && percentageRadioBtn.isSelected()) {
+                selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
+                listDataToPlot = returnPercentageList(false, true);
+                series.setName("Prozent Zucker (relativ zu Grenzwert) aller eingetragenen Zeit");
+            } else if (!plotAllDays.isSelected() && caloriesRadioBtn.isSelected() && percentageRadioBtn.isSelected() &&
+                !newerDatePicker.getValue().isBefore(olderDatePicker.getValue())) {
+                selectedDaysList = entryDAO.returnRegisteredDates(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                listDataToPlot = returnPercentageList(true, false);
+                series.setName("Prozent Kalorien (relativ zu Grenzwert) aller von gewählten Zeitraum");
+            } else if (!plotAllDays.isSelected() && sugarRadioBtn.isSelected() && percentageRadioBtn.isSelected() &&
+                        !newerDatePicker.getValue().isBefore(olderDatePicker.getValue())){
+                selectedDaysList = entryDAO.returnRegisteredDates(false, olderDatePicker.getValue(), newerDatePicker.getValue());
+                listDataToPlot = returnPercentageList(false, false);
+                series.setName("Prozent Zucker (relativ zu Grenzwert) aller von gewählten Zeitraum");
+            } else if (!plotAllDays.isSelected() && newerDatePicker.getValue().isBefore(olderDatePicker.getValue())){
+                series.setName("Anfangsdatum ist früher als Beginnsdatum!");
+            }  else {
+                 series.setName("Keine Daten in abgefragen Zeitraum.");
+            }
 
-        }
 
-        xAxis.setLabel("Zeit (Tage)");
+            xAxis.setLabel("Zeit (Tage)");
 
-        xAxis.setTickLabelRotation(45);
+            xAxis.setTickLabelRotation(45);
 
-        //ArrayList<LocalDate> selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
-        //ArrayList<Double> sumCaloriesList= entryDAO.returnSUMCaloriesForDateRange(true,null,null);
-        for (int i=0; i<selectedDaysList.size();i++){
-            String day = Integer.toString(selectedDaysList.get(i).getDayOfMonth());
-            series.getData().add(new XYChart.Data<>(day,listDataToPlot.get(i)));
-        }
-        lineChart.getData().clear();
-        lineChart.getData().add(series);
+            //ArrayList<LocalDate> selectedDaysList= entryDAO.returnRegisteredDates(true,null,null);
+            //ArrayList<Double> sumCaloriesList= entryDAO.returnSUMCaloriesForDateRange(true,null,null);
+            for (int i = 0; i < selectedDaysList.size(); i++) {
+                String day = Integer.toString(selectedDaysList.get(i).getDayOfMonth());
+                series.getData().add(new XYChart.Data<>(day, listDataToPlot.get(i)));
+            }
+            lineChart.getData().clear();
+            lineChart.getData().add(series);
 
+        /*else {
+
+        }*/
 
     }
 
@@ -126,7 +140,7 @@ public class ControllerGraph {
         UserDAO userDAO = new UserDAO();
         User user = userDAO.getUserData();
 
-        ArrayList<LocalDate> dayList = new ArrayList();
+        ArrayList<LocalDate> dayList;
         if (isAllDates){
             dayList = entryDAO.returnRegisteredDates(true, null, null);
          } else {
@@ -163,6 +177,12 @@ public class ControllerGraph {
 
     public void onPercentageRadioBtn(ActionEvent actionEvent) {
         sumRadioBtn.setSelected(false);
+    }
+
+    public void onPlotAllDays(ActionEvent actionEvent) {
+        isRepresentAllTime = !isRepresentAllTime;
+        olderDatePicker.setDisable(isRepresentAllTime);
+        newerDatePicker.setDisable(isRepresentAllTime);
     }
 }
 
