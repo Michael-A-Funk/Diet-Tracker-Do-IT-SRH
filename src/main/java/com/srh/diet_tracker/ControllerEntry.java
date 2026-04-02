@@ -192,7 +192,7 @@ public class ControllerEntry extends ControllerParent {
     }
 
     public void onReturnHomepage(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 600, 500);
     }
 
 
