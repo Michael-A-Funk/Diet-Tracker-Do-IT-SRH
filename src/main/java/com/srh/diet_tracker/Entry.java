@@ -76,7 +76,7 @@ public class Entry {
             this.calories = -Math.abs(calories);
         }
         else if (calories>=0){
-            this.calories=calories;
+            this.calories= Math.abs(calories);
         }
     }
 

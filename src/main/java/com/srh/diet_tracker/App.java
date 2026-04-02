@@ -34,7 +34,7 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("homepage.fxml"));
 
 
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 600, 500);
         stage.setTitle("Homepage");
         stage.setScene(scene);
         stage.show();

@@ -21,20 +21,20 @@ public class ControllerHomepage extends App {
     public Button graphMakeBtn;
 
     public void userEditGoBtn(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.USER, "User Daten eingeben/ändern", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.USER, "User Daten eingeben/ändern", 600, 400);
     }
 
     public void onEntryGoBtn(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.ENTRY, "Neuer Eintrag oder Letztes Ändern", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.ENTRY, "Neuer Eintrag oder Letztes Ändern", 600, 400);
     }
 
     public void onDayReviewGoBtn(ActionEvent actionEvent){
-        SceneManager.getInstance().loadScene(SceneType.REVIEW, "Tagesübersicht und Einträge verwalten", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.REVIEW, "Tagesübersicht und Einträge verwalten", 600, 400);
 
     }
 
     public void onGraphGoBtn(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.GRAPH, "Graphen erstellen mit Statistik", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.GRAPH, "Graphen erstellen mit Statistik", 600, 400);
     }
 
 
