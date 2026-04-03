@@ -75,7 +75,7 @@ public class Entry {
         if (isSport) {
             this.calories = -Math.abs(calories);
         }
-        else if (calories>=0){
+        else {
             this.calories= Math.abs(calories);
         }
     }

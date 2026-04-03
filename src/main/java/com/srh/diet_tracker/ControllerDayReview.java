@@ -146,8 +146,8 @@ public class ControllerDayReview extends ControllerParent{
        controllerDayReview.representDataInTableAndPercentageLabels(table,datePicker,entryNrColumn,activityColumn,caloriesColumn,sugarColumn,timeColumn,
                             caloriesPercentageLabel,sugarPercentageLabel);
 
-        saveEntryBtn.setDisable(false);
-        deleteBtn.setDisable(false);
+//        saveEntryBtn.setDisable(false);
+//        deleteBtn.setDisable(false);
 
     }
 
@@ -186,8 +186,8 @@ public class ControllerDayReview extends ControllerParent{
                         activityColumn,caloriesColumn,sugarColumn,timeColumn,
                         caloriesPercentageLabel,sugarPercentageLabel);
                 datePicker.setValue(datePickerChanges.getValue());
-                saveEntryBtn.setDisable(true);
-                deleteBtn.setDisable(true);
+//                saveEntryBtn.setDisable(true);
+//                deleteBtn.setDisable(true);
                 break;
             }
         }
