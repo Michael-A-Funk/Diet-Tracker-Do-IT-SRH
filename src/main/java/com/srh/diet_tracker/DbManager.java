@@ -22,7 +22,7 @@ public class DbManager {
 
         var entrySql = "CREATE TABLE IF NOT EXISTS entry("
                 + "	id INTEGER PRIMARY KEY,"
-                + "	isSport BOOLEAN NOT NULL,"
+                + "	activity TEXT NOT NULL,"
                 + " calories REAL NOT NULL,"
                 + "	sugar REAL NOT NULL,"
                 + " date TEXT NOT NULL,"

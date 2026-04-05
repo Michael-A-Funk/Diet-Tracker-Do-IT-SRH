@@ -65,7 +65,7 @@ public  ControllerParent(){}
         return true;
     }
 
-    public Entry returnEntryFromFields(boolean validTextFieldDate, boolean isSport, TextField caloriesTextField, TextField sugarTextField,
+    public Entry returnEntryFromFields(boolean validTextFieldDate, String activity, TextField caloriesTextField, TextField sugarTextField,
                                          CheckBox selectActualTime, DatePicker datePicker, Spinner<Integer> hoursSpinner, Spinner<Integer> minutesSpinner,
                                          Spinner<Integer> secondsSpinner, Label warningLabel) {
         String caloriesText;
@@ -76,14 +76,15 @@ public  ControllerParent(){}
 
         if (validTextFieldDate) {
 
-            entry.setSport(isSport);
+            entry.setActivity(activity);
 
             caloriesText = caloriesTextField.getText();
             sugarText = sugarTextField.getText();
 
 
             double calories = Double.parseDouble(caloriesText);
-            entry.setCalories(calories);
+            entry.setCalories(Math.abs(calories));
+
             double sugar = Double.parseDouble(sugarText);
             entry.setSugar(sugar);
 

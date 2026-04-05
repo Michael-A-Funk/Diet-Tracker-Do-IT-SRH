@@ -5,15 +5,15 @@ import java.time.LocalTime;
 
 public class Entry {
     private int id;
-    private boolean isSport;
+    private String activity;
     private double calories;
     private double sugar;
     private LocalDate day;
     private LocalTime time;
 
 
-    public Entry (int id, boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
-        this.isSport = isSport;
+    public Entry (int id, String activity, double calories, double sugar, LocalDate day, LocalTime time){
+        this.activity = activity;
         this.setCalories(calories);
         this.setSugar(sugar);
         this.day = day;
@@ -22,8 +22,8 @@ public class Entry {
     }
 
     // one query (getLastEntry to be used in ControllerEntry) doesnt need id. This querying spares time.
-    public Entry (boolean isSport,double calories, double sugar, LocalDate day, LocalTime time){
-        this.isSport = isSport;
+    public Entry (String activity, double calories, double sugar, LocalDate day, LocalTime time){
+        this.activity = activity;
         this.setCalories(calories);
         this.setSugar(sugar);
         this.day = day;
@@ -38,15 +38,15 @@ public class Entry {
         this.day = day;
     }
 
-    public void setSport(boolean sport) {
-        isSport = sport;
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 
     // "Empty" Constructor is needed in EntryDAO
     public Entry (){}
 
-    public boolean isSport() {
-        return isSport;
+    public String getActivity () {
+        return activity;
     }
 
     public double getCalories() {return calories;}
@@ -70,23 +70,16 @@ public class Entry {
     }
 
     public void setCalories(double calories) {
-        //Forciert negatives wertdas bei Sport Kalorien immer 0 ist (kein Zucker eintrag wenn Sport),
-        // auch wenn der Wert negativ von der Datenbank kommt (ohne abs() wurde es positiv wieder!!)
-        if (isSport) {
-            this.calories = -Math.abs(calories);
-        }
-        else {
-            this.calories= Math.abs(calories);
-        }
+        this.calories = calories;
     }
 
     public void setSugar(double sugar) {
         //Forciert das bei Sport Zuckereintrag immer 0 ist (kein Zucker eintrag wenn Sport),
         // und bei Essen immer größer oder gleich 0 ist
-        if (this.isSport){
+        if (this.activity.equals("sport")){
             this.sugar = 0;
-        } else if (sugar>=0){
-            this.sugar = sugar;
+        } else{
+            this.sugar = Math.abs(sugar);
         }
 
     }

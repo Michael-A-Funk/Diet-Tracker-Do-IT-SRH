@@ -15,7 +15,7 @@ public class ControllerEntry extends ControllerParent {
     Entry entry;
 
     LocalDate currentDate = LocalDate.now();
-    private boolean isSport;
+    private String activity="meal";
 
     public Label warningLabel = new Label();
     @FXML
@@ -63,13 +63,12 @@ public class ControllerEntry extends ControllerParent {
 
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
-        isSport = false;
-        entry.setSport(false);
+        activity = "meal";
         isSportRadioBtn.setSelected(false);
     }
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
-        isSport = true;
+        activity = "sport";
         isMealRadioBtn.setSelected(false);
     }
 
@@ -89,9 +88,10 @@ public class ControllerEntry extends ControllerParent {
         }
     }
 
+    //Error prone method
     public void onDatePicker(ActionEvent actionEvent) {
-        LocalDate date = datePicker.getValue();
-        entry.setDay(date);
+        /*LocalDate date = datePicker.getValue();
+        entry.setDay(date);*/
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
@@ -101,7 +101,7 @@ public class ControllerEntry extends ControllerParent {
         ControllerEntry controllerEntry = new ControllerEntry();
 
         Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(datePicker,caloriesTextField,sugarTextField,warningLabel),
-                isSport,caloriesTextField,sugarTextField,selectActualTime,datePicker,
+                activity,caloriesTextField,sugarTextField,selectActualTime,datePicker,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 
         EntryDAO entryDAO = new EntryDAO(entry);
@@ -123,16 +123,19 @@ public class ControllerEntry extends ControllerParent {
     public void onEditLastEntryBtn(ActionEvent actionEvent) {
 
         EntryDAO entryDAO = new EntryDAO();
+        try {
         entry = entryDAO.getLastEntry();
 
         //Setting all fields to values of last Entry
         // Activity: Meal or Sport
-        if (entry.isSport()) {
+        if (entry.getActivity().equals("sport")) {
             isSportRadioBtn.setSelected(true);
             isMealRadioBtn.setSelected(false);
+            activity = "sport";
         } else {
             isSportRadioBtn.setSelected(false);
             isMealRadioBtn.setSelected(true);
+            activity ="meal";
         }
         // Textfields calories and sugar
         String calories = Double.toString(entry.getCalories());
@@ -161,6 +164,9 @@ public class ControllerEntry extends ControllerParent {
 
         isNewEntry = false;
         saveEntryBtn.setDisable(false);
+        } catch (Exception e) {
+            warningLabel.setText("Sie haben bisher noch\nkeinen Eintrag gemacht.");
+        }
 
     }
 
@@ -168,6 +174,7 @@ public class ControllerEntry extends ControllerParent {
         saveEntryBtn.setDisable(false);
         isSportRadioBtn.setSelected(false);
         isMealRadioBtn.setSelected(true);
+        activity = "meal";
         caloriesTextField.setText("");
         sugarTextField.setText("");
         selectActualTime.setSelected(true);

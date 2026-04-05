@@ -72,7 +72,7 @@ public class ControllerDayReview extends ControllerParent{
     // FRAGE : Müssen die Attribute sein?
     private EntryDAO entryDAO;
     private UserDAO userDAO;
-    private boolean isSport;
+    private String activity;
     private boolean datePickedOn = false;
 
 
@@ -87,7 +87,7 @@ public class ControllerDayReview extends ControllerParent{
                 // here I get a List with all the info from entries for one day, even its id!! can use it to update any one.
                 ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
                 ControllerDayReview controllerDayReview = new ControllerDayReview();
-                controllerDayReview.setFieldsByEntryNr(newValue-1,entryList,date,datePickerChanges, isSportRadioBtn, isMealRadioBtn, caloriesTextField,
+                setFieldsByEntryNr(newValue-1,entryList,date,datePickerChanges, isSportRadioBtn, isMealRadioBtn, caloriesTextField,
                 sugarTextField, hoursSpinner, minutesSpinner, secondsSpinner);
             });
     }
@@ -104,8 +104,8 @@ public class ControllerDayReview extends ControllerParent{
         }
         else {
             int entryNr = entryList.size()-1;
-            isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
-            isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
+            isSportRadioBtn.setSelected(entryList.get(entryNr).getActivity().equals("sport"));
+            isMealRadioBtn.setSelected(!entryList.get(entryNr).getActivity().equals("meal"));
             String calories = Double.toString(entryList.get(entryNr).getCalories());
             caloriesTextField.setText(calories);
             String sugar = Double.toString(entryList.get(entryNr).getSugar());
@@ -158,23 +158,23 @@ public class ControllerDayReview extends ControllerParent{
 
     public void onIsSportRadioBtn(ActionEvent actionEvent) {
         isMealRadioBtn.setSelected(false);
-        isSport = true;
+        activity = "sport";
     }
 
     public void onIsMealRadioBtn(ActionEvent actionEvent) {
         isSportRadioBtn.setSelected(false);
-        isSport = false;
+        activity = "meal";
     }
 
     public void onSaveEntryBtn(ActionEvent actionEvent) {
-        if(isSportRadioBtn.isDisable()){isSport=false;}
-        else if(isMealRadioBtn.isDisable()){isSport=true;}
+        if(isSportRadioBtn.isDisable()){activity = "meal";}
+        else if(isMealRadioBtn.isDisable()){activity = "sport"; }
         Entry entry = returnEntryFromFields(checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel),
-                isSport,caloriesTextField,sugarTextField,null,datePickerChanges,
+                activity,caloriesTextField,sugarTextField,null,datePickerChanges,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 
         EntryDAO entryDAO = new EntryDAO(entry);
-        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespodingIds(datePicker.getValue());
+        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespondingIds(datePicker.getValue());
         // SET IN METHOD LATER - used on delete Data button
         for (int i=0; i<idList.size();i++){
             int spinnerNr= spinnerEntryNr.getValueFactory().getValue();
@@ -202,9 +202,9 @@ public class ControllerDayReview extends ControllerParent{
             warningLabel.setText("Kein Eintrag an gewählten Tag!\nKeine neue Einträge angezeigt.");
         } else {
             datePickerChanges.setValue(date);
-            isSportRadioBtn.setSelected(entryList.get(entryNr).isSport());
-            isMealRadioBtn.setSelected(!entryList.get(entryNr).isSport());
-            isSport = entryList.get(entryNr).isSport();
+            isSportRadioBtn.setSelected(entryList.get(entryNr).getActivity().equals("sport"));
+            isMealRadioBtn.setSelected(entryList.get(entryNr).getActivity().equals("meal"));
+            activity = entryList.get(entryNr).getActivity();
             String calories = Double.toString(entryList.get(entryNr).getCalories());
             caloriesTextField.setText(calories);
             String sugar = Double.toString(entryList.get(entryNr).getSugar());
@@ -244,7 +244,7 @@ public class ControllerDayReview extends ControllerParent{
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(datePicker.getValue());
         String activity;
         for (int i = entryList.size() - 1; i >= 0; i--) {
-            if (entryList.get(i).isSport()) {
+            if (entryList.get(i).getActivity().equals("sport")) {
                 activity = "Sport";
             } else {
                 activity = "Essen";
@@ -278,7 +278,7 @@ public class ControllerDayReview extends ControllerParent{
 
     public void onDeleteBtn(ActionEvent actionEvent) {
         EntryDAO entryDAO = new EntryDAO();
-        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespodingIds(datePicker.getValue());
+        ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespondingIds(datePicker.getValue());
 
         for (int i=0; i<idList.size();i++){
             int spinnerNr= spinnerEntryNr.getValueFactory().getValue();

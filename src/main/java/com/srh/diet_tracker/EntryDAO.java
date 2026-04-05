@@ -31,17 +31,20 @@ public class EntryDAO {
         //Later, functionality may be added to change the time.
         // Later, a controller should be used when instantiating the Entry class.
 
-        String sql = "INSERT INTO entry(isSport,calories,sugar,date,time) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO entry(activity,calories,sugar,date,time) VALUES(?,?,?,?,?)";
 
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.prepareStatement(sql)) {
-            pstmt.setBoolean(1, entry.isSport());
+            pstmt.setString(1, entry.getActivity());
             pstmt.setDouble(2, entry.getCalories());
-            if (entry.isSport()) {
+
+            // Presumely sugar is already forced in DB
+            /*if (entry.isSport()) {
                 pstmt.setDouble(3, 0);
             } else {
                 pstmt.setDouble(3, entry.getSugar());
-            }
+            }*/
+            pstmt.setDouble(3, entry.getSugar());
             pstmt.setString(4, (entry.getDay()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             pstmt.setString(5, (entry.getTime()).format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
@@ -56,7 +59,7 @@ public class EntryDAO {
     //  The ID is passed by the corresponding `ControllerDayReview` (last ID for `ControllerEntry`, any ID for `ControllerDayReview`)
     public void updateEntryData(int id) {
         String url = "jdbc:sqlite:diet.db";
-        String sql = "UPDATE entry SET isSport = ? , "
+        String sql = "UPDATE entry SET activity = ? , "
                 + " calories = ? , "
                 + " sugar = ?, "
                 + " date = ?, "
@@ -65,7 +68,7 @@ public class EntryDAO {
 
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.prepareStatement(sql)) {
-            pstmt.setBoolean(1, entry.isSport());
+            pstmt.setString(1, entry.getActivity());
             pstmt.setDouble(2, entry.getCalories());
             pstmt.setDouble(3, entry.getSugar());
             pstmt.setString(4, (entry.getDay()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -121,7 +124,8 @@ public class EntryDAO {
 
     public double returnCaloriesSumByDate(LocalDate date) {
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT SUM(calories) AS sum_calories_day FROM entry WHERE date = ?;";
+        String sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) AS sum_calories_day  " +
+                "FROM entry WHERE date = ?;";
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
@@ -140,7 +144,7 @@ public class EntryDAO {
     // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
     public double returnCaloriesTotalSum() {
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT SUM(calories) AS sum_calories_total FROM entry;";
+        String sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) AS sum_calories_total FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.createStatement();
@@ -208,7 +212,7 @@ public class EntryDAO {
 
     public ArrayList<Entry> returnEntriesDay(LocalDate date){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT id, isSport, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
+        String sql = "SELECT id, activity, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Entry> entryList = new ArrayList<>();
 
         try (var conn = DriverManager.getConnection(url);
@@ -224,7 +228,7 @@ public class EntryDAO {
                 LocalDate localDate = LocalDate.parse(rs.getString("date"), parserDate);
                 LocalTime localTime = LocalTime.parse(rs.getString("time"), parserTime);
 
-                Entry entry = new Entry(rs.getInt("id"),rs.getBoolean("isSport"), rs.getDouble("calories"),
+                Entry entry = new Entry(rs.getInt("id"),rs.getString("activity"), rs.getDouble("calories"),
                         rs.getDouble("sugar"), localDate, localTime);
                 entryList.add(entry);
 
@@ -238,7 +242,7 @@ public class EntryDAO {
         return null;
     }
 
-    public ArrayList<Integer> returnEntriesDayCorrespodingIds(LocalDate date){
+    public ArrayList<Integer> returnEntriesDayCorrespondingIds(LocalDate date){
         String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT id FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Integer> idList = new ArrayList<Integer>();
@@ -296,7 +300,7 @@ public class EntryDAO {
 
     public Entry getLastEntry(){
         String url = "jdbc:sqlite:diet.db";
-        String sql = "SELECT isSport, calories, sugar, date, time FROM entry WHERE id=?";
+        String sql = "SELECT activity, calories, sugar, date, time FROM entry WHERE id=?";
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
@@ -309,7 +313,7 @@ public class EntryDAO {
                 LocalDate localDate = LocalDate.parse(rs.getString("date"), parserDate);
                 LocalTime localTime = LocalTime.parse(rs.getString("time"), parserTime);
 
-            return new Entry(rs.getBoolean("isSport"), rs.getDouble("calories"),
+            return new Entry(rs.getString("activity"), rs.getDouble("calories"),
                 rs.getDouble("sugar"), localDate, localTime);
 
 
@@ -355,7 +359,8 @@ public class EntryDAO {
         String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
-            sql = "SELECT SUM(calories) as sum_calories FROM entry GROUP by date ORDER BY date ASC";
+            sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) as sum_calories " +
+                    "FROM entry GROUP by date ORDER BY date ASC";
         }
         else {
             sql = "SELECT SUM(calories) sum_calories FROM entry WHERE date>=? AND date<=?  GROUP by date ORDER BY date ASC;";
