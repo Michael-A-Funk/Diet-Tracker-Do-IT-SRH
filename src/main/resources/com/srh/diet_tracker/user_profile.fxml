@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerUser">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerUser">
    <center>
       <Pane fx:id="height" prefHeight="274.0" prefWidth="407.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
@@ -41,9 +36,11 @@
          </children></Pane>
    </bottom>
    <left>
-      <Pane prefHeight="274.0" prefWidth="138.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="275.0" prefWidth="212.0" BorderPane.alignment="CENTER">
          <children>
             <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="32.0" prefHeight="94.0" prefWidth="121.0" text="Geben Sie hier Ihre&#10;Daten, für die&#10;Kalkulation&#10;von Ihren Ideale&#10;Einahmewerte" />
+            <Label fx:id="caloriesMax" alignment="TOP_LEFT" layoutX="9.0" layoutY="137.0" prefHeight="48.0" prefWidth="202.0" text="Kalorien Maximal:" />
+            <Label fx:id="sugarMax" alignment="TOP_LEFT" layoutX="9.0" layoutY="185.0" prefHeight="48.0" prefWidth="201.0" text="Zucker Maximal:" />
          </children>
       </Pane>
    </left>

@@ -7,6 +7,10 @@ import javafx.scene.control.*;
 public class ControllerUser {
 
     @FXML
+    private Label caloriesMax;
+    @FXML
+    private Label sugarMax;
+    @FXML
     private Spinner<Integer> spinnerHeight;
     @FXML
     private Spinner<Integer> spinnerAge;
@@ -30,7 +34,9 @@ public class ControllerUser {
 
     public ControllerUser(){}
 
-
+    public void initialize() {
+        showMaximumValues();
+    }
     // waits for event from Button "Bestätigen"
     public void saveUser(){ //this line wil be replaced with the values
                                                                      // that come from the TextFields
@@ -80,6 +86,7 @@ public class ControllerUser {
             userDAO.updateUserData();
             System.out.println("Daten wurden Aktualisiert");
         }
+        showMaximumValues();
     }
 
     public void setRadioBtnFemale(ActionEvent actionEvent) {
@@ -95,7 +102,26 @@ public class ControllerUser {
     }
 
     public void onReturnHomepage(ActionEvent actionEvent) {
-        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 900, 600);
+        SceneManager.getInstance().loadScene(SceneType.HOMEPAGE, "Homepage", 600, 500);
+    }
+
+    public void showMaximumValues () {
+        UserDAO userDAO = new UserDAO();
+        if (userDAO.userExists()) {
+            double percentageCalories = Math.floor(user.getBMR());
+            User user = userDAO.getUserData();
+            caloriesMax.setText("Kalorien Grenzwert: "+percentageCalories+"kCal");
+            if (user.hasDiabetes){
+                sugarMax.setText("App ist bisher nocht nicht\noptimiert für Zuckermessung\nfür Diabetiker!");
+            }
+            else {
+                sugarMax.setText("Zucker Grenzwert: 50g");
+            }
+
+        }else {
+            caloriesMax.setText("Kalorien Grenzwert wird\ngesetzt nach ersten Eintrag!");
+            sugarMax.setText("Zucker Grenzwert wird\ngesetzt nach ersten Eintrag!");
+        }
     }
 
     //For Actions after selecting a gender of Gender Menu
