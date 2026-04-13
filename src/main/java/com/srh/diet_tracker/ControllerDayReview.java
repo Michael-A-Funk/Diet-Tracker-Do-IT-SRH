@@ -95,11 +95,14 @@ public class ControllerDayReview extends ControllerParent{
 
     public void onActionDatePicker(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
+        LocalDate currentdate = LocalDate.now();
         EntryDAO entryDAO = new EntryDAO();
         ControllerDayReview controllerDayReview = new ControllerDayReview();
         ArrayList<Entry> entryList = entryDAO.returnEntriesDay(date);
 
-        if (entryList == null || entryList.isEmpty()){
+        if (date.isAfter(currentdate)){
+            warningLabel.setText("Sie habenn ein Datum in\nder Zukunft ausgewählt!");
+        }else if(entryList == null || entryList.isEmpty()){
             warningLabel.setText("Kein Eintrag an gewählten Tag!\nKeine neue Einträge angezeigt.");
         }
         else {
@@ -169,7 +172,7 @@ public class ControllerDayReview extends ControllerParent{
     public void onSaveEntryBtn(ActionEvent actionEvent) {
         if(isSportRadioBtn.isDisable()){activity = "meal";}
         else if(isMealRadioBtn.isDisable()){activity = "sport"; }
-        Entry entry = returnEntryFromFields(checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel),
+        Entry entry = returnEntryFromFields(checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel,isSportRadioBtn),
                 activity,caloriesTextField,sugarTextField,null,datePickerChanges,
                 hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
 
