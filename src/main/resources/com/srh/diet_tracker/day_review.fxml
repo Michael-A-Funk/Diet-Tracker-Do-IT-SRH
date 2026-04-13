@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerDayReview">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.srh.diet_tracker.ControllerDayReview">
    <center>
       <Pane prefHeight="274.0" prefWidth="504.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
          <children>
@@ -36,16 +27,16 @@
       <Pane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="7.0" layoutY="7.0" prefHeight="28.0" prefWidth="89.0" style="-fx-background-color: white; -fx-padding: 5px;" text="Tags Übersicht" />
-            <Button fx:id="saveEntryBtn"  layoutX="523.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
+            <Button fx:id="saveEntryBtn" layoutX="523.0" layoutY="8.0" mnemonicParsing="false" onAction="#onSaveEntryBtn" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
             <Label layoutX="184.0" layoutY="12.0" text="Tag für Bericht auswählen" textFill="WHITE" />
             <DatePicker fx:id="datePicker" layoutX="329.0" layoutY="8.0" onAction="#onActionDatePicker" prefHeight="25.0" prefWidth="109.0" />
             <Button fx:id="returnHomepage" layoutX="103.0" layoutY="8.0" mnemonicParsing="false" onAction="#onReturnHomepage" text="Homepage" />
-            <Button fx:id="deleteBtn"  layoutX="447.0" layoutY="8.0" mnemonicParsing="false" onAction="#onDeleteBtn" prefHeight="25.0" prefWidth="70.0" text="Löschen" />
+            <Button fx:id="deleteBtn" layoutX="447.0" layoutY="8.0" mnemonicParsing="false" onAction="#onDeleteBtn" prefHeight="25.0" prefWidth="70.0" text="Löschen" />
          </children>
       </Pane>
    </top>
    <bottom>
-      <Pane prefHeight="100.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="121.0" prefWidth="600.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
          <children>
             <Spinner fx:id="spinnerEntryNr" initialValue="1" layoutX="129.0" layoutY="17.0" prefHeight="25.0" prefWidth="58.0" />
             <RadioButton fx:id="isSportRadioBtn" layoutX="202.0" layoutY="8.0" mnemonicParsing="false" onAction="#onIsSportRadioBtn" prefHeight="18.0" prefWidth="73.0" text="Sport" textFill="WHITE" />
@@ -59,7 +50,7 @@
             <Label layoutX="458.0" layoutY="41.0" text="Minuten" textFill="WHITE" />
             <Label layoutX="458.0" layoutY="77.0" text="Sekunden" textFill="WHITE" />
             <Label layoutX="25.0" layoutY="14.0" prefHeight="31.0" prefWidth="90.0" text="Tag ändern" textFill="WHITE" />
-            <Label fx:id="warningLabel" alignment="TOP_LEFT" layoutX="132.0" layoutY="58.0" prefHeight="42.0" prefWidth="309.0" text="Wählen sie den Tag für Übersicht und Bearbeitung der&#10;Einträge." textFill="WHITE" />
+            <Label fx:id="warningLabel" alignment="TOP_LEFT" layoutX="132.0" layoutY="52.0" prefHeight="78.0" prefWidth="309.0" text="Wählen sie den Tag für Übersicht und Bearbeitung der&#10;Einträge." textFill="WHITE" />
             <DatePicker fx:id="datePickerChanges" layoutX="11.0" layoutY="48.0" prefHeight="25.0" prefWidth="109.0" />
          </children></Pane>
    </bottom>

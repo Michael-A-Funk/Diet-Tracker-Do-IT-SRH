@@ -12,7 +12,8 @@ public class ControllerParent {
 
 public  ControllerParent(){}
 
-    public boolean checkTextFieldData(DatePicker datePicker, TextField caloriesTextField, TextField sugarTextField, Label warningLabel) {
+    public boolean checkTextFieldData(DatePicker datePicker, TextField caloriesTextField, TextField sugarTextField, Label warningLabel,
+                                      RadioButton isSport) {
         String caloriesText;
         String sugarText;
         LocalDate currentDate = LocalDate.now();
@@ -52,14 +53,14 @@ public  ControllerParent(){}
         }
 
         //Check and warn if calories and sugar entries are adequate.
-        if (isSugarEntryAdequate == false && isCaloriesEntryAdequate == false) {
-            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für\nKalorien und Zucker!\n(für Kommastelle '.').");
+        if (!isSugarEntryAdequate && !isCaloriesEntryAdequate && !isSport.isSelected()) {
+            warningLabel.setText("Warnung: geben sie ein\nadequaten Numerischen Wert\nfür Kalorien und Zucker!\n(für Kommastelle '.').");
             return false;
         } else if (!isCaloriesEntryAdequate) {
-            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für \nKalorien! Falls sie ','\n(für Kommastelle '.')");
+            warningLabel.setText("Warnung: geben sie ein\nadequaten Numerischen Wert\nfür Kalorien!\n(für Kommastelle '.')");
             return false;
-        } else if (isSugarEntryAdequate == false) {
-            warningLabel.setText("Warnung: geben sie ein adequaten\nNumerischen Wert für \nSugar! Falls sie ','\n(für Kommastelle '.')");
+        } else if (!isSugarEntryAdequate && !isSport.isSelected()) {
+            warningLabel.setText("Warnung: geben sie ein\nadequaten Numerischen Wert\nfür Zucker!\n(für Kommastelle '.')");
             return false;
         }
         return true;
@@ -67,7 +68,7 @@ public  ControllerParent(){}
 
     public Entry returnEntryFromFields(boolean validTextFieldDate, String activity, TextField caloriesTextField, TextField sugarTextField,
                                          CheckBox selectActualTime, DatePicker datePicker, Spinner<Integer> hoursSpinner, Spinner<Integer> minutesSpinner,
-                                         Spinner<Integer> secondsSpinner, Label warningLabel) {
+                                         Spinner<Integer> secondsSpinner, RadioButton isSport) {
         String caloriesText;
         String sugarText;
         LocalTime time;
@@ -85,8 +86,13 @@ public  ControllerParent(){}
             double calories = Double.parseDouble(caloriesText);
             entry.setCalories(Math.abs(calories));
 
-            double sugar = Double.parseDouble(sugarText);
-            entry.setSugar(sugar);
+            if (!isSport.isSelected()) {
+                double sugar = Double.parseDouble(sugarText);
+                entry.setSugar(sugar);
+            }
+            else {
+                entry.setSugar(0);
+            }
 
             if (selectActualTime==null || !selectActualTime.isSelected())
             {

@@ -100,9 +100,9 @@ public class ControllerEntry extends ControllerParent {
 
         ControllerEntry controllerEntry = new ControllerEntry();
 
-        Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(datePicker,caloriesTextField,sugarTextField,warningLabel),
+        Entry entry = returnEntryFromFields(controllerEntry.checkTextFieldData(datePicker,caloriesTextField,sugarTextField,warningLabel,isSportRadioBtn),
                 activity,caloriesTextField,sugarTextField,selectActualTime,datePicker,
-                hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
+                hoursSpinner,minutesSpinner,secondsSpinner,isSportRadioBtn);
 
         EntryDAO entryDAO = new EntryDAO(entry);
         try {

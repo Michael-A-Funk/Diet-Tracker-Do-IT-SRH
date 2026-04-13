@@ -174,7 +174,7 @@ public class ControllerDayReview extends ControllerParent{
         else if(isMealRadioBtn.isDisable()){activity = "sport"; }
         Entry entry = returnEntryFromFields(checkTextFieldData(datePickerChanges, caloriesTextField,sugarTextField,warningLabel,isSportRadioBtn),
                 activity,caloriesTextField,sugarTextField,null,datePickerChanges,
-                hoursSpinner,minutesSpinner,secondsSpinner,warningLabel);
+                hoursSpinner,minutesSpinner,secondsSpinner,isSportRadioBtn);
 
         EntryDAO entryDAO = new EntryDAO(entry);
         ArrayList<Integer> idList= entryDAO.returnEntriesDayCorrespondingIds(datePicker.getValue());
