@@ -73,12 +73,15 @@ public class ControllerGraph {
         XYChart.Series series = new XYChart.Series();
 
         //IF PART FOR SUMS!
+        //All Days - Sum of Calories
         if (caloriesRadioBtn.isSelected() && plotAllDays.isSelected() && sumRadioBtn.isSelected()) {
                 selectedDaysList = entryDAO.returnRegisteredDates(true, null, null);
                 listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(true, null, null);
                 yAxis.setLabel("Kalorien (kcal)");
                 series.setName("Summe Kalorien aller eingetragenen Zeit");
-            } else if (caloriesRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected() &&
+        }
+        //Specific Date Range - Sum of Calories
+        else if (caloriesRadioBtn.isSelected() && !plotAllDays.isSelected() && sumRadioBtn.isSelected() &&
                 !newerDatePicker.getValue().isBefore(olderDatePicker.getValue()) && !isEmpty) {
                 selectedDaysList = entryDAO.returnRegisteredDates(false, olderDatePicker.getValue(), newerDatePicker.getValue());
                 listDataToPlot = entryDAO.returnSUMCaloriesForDateRange(false, olderDatePicker.getValue(), newerDatePicker.getValue());

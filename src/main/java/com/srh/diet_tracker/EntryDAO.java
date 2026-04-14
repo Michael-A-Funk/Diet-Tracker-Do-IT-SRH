@@ -269,8 +269,8 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                stmt.setString(2, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(1, olderDate.format(parserDate));
+                stmt.setString(2, newerDate.format(parserDate));
             }
             ResultSet rs = stmt.executeQuery();
 
@@ -346,14 +346,14 @@ public class EntryDAO {
                     "FROM entry GROUP by date ORDER BY date ASC";
         }
         else {
-            sql = "SELECT SUM(calories) sum_calories FROM entry WHERE date>=? AND date<=?  GROUP by date ORDER BY date ASC;";
+            sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) sum_calories FROM entry WHERE date>=? AND date<=?  GROUP by date ORDER BY date ASC;";
         }
 
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
                 stmt.setString(1, olderDate.format(parserDate));
-                stmt.setString(2, newerDate.format(parserTime));
+                stmt.setString(2, newerDate.format(parserDate));
             }
             ResultSet rs = stmt.executeQuery();
             ArrayList<Double> caloriesSumList=new ArrayList<>();
@@ -382,7 +382,7 @@ public class EntryDAO {
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
                 stmt.setString(1, olderDate.format(parserDate)); //DateTimeFormat
-                stmt.setString(2, newerDate.format(parserTime));
+                stmt.setString(2, newerDate.format(parserDate));
             }
             ResultSet rs = stmt.executeQuery();
             ArrayList<Double> caloriesSumList=new ArrayList<>();
