@@ -16,13 +16,13 @@
             <TextField fx:id="sugarTextField" layoutX="163.0" layoutY="111.0" prefHeight="25.0" prefWidth="56.0" />
             <CheckBox fx:id="selectActualTime" layoutX="8.0" layoutY="164.0" mnemonicParsing="false" onAction="#onSelectActualTime" selected="true" text="Jetzige Zeit" />
             <DatePicker fx:id="datePicker" disable="true" layoutX="161.0" layoutY="160.0" onAction="#onDatePicker" prefHeight="25.0" prefWidth="114.0" />
-            <Spinner fx:id="hoursSpinner" disable="true" initialValue="7" layoutX="369.0" layoutY="160.0" max="23" min="0" prefHeight="25.0" prefWidth="61.0" />
-            <Spinner fx:id="minutesSpinner" disable="true" initialValue="0" layoutX="369.0" layoutY="194.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
+            <Spinner fx:id="hoursSpinner" disable="true" initialValue="7" layoutX="108.0" layoutY="230.0" max="23" min="0" prefHeight="25.0" prefWidth="61.0" />
+            <Spinner fx:id="minutesSpinner" disable="true" initialValue="0" layoutX="205.0" layoutY="230.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
             <Label layoutX="108.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Datum" />
-            <Label layoutX="287.0" layoutY="164.0" prefHeight="17.0" prefWidth="51.0" text="Stunden" />
-            <Label layoutX="287.0" layoutY="198.0" prefHeight="17.0" prefWidth="51.0" text="Minuten" />
-            <Label layoutX="287.0" layoutY="234.0" prefHeight="17.0" prefWidth="58.0" text="Sekunden" />
-            <Spinner fx:id="secondsSpinner" disable="true" initialValue="0" layoutX="369.0" layoutY="230.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
+            <Label layoutX="108.0" layoutY="207.0" prefHeight="17.0" prefWidth="51.0" text="Stunden" />
+            <Label layoutX="205.0" layoutY="207.0" prefHeight="17.0" prefWidth="51.0" text="Minuten" />
+            <Label layoutX="297.0" layoutY="207.0" prefHeight="17.0" prefWidth="58.0" text="Sekunden" />
+            <Spinner fx:id="secondsSpinner" disable="true" initialValue="0" layoutX="297.0" layoutY="230.0" max="59" min="0" prefHeight="25.0" prefWidth="61.0" />
             <Label fx:id="warningLabel" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="287.0" layoutY="75.0" prefHeight="72.0" prefWidth="164.0" text="Hinweis:&#10;Geben Sie nur Numerische&#10;Werte ein bei Kalorien und&#10;Zucker!" />
          </children>
       </Pane>
