@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class EntryDAO {
 
+    String url = "jdbc:sqlite:diet.db";
+
     private Entry entry;
 
     // Frage : bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes entry?
@@ -24,7 +26,6 @@ public class EntryDAO {
     }
 
     public void insertEntryData() {
-        String url = "jdbc:sqlite:diet.db";
 
         //For a first entry, the date and time should be automatically set to the current time.
         // This SQL command is one possibility, but not necessarily the final solution.
@@ -58,7 +59,6 @@ public class EntryDAO {
     // This method will be used by two different controllers. The `isLastEntry` variable differentiates between them.
     //  The ID is passed by the corresponding `ControllerDayReview` (last ID for `ControllerEntry`, any ID for `ControllerDayReview`)
     public void updateEntryData(int id) {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "UPDATE entry SET activity = ? , "
                 + " calories = ? , "
                 + " sugar = ?, "
@@ -90,7 +90,6 @@ public class EntryDAO {
 
     // The ID is passed by the corresponding controller (last ID for Controller User, any ID for ControllerDayReview)
     public void deleteEntry(int id) {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "DELETE FROM entry WHERE id = ?";
 
         try (var conn = DriverManager.getConnection(url);
@@ -104,7 +103,6 @@ public class EntryDAO {
     }
 
     public int getLastId() {
-        String url = "jdbc:sqlite:diet.db";
         var sql = "SELECT MAX(id) AS max_id FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
@@ -123,7 +121,6 @@ public class EntryDAO {
 
 
     public double returnCaloriesSumByDate(LocalDate date) {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) AS sum_calories_day  " +
                 "FROM entry WHERE date = ?;";
 
@@ -143,7 +140,6 @@ public class EntryDAO {
 
     // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
     public double returnCaloriesTotalSum() {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) AS sum_calories_total FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
@@ -159,7 +155,6 @@ public class EntryDAO {
     }
 
     public double returnSugarSumByDate(LocalDate date) {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT SUM(sugar) AS sum_sugar_day FROM entry WHERE date= ?;";
 
         try (var conn = DriverManager.getConnection(url);
@@ -178,7 +173,6 @@ public class EntryDAO {
 
     // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
     public double returnSugarTotalSum() {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT SUM(sugar) AS sum_sugar_total FROM entry";
 
         try (var conn = DriverManager.getConnection(url);
@@ -195,7 +189,6 @@ public class EntryDAO {
 
     // Will be implemented in ControllerDayReview and ControllerGraph.  !! HAVE TO THINK ABOUT WHAT IT REPRESENTS !!
     public double returnNumberOfDays() {
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT COUNT(DISTINCT date) AS count_days FROM entry";
 
         try (var conn = DriverManager.getConnection(url);
@@ -211,7 +204,6 @@ public class EntryDAO {
     }
 
     public ArrayList<Entry> returnEntriesDay(LocalDate date){
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT id, activity, calories, sugar, date, time FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Entry> entryList = new ArrayList<>();
 
@@ -243,7 +235,6 @@ public class EntryDAO {
     }
 
     public ArrayList<Integer> returnEntriesDayCorrespondingIds(LocalDate date){
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT id FROM entry WHERE date = ? ORDER BY time ASC";
         ArrayList<Integer> idList = new ArrayList<Integer>();
 
@@ -267,7 +258,6 @@ public class EntryDAO {
     }
 
     public ArrayList<LocalDate> returnRegisteredDates(boolean allDates, LocalDate olderDate, LocalDate newerDate){
-        String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
             sql = "SELECT DISTINCT date FROM entry ORDER BY date ASC";
@@ -299,7 +289,6 @@ public class EntryDAO {
     }
 
     public Entry getLastEntry(){
-        String url = "jdbc:sqlite:diet.db";
         String sql = "SELECT activity, calories, sugar, date, time FROM entry WHERE id=?";
 
         try (var conn = DriverManager.getConnection(url);
@@ -324,7 +313,6 @@ public class EntryDAO {
     }
 
     public double getMaxCalories() {
-        String url = "jdbc:sqlite:diet.db";
         var sql = "SELECT MAX(calories) AS max_calories FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
@@ -340,7 +328,6 @@ public class EntryDAO {
     }
 
     public double getMaxSugar() {
-        String url = "jdbc:sqlite:diet.db";
         var sql = "SELECT MAX(sugar) AS max_sugar FROM entry;";
 
         try (var conn = DriverManager.getConnection(url);
@@ -356,7 +343,6 @@ public class EntryDAO {
     }
 
     public ArrayList<Double> returnSUMCaloriesForDateRange(boolean allDates, LocalDate olderDate, LocalDate newerDate){
-        String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
             sql = "SELECT SUM(CASE WHEN activity = 'sport' THEN -calories ELSE calories END) as sum_calories " +
@@ -387,7 +373,6 @@ public class EntryDAO {
     }
 
     public ArrayList<Double> returnSUMSugarForDateRange(boolean allDates, LocalDate olderDate, LocalDate newerDate){
-        String url = "jdbc:sqlite:diet.db";
         String sql;
         if (allDates){
             sql = "SELECT SUM(sugar) as sum_sugar FROM entry GROUP by date ORDER BY date ASC";
@@ -399,7 +384,7 @@ public class EntryDAO {
         try (var conn = DriverManager.getConnection(url);
              var stmt = conn.prepareStatement(sql)) {
             if (!allDates) {
-                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                stmt.setString(1, olderDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))); //DateTimeFormat
                 stmt.setString(2, newerDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             }
             ResultSet rs = stmt.executeQuery();
