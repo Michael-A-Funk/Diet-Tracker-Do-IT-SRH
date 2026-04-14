@@ -8,6 +8,8 @@ public class UserDAO {
 
     private User user;
 
+    String url = "jdbc:sqlite:diet.db";
+
 
     // Frage : bzg. Controller: soll man sie separat halten wie unten, oder Methode zum setzten des Attributes user?
     //Constructor used when we want to insert new Data into DB
@@ -19,7 +21,6 @@ public class UserDAO {
     public UserDAO(){}
 
     public void insertUserData() {
-        String url = "jdbc:sqlite:diet.db";
 
         String sql = "INSERT INTO user(height,age,weight,isMale,hasDiabetes) VALUES(?,?,?,?,?) ";
 
@@ -38,8 +39,6 @@ public class UserDAO {
     }
 
     public void updateUserData() {
-
-            String url = "jdbc:sqlite:diet.db";
             String sql = "UPDATE user SET height = ? ,"
                     + " age = ? , "
                     + " weight = ?, "
@@ -66,7 +65,6 @@ public class UserDAO {
     }
 
     public boolean userExists (){
-        String url = "jdbc:sqlite:diet.db";
         var sql = "SELECT id FROM user; WHERE id=1";
 
         try (var conn = DriverManager.getConnection(url);
@@ -91,8 +89,6 @@ public class UserDAO {
 
     // Frage : Macht es Sinn Daten zu löschen oder lasst man User einfach Daten Bearbeiten?
     public void deleteEntryData (){
-
-            String url = "jdbc:sqlite:diet.db";
             String sql = "DELETE FROM user WHERE id = 1";
 
             try (var conn = DriverManager.getConnection(url);
@@ -108,7 +104,6 @@ public class UserDAO {
     }
 
     public User getUserData(){
-            String url = "jdbc:sqlite:diet.db";
             String sql = "SELECT height,age,weight,isMale,hasDiabetes FROM user";
 
             try (var conn = DriverManager.getConnection(url);
