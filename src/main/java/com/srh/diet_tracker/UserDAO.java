@@ -65,7 +65,7 @@ public class UserDAO {
     }
 
     public boolean userExists (){
-        var sql = "SELECT id FROM user; WHERE id=1";
+        var sql = "SELECT id FROM user WHERE id=1";
 
         try (var conn = DriverManager.getConnection(url);
              var pstmt = conn.createStatement();
