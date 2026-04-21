@@ -1,4 +1,4 @@
-# 🥗 Ernährungstracker – SRH Do-IT-Phase 2026
+#  Ernährungstracker – SRH Do-IT-Phase 2026
 
 Eine lokal laufende Java-Desktopanwendung zur Erfassung und Auswertung von Kalorien- und Zuckeraufnahme sowie sportlichen Aktivitäten.
 
@@ -6,7 +6,7 @@ Entwickelt im Rahmen der **Do-IT-Phase 2026** an der **SRH Beruflichen Rehabilit
 
 ---
 
-## 📋 Projektübersicht
+##  Projektübersicht
 
 | Feld | Wert |
 |---|---|
@@ -15,7 +15,7 @@ Entwickelt im Rahmen der **Do-IT-Phase 2026** an der **SRH Beruflichen Rehabilit
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Einträge erfassen** – Mahlzeiten und Sportaktivitäten mit Kalorien- und Zuckerwerten
 - **Tagesübersicht** – Alle Einträge eines beliebigen Tages anzeigen, bearbeiten und löschen
@@ -27,7 +27,7 @@ Entwickelt im Rahmen der **Do-IT-Phase 2026** an der **SRH Beruflichen Rehabilit
 
 ---
 
-## 🛠️ Tech-Stack
+##  Tech-Stack
 
 | Komponente | Version |
 |---|---|
@@ -39,7 +39,7 @@ Entwickelt im Rahmen der **Do-IT-Phase 2026** an der **SRH Beruflichen Rehabilit
 
 ---
 
-## 🏗️ Architektur
+##  Architektur
 
 Die Anwendung folgt dem **MVC-Muster** mit klarer Schichtentrennung:
 
@@ -51,7 +51,7 @@ Die Anwendung folgt dem **MVC-Muster** mit klarer Schichtentrennung:
 
 ---
 
-## 🖥️ Ansichten
+## ️ Ansichten
 
 | FXML-Datei | Beschreibung |
 |---|---|
@@ -63,7 +63,7 @@ Die Anwendung folgt dem **MVC-Muster** mit klarer Schichtentrennung:
 
 ---
 
-## 🚀 Voraussetzungen & Starten
+##  Voraussetzungen & Starten
 
 **Voraussetzungen:**
 - Java 23 (JDK)
@@ -83,7 +83,7 @@ Die SQLite-Datenbank `diet.db` wird automatisch beim ersten Start im Arbeitsverz
 
 ---
 
-## 📁 Projektstruktur
+##  Projektstruktur
 
 ```
 Diet-Tracker-Do-IT-SRH/
@@ -97,7 +97,7 @@ Diet-Tracker-Do-IT-SRH/
 
 ---
 
-## 🗄️ Datenbankstruktur
+##  Datenbankstruktur
 
 **Tabelle `entry`** – Ernährungs- und Sporteinträge
 
@@ -123,7 +123,7 @@ Diet-Tracker-Do-IT-SRH/
 
 ---
 
-## ⚙️ Bekannte Schwächen (v2.0)
+## Bekannte Schwächen (v2.0)
 
 **Code-Qualität:**
 - Null-Rückgaben statt `Optional<>` in EntryDAO
@@ -141,7 +141,7 @@ Diet-Tracker-Do-IT-SRH/
 
 ---
 
-## 🔮 Geplante Erweiterungen
+## Geplante Erweiterungen
 
 - Unit-Tests für `EntryDAO` und `User.getBMR()`
 - Null-Rückgaben durch `Optional<>` ersetzen
@@ -152,7 +152,7 @@ Diet-Tracker-Do-IT-SRH/
 
 ---
 
-## 📄 Lizenz
+##  Lizenz
 
 Dieses Projekt wurde im Rahmen eines Bildungsprojekts (SRH Do-IT-Phase 2026) erstellt, für die Umschullung "Fachinformatiker Anwendungsentwicklung".
 
