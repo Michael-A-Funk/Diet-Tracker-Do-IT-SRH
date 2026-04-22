@@ -6,16 +6,6 @@ Entwickelt im Rahmen der **Do-IT-Phase 2026** an der **SRH Beruflichen Rehabilit
 
 ---
 
-##  Projektübersicht
-
-| Feld | Wert |
-|---|---|
-| Verfasser | Michael Funk |
-| Geplante Stunden | 175 h |
-
----
-
-##  Features
 
 - **Einträge erfassen** – Mahlzeiten und Sportaktivitäten mit Kalorien- und Zuckerwerten
 - **Tagesübersicht** – Alle Einträge eines beliebigen Tages anzeigen, bearbeiten und löschen
