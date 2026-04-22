@@ -67,17 +67,6 @@ Die Anwendung folgt dem **MVC-Muster** mit klarer Schichtentrennung:
 
 **Voraussetzungen:**
 - Java 23 (JDK)
-- Maven (oder den mitgelieferten Maven Wrapper `mvnw` verwenden)
-
-**Anwendung starten:**
-
-```bash
-# Mit Maven Wrapper (Windows)
-mvnw.cmd javafx:run
-
-# Mit Maven Wrapper (Linux/macOS)
-./mvnw javafx:run
-```
 
 Die SQLite-Datenbank `diet.db` wird automatisch beim ersten Start im Arbeitsverzeichnis angelegt.
 
@@ -126,7 +115,6 @@ Diet-Tracker-Do-IT-SRH/
 ## Bekannte Schwächen (v2.0)
 
 **Code-Qualität:**
-- Null-Rückgaben statt `Optional<>` in EntryDAO
 - `setFieldsByEntryNr()` hat 11 Parameter (Refactoring empfohlen)
 - `@FXML`-Felder teilweise doppelt initialisiert
 - Gemischte Kommentarsprache (Deutsch/Englisch)
